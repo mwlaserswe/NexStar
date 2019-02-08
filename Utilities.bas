@@ -77,6 +77,17 @@ Private Declare Function SendCommand Lib "C:\MWMotionDriver\MWMotionDriver.dll" 
 
 
 
+Public Function CutTime(ByVal Hours As Double) As Double
+  Dim HoursInt As Long
+  HoursInt = Int(Hours / 24)
+  CutTime = Hours - (HoursInt * 24)
+End Function
+
+Public Function CutAngle(ByVal Angle As Double) As Double
+  Dim AngleInt As Long
+  AngleInt = Int(Angle / 360)
+  CutAngle = Angle - (AngleInt * 360)
+End Function
 
 
 

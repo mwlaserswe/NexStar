@@ -2,14 +2,38 @@ VERSION 5.00
 Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
 Begin VB.Form Mainform 
    Caption         =   "Form1"
-   ClientHeight    =   5325
+   ClientHeight    =   7635
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   8205
+   ClientWidth     =   9420
    LinkTopic       =   "Form1"
-   ScaleHeight     =   5325
-   ScaleWidth      =   8205
+   ScaleHeight     =   7635
+   ScaleWidth      =   9420
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton Command1 
+      Caption         =   "Command1"
+      Height          =   495
+      Left            =   600
+      TabIndex        =   20
+      Top             =   3000
+      Width           =   855
+   End
+   Begin VB.OptionButton O_OrientationSouth 
+      Caption         =   "South"
+      Height          =   195
+      Left            =   480
+      TabIndex        =   19
+      Top             =   1440
+      Width           =   1215
+   End
+   Begin VB.OptionButton O_OrientationNorth 
+      Caption         =   "North"
+      Height          =   195
+      Left            =   480
+      TabIndex        =   18
+      Top             =   1080
+      Width           =   1215
+   End
    Begin VB.Timer Tim_Simulation 
       Interval        =   100
       Left            =   600
@@ -359,7 +383,6 @@ End Sub
 
 
 
-
 Private Sub Command3_Click()
     Dim a As String
     Dim b As String
@@ -379,6 +402,7 @@ End Sub
 Private Sub Form_Load()
     SimOffline = True
     
+    O_OrientationNorth.value = 1
     IniFileName = App.Path & "\NexStar.ini"
     InitNexStarComm
     
@@ -457,9 +481,6 @@ Private Sub NexStarComm_OnComm()
                 Loop While NexStarComm.InBufferCount > 0
                 l = Len(NexStarAz)
                 TelIncrAz = GetNexStarPosition(NexStarAz)
-                L_Az = TelIncrAz
-                TelDegAz = TelIncrAz * 360 / EncoderResolution
-                L_TelDegAz = Format(TelDegAz, "0.0000")
             ElseIf Command = 21 Then
                 Do
                     vbuf = NexStarComm.Input
@@ -470,9 +491,6 @@ Private Sub NexStarComm_OnComm()
                 Loop While NexStarComm.InBufferCount > 0
                 l = Len(NexStarAlt)
                 TelIncrAlt = GetNexStarPosition(NexStarAlt)
-                L_Alt = TelIncrAlt
-                TelDegAlt = TelIncrAlt * 360 / EncoderResolution
-                L_TelDegAlt = Format(TelDegAlt, "0.0000")
             End If
         
     Case comEvSend  ' Im Sendepuffer befinden sich SThreshold Zeichen
@@ -501,13 +519,28 @@ Private Sub Tim_DisplayUpdate_Timer()
         Toggle = True
         C_GetAlt_Click
     End If
+    
+    L_Az = TelIncrAz
+    L_Alt = TelIncrAlt
+    
+    If O_OrientationNorth.value Then
+        TelDegAz = TelIncrAz * 360 / EncoderResolution
+    ElseIf O_OrientationSouth.value Then
+        TelDegAz = (TelIncrAz * 360 / EncoderResolution) + 180
+    End If
+    
+    TelDegAlt = TelIncrAlt * 360 / EncoderResolution
+    L_TelDegAz = Format(CutAngle(TelDegAz), "0.0000")
+    L_TelDegAlt = Format(TelDegAlt, "0.0000")
+    
+    
 End Sub
 
 Private Sub Tim_Simulation_Timer()
     Dim SimScaling As Long
     Dim SimGotoStep As Long
 
-    SimScaling = 50
+    SimScaling = 10
     SimGotoStep = 1000
 
     If SimBntUp Then

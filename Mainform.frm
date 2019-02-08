@@ -10,6 +10,11 @@ Begin VB.Form Mainform
    ScaleHeight     =   5325
    ScaleWidth      =   8205
    StartUpPosition =   3  'Windows Default
+   Begin VB.Timer Tim_Simulation 
+      Interval        =   100
+      Left            =   600
+      Top             =   4680
+   End
    Begin VB.Timer Tim_DisplayUpdate 
       Interval        =   250
       Left            =   6840
@@ -207,51 +212,124 @@ Dim TelDegAlt As Double
 
 Dim ManualSkewingSpeed As Long
 
+'Simulation
+Dim SimIncrAz As Long
+Dim SimIncrAlt As Long
+Dim SimBntUp As Boolean
+Dim SimBntDn As Boolean
+Dim SimBntLe As Boolean
+Dim SimBntRi As Boolean
+Dim SimGotoAzAltActive As Boolean
+Dim SimGotoAz As Long
+Dim SimGotoAlt As Long
 
 
 
-Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Label1 = "down"
-    NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1B) & SetNexStarPosition(ManualSkewingSpeed)
-End Sub
 
-Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Label1 = "down"
-    NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
-End Sub
+
 
 Private Sub C_GetAz_Click()
-    NexStarComm.Output = Chr$(&H1)
-    NexStarAz = ""
-    List1.Clear
-    Command = 1
+    If SimOffline Then
+        TelIncrAz = SimIncrAz
+                L_Az = TelIncrAz
+                TelDegAz = TelIncrAz * 360 / EncoderResolution
+                L_TelDegAz = Format(TelDegAz, "0.0000")
+    Else
+        NexStarComm.Output = Chr$(&H1)
+        NexStarAz = ""
+        List1.Clear
+        Command = 1
+    End If
 End Sub
 
 Private Sub C_GetAlt_Click()
-    NexStarComm.Output = Chr$(&H15)
-    NexStarAlt = ""
-    List1.Clear
-    Command = 21
+    If SimOffline Then
+        TelIncrAlt = SimIncrAlt
+                 L_Alt = TelIncrAlt
+                TelDegAlt = TelIncrAlt * 360 / EncoderResolution
+                L_TelDegAlt = Format(TelDegAlt, "0.0000")
+   Else
+        NexStarComm.Output = Chr$(&H15)
+        NexStarAlt = ""
+        List1.Clear
+        Command = 21
+    End If
 End Sub
 
 
 
-Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    NexStarComm.Output = Chr$(&H7) & SetNexStarPosition(ManualSkewingSpeed) & Chr$(&H1A) & SetNexStarPosition(0)
+
+Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    If SimOffline Then
+        SimBntUp = True
+    Else
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(ManualSkewingSpeed)
+    End If
 End Sub
 
-Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    If SimOffline Then
+        SimBntUp = False
+    Else
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+    End If
+End Sub
+
+Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    If SimOffline Then
+        SimBntDn = True
+    Else
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1B) & SetNexStarPosition(ManualSkewingSpeed)
+    End If
+End Sub
+
+Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    If SimOffline Then
+        SimBntDn = False
+    Else
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+    End If
+End Sub
+
+Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    If SimOffline Then
+        SimBntLe = True
+    Else
+        NexStarComm.Output = Chr$(&H7) & SetNexStarPosition(ManualSkewingSpeed) & Chr$(&H1A) & SetNexStarPosition(0)
+    End If
+End Sub
+
+Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    If SimOffline Then
+        SimBntLe = False
+    Else
+      NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+    End If
+End Sub
+
+Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    If SimOffline Then
+        SimBntRi = True
+    Else
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(ManualSkewingSpeed) & Chr$(&H1A) & SetNexStarPosition(0)
+    End If
+End Sub
+
+Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    If SimOffline Then
+        SimBntRi = False
+    Else
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+    End If
 End Sub
 
 
-Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(ManualSkewingSpeed) & Chr$(&H1A) & SetNexStarPosition(0)
-End Sub
 
-Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
-End Sub
+
+
+
+
+
 
 Private Sub C_SetAzAlt_Click()
     Dim SetAz As Long
@@ -260,23 +338,22 @@ Private Sub C_SetAzAlt_Click()
     SetAz = CLng(Zahl(T_Az))
     SetAlt = CLng(Zahl(T_Alt))
 
-    NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(SetAz) & Chr$(&H16) & SetNexStarPosition(SetAlt)
+    SimGotoAzAltActive = True
+    
+    If SimOffline Then
+        SimGotoAz = SetAz
+        SimGotoAlt = SetAlt
+    Else
+        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(SetAz) & Chr$(&H16) & SetNexStarPosition(SetAlt)
+    End If
+    
 End Sub
 
 Private Sub C_SetEncoder_Click()
-    NexStarComm.Output = Chr$(&HC) & SetNexStarPosition(726559) & SetNexStarPosition(726559)
-End Sub
-
-
-
-Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Label1 = "down"
-    NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(ManualSkewingSpeed)
-End Sub
-
-Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Label1 = "up"
-    NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+    If SimOffline Then
+    Else
+        NexStarComm.Output = Chr$(&HC) & SetNexStarPosition(EncoderResolution) & SetNexStarPosition(EncoderResolution)
+    End If
 End Sub
 
 
@@ -300,13 +377,14 @@ End Sub
 
 
 Private Sub Form_Load()
-
+    SimOffline = True
+    
     IniFileName = App.Path & "\NexStar.ini"
     InitNexStarComm
-    ClearNexStarComm
+    
     Command = 0
     
-    VS_ManualSkewingSpeed.Value = 10
+    VS_ManualSkewingSpeed.value = 10
 End Sub
 
 
@@ -317,7 +395,9 @@ Private Sub InitNexStarComm()
   NexStarPortNr = Zahl(INIGetValue(IniFileName, "NexStar", "PortNr"))
   NexStarBaudrate = Zahl(INIGetValue(IniFileName, "NexStar", "Baudrate"))
 
-  If NexStarPortNr > 0 Then
+  If SimOffline Then
+    '
+  ElseIf NexStarPortNr > 0 Then
     NexStarComm.CommPort = NexStarPortNr
     NexStarComm.Settings = NexStarBaudrate + ",n,8,1"
     NexStarComm.PortOpen = True
@@ -333,14 +413,6 @@ v24error:
   MsgBox "NexStar RS232 Open error: " & Err.Description, , "Communication NexStar"
 End Sub
 
-Private Sub ClearNexStarComm()
-    Dim tmp As String
-    
-    While NexStarComm.InBufferCount > 0
-        tmp = NexStarComm.Input
-    Wend
-    
-End Sub
 
 Private Sub NexStarComm_OnComm()
   Dim pos As Long
@@ -386,7 +458,7 @@ Private Sub NexStarComm_OnComm()
                 l = Len(NexStarAz)
                 TelIncrAz = GetNexStarPosition(NexStarAz)
                 L_Az = TelIncrAz
-                TelDegAz = TelIncrAz * 360 / 726559
+                TelDegAz = TelIncrAz * 360 / EncoderResolution
                 L_TelDegAz = Format(TelDegAz, "0.0000")
             ElseIf Command = 21 Then
                 Do
@@ -399,7 +471,7 @@ Private Sub NexStarComm_OnComm()
                 l = Len(NexStarAlt)
                 TelIncrAlt = GetNexStarPosition(NexStarAlt)
                 L_Alt = TelIncrAlt
-                TelDegAlt = TelIncrAlt * 360 / 726559
+                TelDegAlt = TelIncrAlt * 360 / EncoderResolution
                 L_TelDegAlt = Format(TelDegAlt, "0.0000")
             End If
         
@@ -431,9 +503,75 @@ Private Sub Tim_DisplayUpdate_Timer()
     End If
 End Sub
 
+Private Sub Tim_Simulation_Timer()
+    Dim SimScaling As Long
+    Dim SimGotoStep As Long
+
+    SimScaling = 50
+    SimGotoStep = 1000
+
+    If SimBntUp Then
+        SimIncrAlt = SimIncrAlt + (ManualSkewingSpeed / SimScaling)
+    End If
+        
+    If SimBntDn Then
+        SimIncrAlt = SimIncrAlt - (ManualSkewingSpeed / SimScaling)
+    End If
+    
+    If SimBntLe Then
+        SimIncrAz = SimIncrAz - (ManualSkewingSpeed / SimScaling)
+    End If
+        
+    If SimBntRi Then
+        SimIncrAz = SimIncrAz + (ManualSkewingSpeed / SimScaling)
+    End If
+        
+    If SimIncrAz > EncoderResolution Then
+        SimIncrAz = 0
+    ElseIf SimIncrAz < 0 Then
+        SimIncrAz = EncoderResolution
+    End If
+        
+    If SimIncrAlt > EncoderResolution Then
+        SimIncrAlt = 0
+    ElseIf SimIncrAlt < 0 Then
+        SimIncrAlt = EncoderResolution
+    End If
+    
+    
+    If SimGotoAzAltActive Then
+        If Abs(SimGotoAz - SimIncrAz) < SimGotoStep Then
+            SimIncrAz = SimGotoAz
+        ElseIf SimGotoAz > SimIncrAz Then
+            SimIncrAz = SimIncrAz + SimGotoStep
+        Else
+            SimIncrAz = SimIncrAz - SimGotoStep
+        End If
+    
+        If Abs(SimGotoAlt - SimIncrAlt) < SimGotoStep Then
+            SimIncrAlt = SimGotoAlt
+        ElseIf SimGotoAlt > SimIncrAlt Then
+            SimIncrAlt = SimIncrAlt + SimGotoStep
+        Else
+            SimIncrAlt = SimIncrAlt - SimGotoStep
+        End If
+        
+        
+        If (SimIncrAz = SimGotoAz) And (SimIncrAlt = SimGotoAlt) Then
+            SimGotoAzAltActive = False
+        End If
+
+    End If
+    
+    
+    
+    'Dim SimGotoAlt As Long
+
+End Sub
+
 Private Sub VS_ManualSkewingSpeed_Change()
     Dim tmp As Long
     
-    tmp = VS_ManualSkewingSpeed.Value
+    tmp = VS_ManualSkewingSpeed.value
     ManualSkewingSpeed = 1000 * tmp
 End Sub

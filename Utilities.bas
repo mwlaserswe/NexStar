@@ -76,59 +76,9 @@ Private Declare Function SendCommand Lib "C:\MWMotionDriver\MWMotionDriver.dll" 
 
 
 
-'GetPFeldWert sucht das PFELD_ARRAY nach dem übergebenen Index ab
-'und gibt dessen Wert als Single zurück
-
-Public Function GetPFeldWert(PFeldIndex As Integer) As Single
-  Dim i As Integer
-  Dim Pidx As Integer
-  
-  GetPFeldWert = 0          'Vorbelegung
-  
-  'If innoStructures.basics.flag_SimulationPfelder Then
-  If innoConfig.isPFelderSimulation() Then
-    GetPFeldWert = pFelderSim.getPFeld(PFeldIndex)
-    Exit Function
-  End If
-  
-  On Error GoTo Indexfehler
-  
-      Do While PFeldDLLArrayIdx(Pidx) <> 0
-        If PFeldDLLArrayIdx(Pidx) = PFeldIndex Then
-          GetPFeldWert = PFeldDLLArrayRead(Pidx)
-          Exit Do
-        End If
-        Pidx = Pidx + 1
-      Loop
-
-  Exit Function
-  
-Indexfehler:
-  GetPFeldWert = 0
-  MsgBox "Function 'GetPFeldWert': " & Err.Description, vbOKOnly Or vbCritical, "Terminal"
-  Resume Next
-
-End Function
 
 
-Public Sub SetPFeldWert(PFeldIndex As Integer, PFeldWert As Single)
 
-  If innoConfig.isPFelderSimulation() Then
-    pFelderSim.setPFeld PFeldIndex, PFeldWert
-    Exit Sub
-  End If
-
-
-Dim i As Integer
-
-For i = 0 To UBound(PFELD_ARRAY)
-  If PFELD_ARRAY(i).Index = CInt(PFeldIndex) Then
-    PFELD_ARRAY(i).wert = PFeldWert
-    Exit Sub
-  End If
-Next i
-
-End Sub
 
 
 Public Function Zahl(Txt As String) As Double
@@ -350,18 +300,18 @@ End Sub
 
 
 Public Sub BitSet_Int(daten As Integer, BitNr As Integer)
-  daten = daten Or bitMaske_Int(BitNr)
+'  daten = daten Or bitMaske_Int(BitNr)
 End Sub
 Public Sub BitReset_Int(daten As Integer, BitNr As Integer)
-  daten = daten And bitMaskeInv_Int(BitNr)
+'  daten = daten And bitMaskeInv_Int(BitNr)
 End Sub
 
 
 Public Function BitTest(daten As Byte, BitNr As Integer) As Boolean
-  BitTest = False
-  If (daten And bitMaske(BitNr)) <> 0 Then
-    BitTest = True
-  End If
+'  BitTest = False
+'  If (daten And bitMaske(BitNr)) <> 0 Then
+'    BitTest = True
+'  End If
 End Function
 
 
@@ -414,7 +364,7 @@ Public Sub PrintControlFehler(WertVar As Variant, Steuerelement As Variant)
 
 WertOld = Steuerelement
     If (WertOld <> wert) Then         'hat sich die Wert geändert?
-      ProtokollMessage wert
+'      ProtokollMessage wert
 
     End If
      
@@ -629,11 +579,11 @@ Public Sub PrintCommImage(PortNr As String, CommStatus As String, Pic As Picture
     Pic.Tag = CommStatus
     If CommStatus = True Then
       Pic.Cls
-      Pic.BackColor = COL_GREEN
+      Pic.BackColor = vbGreen
       Pic.Print PortNr
     Else
       Pic.Cls
-      Pic.BackColor = COL_RED
+      Pic.BackColor = vbRed
       Pic.Print PortNr
     End If
   End If
@@ -733,69 +683,6 @@ Public Sub GetAllFiles(ByVal Pfad As String, ByVal Patt$, ByRef Field() As Strin
   FindClose hFile
 End Sub
 
-Public Function AddPfeldArray(PFeldNr)
-
-  If innoConfig.isPFelderSimulation() Then
-        Exit Function
-  End If
-
-  Dim i As Integer
-  Dim PfeldSchonInArray As Boolean
-  Dim Pidx As Integer
-
-
-      Do While PFeldDLLArrayIdx(Pidx) <> 0
-        'Array durchsuchen, ob die Pfeldnr. schon eingetragen wurde
-        If PFeldDLLArrayIdx(Pidx) = PFeldNr Then
-          PfeldSchonInArray = True
-        End If
-        Pidx = Pidx + 1
-      Loop
-
-      'Pfeldnr. nur dann eintragen, wenn sie noch nicht drinsteht
-      If Not PfeldSchonInArray Then
-        PFeldDLLArrayIdx(Pidx) = PFeldNr
-        PFeldDLLArrayRead(Pidx) = 0
-        PFeldDLLMax = PFeldDLLMax + 1
-      End If
-
-'  If Zahl(INIGetValue(INI_DateiName, "Terminalgrundeinstellung", "mmictrlDLL_P")) = 0 Then
-'      Pidx = UBound(PFELD_ARRAY)
-'
-'      'Array durchsuchen, ob die Pfeldnr. schon eingetragen wurde
-'      For i = 0 To UBound(PFELD_ARRAY)
-'        If PFELD_ARRAY(i).Index = PFeldNr And PFELD_ARRAY(i).Gültig Then
-'          PfeldSchonInArray = True
-'        End If
-'      Next i
-'
-'      'Pfeldnr. nur dann eintragen, wenn sie noch nicht drinsteht
-'      If Not PfeldSchonInArray Then
-'        PFELD_ARRAY(Pidx).Index = PFeldNr: PFELD_ARRAY(Pidx).wert = 0: PFELD_ARRAY(Pidx).Gültig = True: Pidx = Pidx + 1
-'        ReDim Preserve PFELD_ARRAY(0 To UBound(PFELD_ARRAY) + 1)
-'      End If
-'
-'  Else
-'
-'      Do While PFeldDLLArrayIdx(Pidx) <> 0
-'        'Array durchsuchen, ob die Pfeldnr. schon eingetragen wurde
-'        If PFeldDLLArrayIdx(Pidx) = PFeldNr Then
-'          PfeldSchonInArray = True
-'        End If
-'        Pidx = Pidx + 1
-'      Loop
-'
-'      'Pfeldnr. nur dann eintragen, wenn sie noch nicht drinsteht
-'      If Not PfeldSchonInArray Then
-'        PFeldDLLArrayIdx(Pidx) = PFeldNr
-'        PFeldDLLArrayRead(Pidx) = 0
-'        PFeldDLLMax = PFeldDLLMax + 1
-'      End If
-'
-'
-'  End If
-  
-End Function
 
 
 Public Function t(Index As Integer, DefaultText As String) As String
@@ -1104,134 +991,8 @@ Dim ByteLocal(3) As Byte
 End Function
 
 
-Public Sub WriteMMIPFeld(ByVal PFeldIndex As Integer, ByVal PFeldWert As Double)
 
 
-  If innoConfig.isPFelderSimulation() Then
-    pFelderSim.setPFeld2 PFeldIndex, PFeldWert
-    Exit Sub
-  End If
-
-
-'ByVal weil sonst keine automatische Kovertierung  von single zu double erfolgt
-
-Dim Index(1) As Integer
-Dim wert(1) As Double
-
-  Index(1) = PFeldIndex
-  wert(1) = PFeldWert
-
-        ncrWriteParamArray cncHandle, Index(1), wert(1), 1
-
-'      If Zahl(INIGetValue(INI_DateiName, "Terminalgrundeinstellung", "mmictrlDLL_P")) = 0 Then
-'        SendeBuffer = SendeBuffer & ">03 " & CStr(PFeldIndex) & "  " & KommaToPunkt(CStr(PFeldWert))
-'      ElseIf Zahl(INIGetValue(INI_DateiName, "Terminalgrundeinstellung", "mmictrlDLL_P")) = 1 Then
-'        If checkdll Then
-'        ncrWriteParamArray cncHandle, Index(1), wert(1), 1
-'        End If
-'      End If
-
-End Sub
-
-
-Public Function DoCommand(Befehl As String, Optional Parameters, Optional Antwort) As Long
-' Send Command to MWMotionDriver
-
-  Dim status As Long
-  Dim pos As Integer
-  Dim Pars As String, antw As String
-  
-  Pars = IIf(IsMissing(Parameters), "", Parameters)
-  antw = Space(256)
-  status = SendCommand(Befehl, Pars, antw, Len(antw))
-  pos = InStr(antw, Chr(0))
-  antw = IIf(pos = 0, "", Left(antw, pos - 1))
-  If Not IsMissing(Antwort) Then Antwort = antw
-  DoCommand = status
-  '#
-'  DriverHistroy.Add Befehl, CStr(Pars), CStr(antw), Status
-End Function
-
-
-
-
-Public Sub sureFileDelete(strFile As String)
-
-    Dim DelTimer As New TON
-    
-    DelTimer.Time = 1
-    
-    Dim dimFlagTimeout As Boolean
-    
-    dimFlagTimeout = False
-    
-    Kill strFile
-    
-    'Warten bis die Datei tatsächlich gelöscht ist
-  
-    Do
-    
-        DoEvents
-        
-        If DelTimer.q Then
-            dimFlagTimeout = True
-        End If
-    
-    Loop While MWFileExist(strFile)
-   
-   
-    If dimFlagTimeout Then
-        MsgBox "Utilities::sureFileDelete, timeout by killing:" & strFile
-    End If
-    
-   
-End Sub
-
-
-Public Function isAutomaticMode() As Boolean
-
-' okl - automatik mode definition: B:\Allgemein\Inbetriebnahme\DOKU\P-Felder
-'
-'Das P-Feld wird vom Terminal Programm gesetzt beim Wechsel von Automatik in Manuell Betrieb (typisch bei automatisierten Maschinen)                                                                                                                   ·         Im DIN Programm kann das P-Feld nach Belieben für Verzweigungen, etc. verwendet werden.
-'
-' P1597 = 1;  Automatik-Betrieb
-' P1597 = 0;  Manuell-Betrieb
-'
-' -----
-    
-    isAutomaticMode = False
-        
-    If GetPFeldWert(1597) = 0 Then
-        isAutomaticMode = False
-    End If
-     
-    If GetPFeldWert(1597) = 1 Then
-        isAutomaticMode = True
-    End If
-     
-    
-End Function
-
-Public Function getTrueFalseString(flag As Boolean) As String
-    
-    getTrueFalseString = "false"
-    If flag = True Then getTrueFalseString = "true"
-    
-    
-End Function
-
-Public Sub innerFramCalc(fr As Form, innerFrame As Frame)
-
-  ' versch
-
-
-  innerFrame.Left = 0
-  innerFrame.Top = 0
-  fr.Height = innerFrame.Height
-  fr.Width = innerFrame.Width
-
-
-End Sub
 
 
 

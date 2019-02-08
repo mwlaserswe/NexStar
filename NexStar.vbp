@@ -8,6 +8,7 @@ Module=Utilities; Utilities.bas
 Module=NexStar; NexStar.bas
 IconForm="Mainform"
 Startup="Mainform"
+ExeName32="NexStar.exe"
 Command32=""
 Name="Project1"
 HelpContextID="0"

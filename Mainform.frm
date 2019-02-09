@@ -2,14 +2,30 @@ VERSION 5.00
 Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
 Begin VB.Form Mainform 
    Caption         =   "Form1"
-   ClientHeight    =   7635
+   ClientHeight    =   11235
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   9420
+   ClientWidth     =   8910
    LinkTopic       =   "Form1"
-   ScaleHeight     =   7635
-   ScaleWidth      =   9420
+   ScaleHeight     =   11235
+   ScaleWidth      =   8910
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton Command4 
+      Caption         =   "Siderial Time"
+      Height          =   255
+      Left            =   600
+      TabIndex        =   22
+      Top             =   5880
+      Width           =   1215
+   End
+   Begin VB.CommandButton Command2 
+      Caption         =   "Test Sternzeit"
+      Height          =   495
+      Left            =   600
+      TabIndex        =   21
+      Top             =   9360
+      Width           =   1215
+   End
    Begin VB.CommandButton Command1 
       Caption         =   "Command1"
       Height          =   495
@@ -163,6 +179,24 @@ Begin VB.Form Mainform
       RThreshold      =   1
       BaudRate        =   4800
       InputMode       =   1
+   End
+   Begin VB.Label Label3 
+      Caption         =   "Siderial Time"
+      Height          =   255
+      Left            =   2520
+      TabIndex        =   24
+      Top             =   5880
+      Width           =   975
+   End
+   Begin VB.Label L_SiderialTime 
+      Alignment       =   1  'Right Justify
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   255
+      Left            =   3720
+      TabIndex        =   23
+      Top             =   5880
+      Width           =   1575
    End
    Begin VB.Label L_TelDegAlt 
       Alignment       =   1  'Right Justify
@@ -383,14 +417,19 @@ End Sub
 
 
 
+
+Private Sub Command2_Click()
+    TestJulianischesDatum.Show
+End Sub
+
 Private Sub Command3_Click()
     Dim a As String
-    Dim b As String
+    Dim B As String
     Dim erg As Long
     
     a = SetNexStarPosition(1234567)
     
-    b = Chr$(&H0) & Chr$(&H0) & Chr$(&H0) & Chr$(&H11) & Chr$(&H24) & Chr$(&H80)
+    B = Chr$(&H0) & Chr$(&H0) & Chr$(&H0) & Chr$(&H11) & Chr$(&H24) & Chr$(&H80)
 '    b = Chr$(&H0) & Chr$(&H3) & Chr$(&HE8)
     
     erg = GetNexStarPosition(a)
@@ -398,6 +437,14 @@ Private Sub Command3_Click()
 End Sub
 
 
+
+Private Sub Command4_Click()
+    Dim SiderialTime As Double
+    
+    GetSiderialTime 2007, 12, 25, 20, 0, 0, 1, 13.5, SiderialTime
+    L_SiderialTime = SiderialTime
+    
+End Sub
 
 Private Sub Form_Load()
     SimOffline = True
@@ -409,6 +456,11 @@ Private Sub Form_Load()
     Command = 0
     
     VS_ManualSkewingSpeed.value = 10
+
+
+
+
+
 End Sub
 
 

@@ -696,7 +696,7 @@ End Sub
 
 
 
-Public Function t(Index As Integer, DefaultText As String) As String
+Public Function t_variable_texte(Index As Integer, DefaultText As String) As String
   Static Init         As Boolean
   Dim first_of_more   As Boolean
   Static language_supported As Boolean
@@ -864,11 +864,11 @@ NoValidLine:
   If language_supported Then
     If ReadCollectionItem(CStr(Index) & SprachFileSprache, returnval) Then
       If SprachFileNummernAnzeigen Then
-        t = CStr(Index) + "," + returnval
+        t_variable_texte = CStr(Index) + "," + returnval
       Else
-         t = returnval
+         t_variable_texte = returnval
       End If
-    Else: t = DefaultText
+    Else: t_variable_texte = DefaultText
         ErrorCollection.Add CStr(Index) & SprachFileSprache & " is not available ", CStr(Index) & SprachFileSprache
         sprachcollection.Add DefaultText, CStr(Index) & SprachFileSprache
         
@@ -885,7 +885,7 @@ NoValidLine:
           Close errorfile
     End If
   Else:
-      t = DefaultText ' " Language " & SprachFileSprache & " not supported. Please adjust the .INI file!! Available languages are " & avail_language
+      t_variable_texte = DefaultText ' " Language " & SprachFileSprache & " not supported. Please adjust the .INI file!! Available languages are " & avail_language
   End If
   Exit Function
     
@@ -963,11 +963,11 @@ Public Sub SortString(DatenFeld() As String)
 End Sub
 
 ' Zerlegt eine 32-Bit Zahl in 4 Byte(0..3)
-Public Sub LongToByte(ByVal l As Long, b() As Byte)
+Public Sub LongToByte(ByVal l As Long, B() As Byte)
 Dim i As Integer
 
     For i = 0 To 3
-        b(i) = l And 255&
+        B(i) = l And 255&
         l = Int(l / 256&)
 '         L = L \ 256&           ' funktioniert nicht !!
    Next i
@@ -975,13 +975,13 @@ Dim i As Integer
 End Sub
 
 ' Vereint 4 Bytes(0..3) zu einer 32-Bit Zahl mit Vorzeichen
-Public Function ByteToLong(b() As Byte) As Long
+Public Function ByteToLong(B() As Byte) As Long
 Dim i As Integer
 Dim negativ As Boolean
 Dim ByteLocal(3) As Byte
 
-    ByteLocal(0) = b(0):    ByteLocal(1) = b(1)
-    ByteLocal(2) = b(2):    ByteLocal(3) = b(3)
+    ByteLocal(0) = B(0):    ByteLocal(1) = B(1)
+    ByteLocal(2) = B(2):    ByteLocal(3) = B(3)
 
     negativ = False
     If (ByteLocal(3) And &H80) Then

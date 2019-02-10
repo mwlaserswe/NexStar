@@ -1,6 +1,7 @@
 Attribute VB_Name = "GlobalVariables"
 Option Explicit
 
+Public Const Pi = 3.14159265359
 Public Const EncoderResolution = 726559
 
 Public Type MyDate
@@ -13,7 +14,13 @@ Public Type MyTime
     TimeDec As Double
     H As Double
     M As Double
-    S As Double
+    s As Double
+End Type
+
+Public Type Vector
+  x As Double
+  y As Double
+  z As Double
 End Type
 
 Public SimOffline As Boolean

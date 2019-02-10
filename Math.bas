@@ -39,7 +39,7 @@ Public Function GetJulianDate(Dt As MyDate, Tm As MyTime) As Double
   a = Int(Dt.YY / 100)
   B = 2 - a + Int(a / 4)
 
-  H = Tm.H / 24 + Tm.M / 1440 + Tm.S / 86400
+  H = Tm.H / 24 + Tm.M / 1440 + Tm.s / 86400
   
   GetJulianDate = Int(365.25 * (Dt.YY + 4716)) + Int(30.6001 * (Dt.MM + 1)) + Dt.DD + H + B - 1524.5
 End Function
@@ -67,7 +67,7 @@ Public Function GetSiderialTime(LocalDate As MyDate, LocalTimeUT As MyTime, Laen
     '1.  Julianische Datum JD um 0h berechnen. Muﬂ immer auf 0,5 enden
     Time0hGMT.H = 0
     Time0hGMT.M = 0
-    Time0hGMT.S = 0
+    Time0hGMT.s = 0
     JD = GetJulianDate(LocalDate, Time0hGMT)
     
     ' 2. Sternzeit in Greenwich berechnen
@@ -125,31 +125,27 @@ Public Function TimeDezToHMS(TimeDezimal As Double) As MyTime
     TimeDezToHMS.H = Int(locTDec)
     locTDec = locTDec - TimeDezToHMS.H
     
-    TimeDezToHMS.S = locTDec * 3600
+    TimeDezToHMS.s = locTDec * 3600
     
-    TimeDezToHMS.M = Int(TimeDezToHMS.S / 60)
-    TimeDezToHMS.S = TimeDezToHMS.S - (TimeDezToHMS.M * 60)
+    TimeDezToHMS.M = Int(TimeDezToHMS.s / 60)
+    TimeDezToHMS.s = TimeDezToHMS.s - (TimeDezToHMS.M * 60)
 
 End Function
 
 
 Public Function TimeHMStoDez(TimeIn As MyTime) As MyTime
-    TimeHMStoDez.TimeDec = TimeIn.H + TimeIn.M / 60 + TimeIn.S / 3600
+    TimeHMStoDez.TimeDec = TimeIn.H + TimeIn.M / 60 + TimeIn.s / 3600
     TimeHMStoDez.H = TimeIn.H
     TimeHMStoDez.M = TimeIn.M
-    TimeHMStoDez.S = TimeIn.S
+    TimeHMStoDez.s = TimeIn.s
     
 End Function
 
 
-Public Function RA_to_Az(RA As MyTime, SideralTime As MyTime) As MyTime
-    Dim x As Double
-    
-    x = SideralTime.TimeDec - RA.TimeDec
-    
-    
-    RA_to_Az.TimeDec = x
+Public Function arcsin(x As Double) As Double
+    arcsin = Atn(x / Sqr(-x * x + 1))
 End Function
+
 
 
 

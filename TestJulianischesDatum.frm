@@ -9,14 +9,6 @@ Begin VB.Form TestJulianischesDatum
    ScaleHeight     =   6390
    ScaleWidth      =   8220
    StartUpPosition =   3  'Windows Default
-   Begin VB.TextBox T_Zeitzone 
-      Height          =   285
-      Left            =   1800
-      TabIndex        =   8
-      Text            =   "Text1"
-      Top             =   1680
-      Width           =   855
-   End
    Begin VB.TextBox T_Laenge 
       Height          =   285
       Left            =   1800
@@ -81,19 +73,11 @@ Begin VB.Form TestJulianischesDatum
       Top             =   5400
       Width           =   3735
    End
-   Begin VB.Label Label23 
-      Caption         =   "Ost ist positiv"
-      Height          =   255
-      Left            =   3000
-      TabIndex        =   39
-      Top             =   1680
-      Width           =   1575
-   End
    Begin VB.Label Label19 
       Caption         =   "Ost ist positiv"
       Height          =   255
       Left            =   3000
-      TabIndex        =   38
+      TabIndex        =   36
       Top             =   1320
       Width           =   1575
    End
@@ -101,7 +85,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Zeit in UT"
       Height          =   255
       Left            =   4800
-      TabIndex        =   37
+      TabIndex        =   35
       Top             =   720
       Width           =   975
    End
@@ -109,7 +93,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Zeit u. Ort (H:M:S)"
       Height          =   255
       Left            =   360
-      TabIndex        =   36
+      TabIndex        =   34
       Top             =   4680
       Width           =   1455
    End
@@ -118,23 +102,15 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Label1"
       Height          =   255
       Left            =   1920
-      TabIndex        =   35
+      TabIndex        =   33
       Top             =   4680
       Width           =   1695
-   End
-   Begin VB.Label Label22 
-      Caption         =   "Zeitzone"
-      Height          =   255
-      Left            =   840
-      TabIndex        =   34
-      Top             =   1680
-      Width           =   975
    End
    Begin VB.Label Label21 
       Caption         =   "Grad"
       Height          =   255
       Left            =   3960
-      TabIndex        =   33
+      TabIndex        =   32
       Top             =   4440
       Width           =   615
    End
@@ -142,7 +118,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Zeit u. Ort (dezimal)"
       Height          =   255
       Left            =   360
-      TabIndex        =   32
+      TabIndex        =   31
       Top             =   4320
       Width           =   1455
    End
@@ -151,7 +127,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Label1"
       Height          =   255
       Left            =   1920
-      TabIndex        =   31
+      TabIndex        =   30
       Top             =   4320
       Width           =   1695
    End
@@ -160,7 +136,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Label1"
       Height          =   255
       Left            =   5400
-      TabIndex        =   30
+      TabIndex        =   29
       Top             =   4320
       Width           =   1815
    End
@@ -168,7 +144,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Geo. Länge"
       Height          =   255
       Left            =   840
-      TabIndex        =   29
+      TabIndex        =   28
       Top             =   1320
       Width           =   975
    End
@@ -177,7 +153,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Label1"
       Height          =   255
       Left            =   5400
-      TabIndex        =   28
+      TabIndex        =   27
       Top             =   3960
       Width           =   1815
    End
@@ -186,7 +162,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Label1"
       Height          =   255
       Left            =   1920
-      TabIndex        =   27
+      TabIndex        =   26
       Top             =   3960
       Width           =   1695
    End
@@ -194,7 +170,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Zeit"
       Height          =   255
       Left            =   360
-      TabIndex        =   26
+      TabIndex        =   25
       Top             =   3960
       Width           =   1575
    End
@@ -202,7 +178,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Grad"
       Height          =   255
       Left            =   3960
-      TabIndex        =   25
+      TabIndex        =   24
       Top             =   3960
       Width           =   615
    End
@@ -211,7 +187,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Label1"
       Height          =   255
       Left            =   5400
-      TabIndex        =   24
+      TabIndex        =   23
       Top             =   3240
       Width           =   1815
    End
@@ -220,7 +196,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Label1"
       Height          =   255
       Left            =   1920
-      TabIndex        =   23
+      TabIndex        =   22
       Top             =   3240
       Width           =   1695
    End
@@ -228,7 +204,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "GMST Zeit"
       Height          =   255
       Left            =   360
-      TabIndex        =   22
+      TabIndex        =   21
       Top             =   3240
       Width           =   1455
    End
@@ -236,7 +212,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "GMST_Grad"
       Height          =   255
       Left            =   3960
-      TabIndex        =   21
+      TabIndex        =   20
       Top             =   3240
       Width           =   1335
    End
@@ -244,7 +220,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "S"
       Height          =   255
       Left            =   4200
-      TabIndex        =   20
+      TabIndex        =   19
       Top             =   480
       Width           =   135
    End
@@ -252,7 +228,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "M"
       Height          =   255
       Left            =   3600
-      TabIndex        =   19
+      TabIndex        =   18
       Top             =   480
       Width           =   255
    End
@@ -260,7 +236,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "H"
       Height          =   255
       Left            =   3000
-      TabIndex        =   18
+      TabIndex        =   17
       Top             =   480
       Width           =   255
    End
@@ -268,7 +244,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Tag"
       Height          =   255
       Left            =   840
-      TabIndex        =   17
+      TabIndex        =   16
       Top             =   480
       Width           =   375
    End
@@ -276,7 +252,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Monat"
       Height          =   255
       Left            =   1440
-      TabIndex        =   16
+      TabIndex        =   15
       Top             =   480
       Width           =   495
    End
@@ -284,7 +260,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Jahr"
       Height          =   255
       Left            =   2040
-      TabIndex        =   15
+      TabIndex        =   14
       Top             =   480
       Width           =   375
    End
@@ -301,7 +277,7 @@ Begin VB.Form TestJulianischesDatum
       EndProperty
       Height          =   255
       Left            =   1320
-      TabIndex        =   14
+      TabIndex        =   13
       Top             =   2400
       Width           =   375
    End
@@ -309,7 +285,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Grad"
       Height          =   255
       Left            =   3960
-      TabIndex        =   13
+      TabIndex        =   12
       Top             =   3600
       Width           =   615
    End
@@ -317,7 +293,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Zeit GMST 0h"
       Height          =   255
       Left            =   360
-      TabIndex        =   12
+      TabIndex        =   11
       Top             =   3600
       Width           =   1575
    End
@@ -326,7 +302,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Label1"
       Height          =   255
       Left            =   1920
-      TabIndex        =   11
+      TabIndex        =   10
       Top             =   3600
       Width           =   1695
    End
@@ -335,7 +311,7 @@ Begin VB.Form TestJulianischesDatum
       Caption         =   "Label1"
       Height          =   255
       Left            =   5400
-      TabIndex        =   10
+      TabIndex        =   9
       Top             =   3600
       Width           =   1815
    End
@@ -353,7 +329,7 @@ Begin VB.Form TestJulianischesDatum
       EndProperty
       Height          =   375
       Left            =   1920
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   2400
       Width           =   1695
    End
@@ -367,19 +343,23 @@ Attribute VB_Exposed = False
 
 Private Sub Command2_Click()
     Dim JD As Double
-    Dim Std As Double
-    Dim Min As Double
-    Dim Sek As Double
+'    Dim Std As Double
+'    Dim Min As Double
+'    Dim Sek As Double
+
+    Dim TimeToDisplay As MyTime
     
     Dim D As Double
     Dim M As Double
     Dim Y As Double
     
-    
+    Dim Time0hGMT As MyTime
+    Dim LocalTimeUT As MyTime
+    Dim LocalTimeSiderial As MyTime
+    Dim LocalDate As MyDate
     Dim Stunde As Double
     Dim Minuten As Double
     Dim Sekunde As Double
-    Dim Zeitzone As Double
     Dim Laenge As Double
     
     Dim t As Double
@@ -393,76 +373,74 @@ Private Sub Command2_Click()
     
   
   
-  '1.  Julianische Datum JD berechnen
   
   
-    D = Zahl(T_Tag)
-    M = Zahl(T_Monat)
-    Y = Zahl(T_Jahr)
+    LocalDate.YY = Zahl(T_Jahr)
+    LocalDate.MM = Zahl(T_Monat)
+    LocalDate.DD = Zahl(T_Tag)
     INISetValue IniFileName, "Datum", "Tag", T_Tag
     INISetValue IniFileName, "Datum", "Monat", T_Monat
     INISetValue IniFileName, "Datum", "Jahr", T_Jahr
   
-    Stunde = Zahl(T_Stunden)
-    Minuten = Zahl(T_Minuten)
-    Sekunde = Zahl(T_Sekunden)
-    Zeitzone = Zahl(T_Zeitzone)
+    LocalTimeUT.H = Zahl(T_Stunden)
+    LocalTimeUT.M = Zahl(T_Minuten)
+    LocalTimeUT.S = Zahl(T_Sekunden)
 
     INISetValue IniFileName, "Zeit", "Stunden", T_Stunden
     INISetValue IniFileName, "Zeit", "Minuten", T_Minuten
     INISetValue IniFileName, "Zeit", "Sekunden", T_Sekunden
-    INISetValue IniFileName, "Zeit", "Zeitzone", T_Zeitzone
   
   
-  Laenge = Zahl(T_Laenge)
-  INISetValue IniFileName, "Koordinaten", "Länge", T_Laenge
+    Laenge = Zahl(T_Laenge)
+    INISetValue IniFileName, "Koordinaten", "Länge", T_Laenge
   
   
+    '1.  Julianische Datum JD um 0h berechnen. Muß immer auf 0,5 enden
+    Time0hGMT.H = 0
+    Time0hGMT.M = 0
+    Time0hGMT.S = 0
+    JD = GetJulianDate(LocalDate, Time0hGMT)
+    L_JD = JD
+  
+  
+    ' 2. Sternzeit in Greenwich berechnen
+    ' Berechne die mittlere Sternzeit von Greenwich um 0 h UT zum gewünschten Datum.
+    ' Addiere zum Ergebnis von 1) das Produkt t * 1.00273790935
+    ' Der Faktor 1.002 737 909 35 berücksichtigt, dass die Sternzeit um so viel schneller abläuft als die Sonnenzeit.
+    ' Das Resultat ist zum Schluss wieder auf [0; 24) zu normieren.
+    ' Soll die mittlere Sternzeit nicht für Greenwich, sondern für einen Ort der geografischen Länge L° ,
+    ' addiere man zum Resultat L/15      (positiv gezählt nach Osten, negativ nach Westen)
+
+    t = (JD - 2451545#) / 36525
+  
+  
+    GMST_Zeit_s = 24110.54841 + 8640184.812866 * t + 0.093104 * t * t - 0.0000062 * t * t * t
+    GMST_Zeit_h = GMST_Zeit_s / 3600
+              L_GMST_Zeit = GMST_Zeit_h
+    GMST_24 = CutTime(GMST_Zeit_h)
+    L_Zeit = GMST_24
     
+    ' Lokale Zeit auf siderische Zeit umgerechnet
+    LocalTimeSiderial = TimeHMStoDez(LocalTimeUT)
+    
+    GMSTindividualTime = LocalTimeSiderial.TimeDec * 1.00273790935 + GMST_24
+    
+    GMSTindividualTime = CutTime(GMSTindividualTime)
+    
+    L_Zeit2 = GMSTindividualTime
+    
+    ' Geographische Länge berücksichtigen
+    GMSTindividualOrt = GMSTindividualTime + Laenge / 15
+    
+    GMSTindividualOrt = CutTime(GMSTindividualOrt)
+    
+    L_Zeit_Ort = GMSTindividualOrt
+     
+     
+    ' Sternzeit im H:M:S Format ausgeben
+    TimeToDisplay = TimeDezToHMS(GMSTindividualOrt)
+    L_Zeit_Ort_2 = TimeToDisplay.H & ":" & TimeToDisplay.M & ":" & Format(TimeToDisplay.S, "00.00")
 
-  JD = GetJulianDate(Y, M, D, 0, 0, 0)
-  
-  L_JD = JD
-  
-  
-' 2. Sternzeit in Greenwich berechnen
-' Berechne die mittlere Sternzeit von Greenwich um 0 h UT zum gewünschten Datum.
-' Addiere zum Ergebnis von 1) das Produkt t * 1.00273790935
-' Der Faktor 1.002 737 909 35 berücksichtigt, dass die Sternzeit um so viel schneller abläuft als die Sonnenzeit.
-' Das Resultat ist zum Schluss wieder auf [0; 24) zu normieren.
-' Soll die mittlere Sternzeit nicht für Greenwich, sondern für einen Ort der geografischen Länge L° ,
-' addiere man zum Resultat L/15      (positiv gezählt nach Osten, negativ nach Westen)
-
-  t = (JD - 2451545#) / 36525
-  
-  
-  GMST_Zeit_s = 24110.54841 + 8640184.812866 * t + 0.093104 * t * t - 0.0000062 * t * t * t
-  GMST_Zeit_h = GMST_Zeit_s / 3600
-            L_GMST_Zeit = GMST_Zeit_h
-  GMST_24 = CutTime(GMST_Zeit_h)
-  L_Zeit = GMST_24
-  
-  'Lokale Zeit auf siderische Zeit umgerechnet
-  LokalTime = (Stunde + Minuten / 60 + Sekunde / 3600) * 1.00273790935
- 
-  GMSTindividualTime = GMST_24 + LokalTime
-  
-  GMSTindividualTime = CutTime(GMSTindividualTime)
-  
-  L_Zeit2 = GMSTindividualTime
-  
-  'Geographische Länge berücksichtigen
-  GMSTindividualOrt = GMSTindividualTime + Laenge / 15
-  
-  GMSTindividualOrt = CutTime(GMSTindividualOrt)
-  
-  L_Zeit_Ort = GMSTindividualOrt
-  
-  ZeitDezToHMS GMSTindividualOrt, Std, Min, Sek
-  
-  L_Zeit_Ort_2 = (Std & ":" & Min & ":" & Sek)
- 
- 
  
 '
 '  GMST_Grad = 100.46061837 + 36000.770053608 * t + 0.000387933 * t * t - ((t * t * t) / 38710000)

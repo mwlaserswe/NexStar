@@ -10,7 +10,15 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   8910
    StartUpPosition =   3  'Windows Default
-   Begin VB.CommandButton Command4 
+   Begin VB.CommandButton Command5 
+      Caption         =   "Demo Saturn"
+      Height          =   255
+      Left            =   600
+      TabIndex        =   25
+      Top             =   6600
+      Width           =   1335
+   End
+   Begin VB.CommandButton C_TestSiderialTime 
       Caption         =   "Siderial Time"
       Height          =   255
       Left            =   600
@@ -179,6 +187,16 @@ Begin VB.Form Mainform
       RThreshold      =   1
       BaudRate        =   4800
       InputMode       =   1
+   End
+   Begin VB.Label L_SiderialTimeHMS 
+      Alignment       =   1  'Right Justify
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   255
+      Left            =   5520
+      TabIndex        =   26
+      Top             =   5880
+      Width           =   1575
    End
    Begin VB.Label Label3 
       Caption         =   "Siderial Time"
@@ -438,24 +456,66 @@ End Sub
 
 
 
-Private Sub Command4_Click()
-    Dim SiderialTime As Double
+' Test siderial time
+' https://de.wikibooks.org/wiki/Astronomische_Berechnungen_f%C3%BCr_Amateure/_Zeit/_Zeitrechnungen
+' 25.Dez.2007; 20h (UT); 13,5° Ost = 3,1634161794371  = 3h 09m 48.30s
+Private Sub C_TestSiderialTime_Click()
+
+    Dim DemoDate As MyDate
+    Dim DemoTime As MyTime
+    Dim SiderialTime As MyTime
     
-    GetSiderialTime 2007, 12, 25, 20, 0, 0, 1, 13.5, SiderialTime
-    L_SiderialTime = SiderialTime
+    DemoDate.YY = 2007
+    DemoDate.MM = 12
+    DemoDate.DD = 25
+    DemoTime.H = 20
+    DemoTime.M = 0
+    DemoTime.S = 0
+    SiderialTime = GetSiderialTime(DemoDate, DemoTime, 13.5)
     
+    L_SiderialTime = SiderialTime.TimeDec
+    L_SiderialTimeHMS = SiderialTime.H & ":" & SiderialTime.M & ":" & Format(SiderialTime.S, "00.00")
+    
+    
+End Sub
+
+Private Sub Command5_Click()
+    ' matrix_method_rev_d.pdf Seite 15
+    Dim SaturnDemoDate As MyDate
+    Dim SaturnDemoTime As MyTime
+    Dim SiderialTime As MyTime
+    Dim RA_Saturn As MyTime
+    Dim tmp As Double
+    Dim ttmp As MyTime
+    
+    SaturnDemoDate.YY = 1978
+    SaturnDemoDate.MM = 11
+    SaturnDemoDate.DD = 13
+    SaturnDemoTime.H = 4
+    SaturnDemoTime.M = 34
+    SaturnDemoTime.S = 0
+    SiderialTime = GetSiderialTime(SaturnDemoDate, SaturnDemoTime, 4.35808335)
+
+    RA_Saturn.H = 10
+    RA_Saturn.M = 57
+    RA_Saturn.S = 35.681
+    RA_Saturn = TimeHMStoDez(RA_Saturn)
+    tmp = RA_Saturn.TimeDec
+    
+    ttmp = RA_to_Az(RA_Saturn, SiderialTime)
+    tmp = ttmp.TimeDec
 End Sub
 
 Private Sub Form_Load()
     SimOffline = True
     
-    O_OrientationNorth.value = 1
+    O_OrientationNorth.Value = 1
     IniFileName = App.Path & "\NexStar.ini"
     InitNexStarComm
     
     Command = 0
     
-    VS_ManualSkewingSpeed.value = 10
+    VS_ManualSkewingSpeed.Value = 10
 
 
 
@@ -488,6 +548,7 @@ Private Sub InitNexStarComm()
 v24error:
   MsgBox "NexStar RS232 Open error: " & Err.Description, , "Communication NexStar"
 End Sub
+
 
 
 Private Sub NexStarComm_OnComm()
@@ -575,9 +636,9 @@ Private Sub Tim_DisplayUpdate_Timer()
     L_Az = TelIncrAz
     L_Alt = TelIncrAlt
     
-    If O_OrientationNorth.value Then
+    If O_OrientationNorth.Value Then
         TelDegAz = TelIncrAz * 360 / EncoderResolution
-    ElseIf O_OrientationSouth.value Then
+    ElseIf O_OrientationSouth.Value Then
         TelDegAz = (TelIncrAz * 360 / EncoderResolution) + 180
     End If
     
@@ -657,6 +718,6 @@ End Sub
 Private Sub VS_ManualSkewingSpeed_Change()
     Dim tmp As Long
     
-    tmp = VS_ManualSkewingSpeed.value
+    tmp = VS_ManualSkewingSpeed.Value
     ManualSkewingSpeed = 1000 * tmp
 End Sub

@@ -1,5 +1,8 @@
 Attribute VB_Name = "Math"
-Public Function GetJulianDate(ByVal Y As Double, ByVal M As Double, ByVal D As Double, ByVal Hour As Double, ByVal Minute As Double, ByVal Second As Double) As Double
+Option Explicit
+
+
+Public Function GetJulianDate(Dt As MyDate, Tm As MyTime) As Double
   'wenn Monat > 2 dann  Y = Jahr,   M = Monat
   '                  sonst Y = Jahr - 1, M = Monat + 12
   '
@@ -23,43 +26,49 @@ Public Function GetJulianDate(ByVal Y As Double, ByVal M As Double, ByVal D As D
   '
   '   Beispiel: 25. März 2010, 16:30 UT (gregorianisch)    2.455.281,1875
   '  Dim A As Double
+  Dim a As Double
   Dim B As Double
   Dim H As Double
 
-  If M <= 2 Then
-    Y = Y - 1
-    M = M + 12
+  If Dt.MM <= 2 Then
+    Dt.YY = Dt.YY - 1
+    Dt.MM = Dt.MM + 12
   End If
   
   'Korrektur für den julianischen Kalender
-  a = Int(Y / 100)
+  a = Int(Dt.YY / 100)
   B = 2 - a + Int(a / 4)
 
-  H = Hour / 24 + Minute / 1440 + Second / 86400
+  H = Tm.H / 24 + Tm.M / 1440 + Tm.S / 86400
   
-  GetJulianDate = Int(365.25 * (Y + 4716)) + Int(30.6001 * (M + 1)) + D + H + B - 1524.5
+  GetJulianDate = Int(365.25 * (Dt.YY + 4716)) + Int(30.6001 * (Dt.MM + 1)) + Dt.DD + H + B - 1524.5
 End Function
 
 
 
-
-Public Sub GetSiderialTime(Y As Double, M As Double, D As Double, Stunde As Double, Minuten As Double, Sekunde As Double, Zeitzone As Double, Laenge As Double, SiderialTime As Double)
+Public Function GetSiderialTime(LocalDate As MyDate, LocalTimeUT As MyTime, Laenge As Double) As MyTime
 ' https://de.wikipedia.org/wiki/Sternzeit
 ' https://de.wikibooks.org/wiki/Astronomische_Berechnungen_für_Amateure/_Zeit/_Zeitrechnungen
 ' Welchen Wert hatte die mittlere Sternzeit in Berlin (Länge = +13.5°) am 25. Dezember 2007 um 20 h UT (entspricht 21 MEZ in Berlin)?
 ' Ergebnis: 3h 09m 48,3s
 
-    Dim t As Double
-    Dim JD As Double
-    Dim GMST_Zeit_s As Double
-    Dim GMST_Zeit_h As Double
-    Dim GMST_24 As Double
-    Dim LokalTime As Double
-    Dim GMSTindividualTime As Double
-    Dim GMSTindividualOrt As Double
+        Dim Time0hGMT As MyTime
+        Dim LocalTimeSiderial As MyTime
+        
+        Dim t As Double
+        Dim JD As Double
+        Dim GMST_Zeit_s As Double
+        Dim GMST_Zeit_h As Double
+        Dim GMST_24 As Double
+        Dim LokalTime As Double
+        Dim GMSTindividualTime As Double
+        Dim GMSTindividualOrt As Double
     
     '1.  Julianische Datum JD um 0h berechnen. Muß immer auf 0,5 enden
-     JD = GetJulianDate(Y, M, D, 0, 0, 0)
+    Time0hGMT.H = 0
+    Time0hGMT.M = 0
+    Time0hGMT.S = 0
+    JD = GetJulianDate(LocalDate, Time0hGMT)
     
     ' 2. Sternzeit in Greenwich berechnen
     ' Berechne die mittlere Sternzeit von Greenwich um 0 h UT zum gewünschten Datum.
@@ -77,9 +86,8 @@ Public Sub GetSiderialTime(Y As Double, M As Double, D As Double, Stunde As Doub
     GMST_24 = CutTime(GMST_Zeit_h)
   
     'Lokale Zeit auf siderische Zeit umgerechnet
-    LokalTime = (Stunde + Minuten / 60 + Sekunde / 3600) * 1.00273790935
- 
-    GMSTindividualTime = GMST_24 + LokalTime
+    LocalTimeSiderial = TimeHMStoDez(LocalTimeUT)
+    GMSTindividualTime = LocalTimeSiderial.TimeDec * 1.00273790935 + GMST_24
   
     GMSTindividualTime = CutTime(GMSTindividualTime)
    
@@ -87,20 +95,64 @@ Public Sub GetSiderialTime(Y As Double, M As Double, D As Double, Stunde As Doub
     GMSTindividualOrt = GMSTindividualTime + Laenge / 15
   
     GMSTindividualOrt = CutTime(GMSTindividualOrt)
-    SiderialTime = GMSTindividualOrt
+    
+    GetSiderialTime = TimeDezToHMS(GMSTindividualOrt)
   
-End Sub
+End Function
+
+
+Public Function CutTime(ByVal Hours As Double) As Double
+  Dim HoursInt As Long
+  HoursInt = Int(Hours / 24)
+  CutTime = Hours - (HoursInt * 24)
+End Function
+
+
+Public Function CutAngle(ByVal Angle As Double) As Double
+  Dim AngleInt As Long
+  AngleInt = Int(Angle / 360)
+  CutAngle = Angle - (AngleInt * 360)
+End Function
+
+
+Public Function TimeDezToHMS(TimeDezimal As Double) As MyTime
+    Dim locTDec As Double
+    
+    locTDec = TimeDezimal
+    
+    TimeDezToHMS.TimeDec = locTDec
+    
+    TimeDezToHMS.H = Int(locTDec)
+    locTDec = locTDec - TimeDezToHMS.H
+    
+    TimeDezToHMS.S = locTDec * 3600
+    
+    TimeDezToHMS.M = Int(TimeDezToHMS.S / 60)
+    TimeDezToHMS.S = TimeDezToHMS.S - (TimeDezToHMS.M * 60)
+
+End Function
+
+
+Public Function TimeHMStoDez(TimeIn As MyTime) As MyTime
+    TimeHMStoDez.TimeDec = TimeIn.H + TimeIn.M / 60 + TimeIn.S / 3600
+    TimeHMStoDez.H = TimeIn.H
+    TimeHMStoDez.M = TimeIn.M
+    TimeHMStoDez.S = TimeIn.S
+    
+End Function
+
+
+Public Function RA_to_Az(RA As MyTime, SideralTime As MyTime) As MyTime
+    Dim x As Double
+    
+    x = SideralTime.TimeDec - RA.TimeDec
+    
+    
+    RA_to_Az.TimeDec = x
+End Function
 
 
 
-Public Sub ZeitDezToHMS(ByVal TimeDezimal As Double, Stunden As Double, Minuten As Double, Sekunden As Double)
-  Stunden = Int(TimeDezimal)
-  TimeDezimal = TimeDezimal - Stunden
-
-  Sekunden = TimeDezimal * 3600
-
-  Minuten = Int(Sekunden / 60)
-  Sekunden = Int(Sekunden - (Minuten * 60))
 
 
-End Sub
+

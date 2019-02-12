@@ -10,6 +10,11 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   8910
    StartUpPosition =   3  'Windows Default
+   Begin VB.Timer Tim_Tracking 
+      Interval        =   1000
+      Left            =   7800
+      Top             =   5520
+   End
    Begin VB.CommandButton Command4 
       Caption         =   "Demo Stern"
       Height          =   255
@@ -187,6 +192,16 @@ Begin VB.Form Mainform
       RThreshold      =   1
       BaudRate        =   4800
       InputMode       =   1
+   End
+   Begin VB.Label L_UT 
+      Alignment       =   1  'Right Justify
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   255
+      Left            =   2400
+      TabIndex        =   33
+      Top             =   8040
+      Width           =   2295
    End
    Begin VB.Label Label4 
       Caption         =   "Hour Angle"
@@ -491,10 +506,30 @@ End Sub
 
 
 Private Sub Command1_Click()
-    Dim ut As String
-
+    Dim ut As Date
+    Dim AnyDateTime As Date
+    
+    Dim tst1 As Integer
+    Dim tst2 As Integer
+    Dim tst3 As Integer
+    Dim tst4 As Integer
+    Dim tst5 As Integer
+    Dim tst6 As Integer
+    
     ut = UtcTime(Now)
- 
+    
+    AnyDateTime = "18.2.2019 1:0:0"
+    ut = UtcTime(AnyDateTime)
+    
+    tst1 = Day(ut)
+    tst2 = Month(ut)
+    tst3 = Year(ut)
+    tst4 = Hour(ut)
+    tst5 = Minute(ut)
+    tst6 = Second(ut)
+    
+    'Achtung: "2019.11.4 1:0:00" liefert nur "4.11.2019"
+
 End Sub
 
 Private Sub Command2_Click()
@@ -597,7 +632,7 @@ Private Sub Command4_Click()
     
     
     
-''' ' Rigel Kassel
+''' ' Capella Kassel
 '''    Dim CapellaDemoDate As MyDate
 '''    Dim CapellaDemoTime As MyTime
 '''    CapellaDemoDate.YY = 2019
@@ -631,7 +666,6 @@ Private Sub Command4_Click()
 '''
 '''    Dim AZ As Double
 '''    Dim ALT As Double
-'''    Dim HourAngle As MyTime
 '''    Dim HourAngle As MyTime
 '''     RA_DEC_to_AZ_ALT RA_Capella, DEC_Capella, Longitude, Latitude, CapellaDemoTime, CapellaDemoDate, AZ, ALT, HourAngle
 '''
@@ -1023,6 +1057,63 @@ Private Sub Tim_Simulation_Timer()
     
     
     'Dim SimGotoAlt As Long
+
+End Sub
+
+
+
+Private Sub Tim_Tracking_Timer()
+    Dim LocalUT As Date
+    
+    LocalUT = UtcTime(Now)
+
+    L_UT = LocalUT
+
+ ' Capella Kassel
+    Dim CapellaDemoDate As MyDate
+    Dim CapellaDemoTime As MyTime
+    CapellaDemoDate.YY = Year(LocalUT)
+    CapellaDemoDate.MM = Month(LocalUT)
+    CapellaDemoDate.DD = Day(LocalUT)
+    CapellaDemoTime.H = Hour(LocalUT)
+    CapellaDemoTime.M = Minute(LocalUT)
+    CapellaDemoTime.s = Second(LocalUT)
+
+    Dim RA_Capella As MyTime
+    RA_Capella.H = 5
+    RA_Capella.M = 18
+    RA_Capella.s = 6
+
+    Dim DEC_Capella As MyTime
+    DEC_Capella.H = 46
+    DEC_Capella.M = 1
+    DEC_Capella.s = 0
+
+    Dim Longitude As GeoCoord                     ' Observer’s longitude
+    Longitude.Deg = 9
+    Longitude.Min = 18
+    Longitude.Sec = 3
+    Longitude.Sign = "E"
+
+    Dim Latitude As GeoCoord                     ' Observer’s latitude
+    Latitude.Deg = 51
+    Latitude.Min = 11
+    Latitude.Sec = 27
+    Latitude.Sign = "N"
+
+    Dim AZ As Double
+    Dim ALT As Double
+    Dim HourAngle As MyTime
+     RA_DEC_to_AZ_ALT RA_Capella, DEC_Capella, Longitude, Latitude, CapellaDemoTime, CapellaDemoDate, AZ, ALT, HourAngle
+
+'    L_AzStar = AZ
+    If O_OrientationNorth.Value Then AZ = AZ + 180
+    L_AzStar = CutAngle(AZ)
+    L_AltStar = ALT
+    L_HourAngle = HourAngle.H & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
+    
+
+
 
 End Sub
 

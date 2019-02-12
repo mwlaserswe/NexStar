@@ -17,9 +17,16 @@ Public Type MyTime
     s As Double
 End Type
 
+Public Type GeoCoord
+    Deg As Double
+    Min As Double
+    Sec As Double
+    Sign As String
+End Type
+
 Public Type Vector
   x As Double
-  y As Double
+  Y As Double
   z As Double
 End Type
 

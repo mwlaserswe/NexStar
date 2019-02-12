@@ -10,12 +10,12 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   8910
    StartUpPosition =   3  'Windows Default
-   Begin VB.CommandButton Command5 
-      Caption         =   "Demo Saturn"
+   Begin VB.CommandButton Command4 
+      Caption         =   "Demo Stern"
       Height          =   255
       Left            =   600
-      TabIndex        =   25
-      Top             =   6600
+      TabIndex        =   30
+      Top             =   6720
       Width           =   1335
    End
    Begin VB.CommandButton C_TestSiderialTime 
@@ -188,40 +188,58 @@ Begin VB.Form Mainform
       BaudRate        =   4800
       InputMode       =   1
    End
+   Begin VB.Label Label4 
+      Caption         =   "Hour Angle"
+      Height          =   255
+      Left            =   2280
+      TabIndex        =   32
+      Top             =   7440
+      Width           =   855
+   End
+   Begin VB.Label L_HourAngle 
+      Alignment       =   1  'Right Justify
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   255
+      Left            =   3120
+      TabIndex        =   31
+      Top             =   7440
+      Width           =   1575
+   End
    Begin VB.Label Label6 
       Caption         =   "Altitude"
       Height          =   255
-      Left            =   4800
-      TabIndex        =   30
-      Top             =   6600
+      Left            =   2280
+      TabIndex        =   29
+      Top             =   7080
       Width           =   615
    End
    Begin VB.Label Label5 
       Caption         =   "Azimuth"
       Height          =   255
       Left            =   2280
-      TabIndex        =   29
-      Top             =   6600
+      TabIndex        =   28
+      Top             =   6720
       Width           =   615
    End
-   Begin VB.Label L_AzSaturn 
+   Begin VB.Label L_AzStar 
       Alignment       =   1  'Right Justify
       BorderStyle     =   1  'Fixed Single
       Caption         =   "--"
       Height          =   255
-      Left            =   2880
-      TabIndex        =   28
-      Top             =   6600
+      Left            =   3120
+      TabIndex        =   27
+      Top             =   6720
       Width           =   1575
    End
-   Begin VB.Label L_AltSaturn 
+   Begin VB.Label L_AltStar 
       Alignment       =   1  'Right Justify
       BorderStyle     =   1  'Fixed Single
       Caption         =   "--"
       Height          =   255
-      Left            =   5520
-      TabIndex        =   27
-      Top             =   6600
+      Left            =   3120
+      TabIndex        =   26
+      Top             =   7080
       Width           =   1575
    End
    Begin VB.Label L_SiderialTimeHMS 
@@ -230,7 +248,7 @@ Begin VB.Form Mainform
       Caption         =   "--"
       Height          =   255
       Left            =   5520
-      TabIndex        =   26
+      TabIndex        =   25
       Top             =   5880
       Width           =   1575
    End
@@ -494,145 +512,301 @@ End Sub
 
 ' Test siderial time
 ' https://de.wikibooks.org/wiki/Astronomische_Berechnungen_f%C3%BCr_Amateure/_Zeit/_Zeitrechnungen
-' 25.Dez.2007; 20h (UT); 13,5° Ost = 3,1634161794371  = 3h 09m 48.30s
+' Welchen Wert hatte die mittlere Sternzeit?
+' Berlin (Länge = +13.5°) am 25. Dezember 2007 um 20 h UT (entspricht 21 MEZ in Berlin)?
+' Ergebnis: 3,1634161794371 = 3h 09m 48,3s
 Private Sub C_TestSiderialTime_Click()
 
     Dim DemoDate As MyDate
     Dim DemoTime As MyTime
     Dim SiderialTime As MyTime
+    Dim SiderialTimeGreenwich As MyTime
+    Dim s As String
     
     DemoDate.YY = 2007
     DemoDate.MM = 12
     DemoDate.DD = 25
-    DemoTime.H = 20
+    DemoTime.h = 20
     DemoTime.M = 0
     DemoTime.s = 0
-    SiderialTime = GetSiderialTime(DemoDate, DemoTime, 13.5)
-    
+        
+    SiderialTimeGreenwich = GMST(DemoDate, DemoTime)
+    SiderialTime = TimeDezToHMS(SiderialTimeGreenwich.TimeDec + 13.5 / 15)
     L_SiderialTime = SiderialTime.TimeDec
-    L_SiderialTimeHMS = SiderialTime.H & ":" & SiderialTime.M & ":" & Format(SiderialTime.s, "00.00")
-    
-    
+    L_SiderialTimeHMS = SiderialTime.h & ":" & SiderialTime.M & ":" & Format(SiderialTime.s, "00.00")
+
 End Sub
 
-Private Sub Command5_Click()
-    ' matrix_method_rev_d.pdf Seite 15
+
+Private Sub Command4_Click()
+    Dim Jetzt As String
+    Dim Lont As MyTime
+
+' Datensatz Saturn Demo aus dem Sript
     Dim SaturnDemoDate As MyDate
     Dim SaturnDemoTime As MyTime
-    Dim SiderialTime As MyTime
-    Dim RA_Saturn As MyTime
-    Dim tmp As Double
-    Dim ttmp As MyTime
-    Dim LocalHourAngleHour As Double    'Local hour angle in hour (decimal)
-    Dim LocalHourAngleDeg As Double     'Local hour angle in degree
-    Dim LocalHourAngleRad As Double     'Local hour angle in radian
-     
-    Dim Longitude As MyTime                     ' Observer’s longitude
-    Dim LongitudeDeg As Double
-    
-    
-    Longitude.H = 0
-    Longitude.M = 17
-    Longitude.s = 25.94
-    Longitude = TimeHMStoDez(Longitude)
-    LongitudeDeg = Longitude.TimeDec * 15
-    
-  
-    
-    SaturnDemoDate.YY = 1978
+    SaturnDemoDate.YY = 1978    '13.11.1978
     SaturnDemoDate.MM = 11
     SaturnDemoDate.DD = 13
-    SaturnDemoTime.H = 4
+    SaturnDemoTime.h = 4        '4:34:00 UT   5:34:00 Ortszeit
     SaturnDemoTime.M = 34
     SaturnDemoTime.s = 0
-    SiderialTime = GetSiderialTime(SaturnDemoDate, SaturnDemoTime, LongitudeDeg)
 
-    RA_Saturn.H = 10
-    RA_Saturn.M = 57
+    Dim RA_Saturn As MyTime
+    RA_Saturn.h = 10
+    RA_Saturn.M = 57              '57
     RA_Saturn.s = 35.681
-    RA_Saturn = TimeHMStoDez(RA_Saturn)
-    
-    'Calculate local hour angle
-    LocalHourAngleHour = SiderialTime.TimeDec - RA_Saturn.TimeDec
-    LocalHourAngleDeg = LocalHourAngleHour * 15
-    LocalHourAngleRad = LocalHourAngleDeg / (180 / Pi)
-    
-    'Calculate Saturn position in rectangular equatorial coordinate system
-    Dim LMN_Equatorial As Vector         ' Rectangular equatorial coordinate system
-    Dim LMN_EquaMatrix(10, 10) As Double
-    
+
     Dim DEC_Saturn As MyTime
-    Dim DeclinationDeg As Double
-    Dim DeclinationRad As Double
-    
-    DEC_Saturn.H = 8
+    DEC_Saturn.h = 8
     DEC_Saturn.M = 25
     DEC_Saturn.s = 58.1
-    
-    DEC_Saturn = TimeHMStoDez(DEC_Saturn)
-    DeclinationDeg = DEC_Saturn.TimeDec
-    DeclinationRad = DeclinationDeg / (180 / Pi)
-    LMN_Equatorial = PolarKarthesisch(LocalHourAngleRad, DeclinationRad)
-   
-    LMN_EquaMatrix(0, 0) = LMN_Equatorial.x
-    LMN_EquaMatrix(1, 0) = LMN_Equatorial.Y
-    LMN_EquaMatrix(2, 0) = LMN_Equatorial.z
-   
-    'Calculate Saturn position in rectangular horizontal coordinate system
-    Dim LMN_Horizontal As Vector                ' Rectangular horizontal coordinate system
-    Dim LMN_HorizMatrix(10, 10) As Double
-    Dim TransformationMatrix(10, 10) As Double  ' Transformation-Matrix from equatorial Coordinates to horizontal Coordinates
-    Dim Lattitude As MyTime                     ' Observer’s latitude
-    Dim LattitudeDeg As Double
-    Dim LattitudeRad As Double
-    Dim Phi As Double                           ' Observer’s latitude
-    
-    Lattitude.H = 50
-    Lattitude.M = 47
-    Lattitude.s = 55
-    Lattitude = TimeHMStoDez(Lattitude)
-    LattitudeDeg = Lattitude.TimeDec
-    LattitudeRad = LattitudeDeg / (180 / Pi)
-   
-    Phi = LattitudeRad
-    TransformationMatrix(0, 0) = Cos(Phi - Pi / 2)
-    TransformationMatrix(0, 1) = 0
-    TransformationMatrix(0, 2) = Sin(Phi - Pi / 2)
-    TransformationMatrix(1, 0) = 0
-    TransformationMatrix(1, 1) = 1
-    TransformationMatrix(1, 2) = 0
-    TransformationMatrix(2, 0) = -Sin(Phi - Pi / 2)
-    TransformationMatrix(2, 1) = 0
-    TransformationMatrix(2, 2) = Cos(Phi - Pi / 2)
 
-    MatrixProduct TransformationMatrix, 3, 3, LMN_EquaMatrix, 3, 1, LMN_HorizMatrix
+    Lont = TimeDezToHMS(4.35808335) '  -4.358°              ' Observer’s longitude
 
-    Dim Lh As Double
-    Dim Mh As Double
-    Dim Nh As Double
+    Dim Longitude As GeoCoord
+    Longitude.Deg = Lont.h
+    Longitude.Min = Lont.M
+    Longitude.Sec = Lont.s
+    Longitude.Sign = "E"
+
+    Dim Latitude As GeoCoord    '  50°47'55''                 ' Observer’s latitude
+    Latitude.Deg = 50
+    Latitude.Min = 47
+    Latitude.Sec = 55
+    Latitude.Sign = "N"
+
+    Dim AZ As Double
+    Dim ALT As Double
+    Dim HourAngle As MyTime
+
+    RA_DEC_to_AZ_ALT RA_Saturn, DEC_Saturn, Longitude, Latitude, SaturnDemoTime, SaturnDemoDate, AZ, ALT, HourAngle
+
+'    L_AzStar = AZ
+    L_AzStar = CutAngle(AZ)
+    L_AltStar = ALT
+    L_HourAngle = HourAngle.h & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
     
-    Lh = LMN_HorizMatrix(0, 0)                  ' Rectangular horizontal  coordinate system
-    Mh = LMN_HorizMatrix(1, 0)
-    Nh = LMN_HorizMatrix(2, 0)
     
     
-    'Calculate Saturn position in Altazimuth horizontal coordinate system
-    Dim AzRad As Double         'Azimuth in radian
-    Dim AzDeg As Double         'Azimuth in degree
-    Dim AltRad As Double        'Altitude in radian
-    Dim AltDeg As Double        'Altitude in degree
-    Dim sin_h As Double
     
-    AzRad = -Atn(Mh / Lh)
-    AzDeg = AzRad / (Pi / 180)
+''' ' Rigel Kassel
+'''    Dim CapellaDemoDate As MyDate
+'''    Dim CapellaDemoTime As MyTime
+'''    CapellaDemoDate.YY = 2019
+'''    CapellaDemoDate.MM = 2
+'''    CapellaDemoDate.DD = 2
+'''    CapellaDemoTime.h = 19
+'''    CapellaDemoTime.M = 0
+'''    CapellaDemoTime.s = 0
+'''
+'''    Dim RA_Capella As MyTime
+'''    RA_Capella.h = 5
+'''    RA_Capella.M = 18
+'''    RA_Capella.s = 6
+'''
+'''    Dim DEC_Capella As MyTime
+'''    DEC_Capella.h = 46
+'''    DEC_Capella.M = 1
+'''    DEC_Capella.s = 0
+'''
+'''    Dim Longitude As GeoCoord                     ' Observer’s longitude
+'''    Longitude.Deg = 9
+'''    Longitude.Min = 18
+'''    Longitude.Sec = 3
+'''    Longitude.Sign = "E"
+'''
+'''    Dim Latitude As GeoCoord                     ' Observer’s latitude
+'''    Latitude.Deg = 51
+'''    Latitude.Min = 11
+'''    Latitude.Sec = 27
+'''    Latitude.Sign = "N"
+'''
+'''    Dim AZ As Double
+'''    Dim ALT As Double
+'''    Dim HourAngle As MyTime
+'''    Dim HourAngle As MyTime
+'''     RA_DEC_to_AZ_ALT RA_Capella, DEC_Capella, Longitude, Latitude, CapellaDemoTime, CapellaDemoDate, AZ, ALT, HourAngle
+'''
+''''    L_AzStar = AZ
+'''    L_AzStar = CutAngle(AZ)
+'''    L_AltStar = ALT
+'''    L_HourAngle = HourAngle.h & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
     
-    sin_h = Cos(Phi) * Cos(LocalHourAngleRad) * Cos(DeclinationRad) + Sin(Phi) * Sin(DeclinationRad)
-    AltRad = arcsin(sin_h)
-    AltDeg = AltRad / (Pi / 180)
     
-    L_AzSaturn = AzDeg
-    L_AltSaturn = AltDeg
+    
+''' ' Deneb München
+'''    Dim DenebDemoDate As MyDate
+'''    Dim DenebDemoTime As MyTime
+'''    DenebDemoDate.YY = 2019
+'''    DenebDemoDate.MM = 2
+'''    DenebDemoDate.DD = 2
+'''    DenebDemoTime.h = 19
+'''    DenebDemoTime.M = 0
+'''    DenebDemoTime.s = 0
+'''
+'''    Dim RA_Deneb As MyTime
+'''    RA_Deneb.h = 20
+'''    RA_Deneb.M = 42
+'''    RA_Deneb.s = 4
+'''
+'''    Dim DEC_Deneb As MyTime
+'''    DEC_Deneb.h = 45
+'''    DEC_Deneb.M = 21
+'''    DEC_Deneb.s = 0
+'''
+'''    Dim Longitude As GeoCoord                     ' Observer’s longitude
+'''    Longitude.Deg = 11
+'''    Longitude.Min = 34
+'''    Longitude.Sec = 0
+'''    Longitude.Sign = "E"
+'''
+'''    Dim Latitude As GeoCoord                     ' Observer’s latitude
+'''    Latitude.Deg = 48
+'''    Latitude.Min = 8
+'''    Latitude.Sec = 0
+'''    Latitude.Sign = "N"
+'''
+'''    Dim AZ As Double
+'''    Dim ALT As Double
+'''    Dim HourAngle As MyTime
+'''
+'''     RA_DEC_to_AZ_ALT RA_Deneb, DEC_Deneb, Longitude, Latitude, DenebDemoTime, DenebDemoDate, AZ, ALT, HourAngle
+'''
+''''    L_AzStar = AZ
+'''    L_AzStar = CutAngle(AZ + 180)
+'''    L_AltStar = ALT
+'''    L_HourAngle = HourAngle.h & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
+   
+    
+    
+    
+    
+    
+    
+
 End Sub
+
+'''Private Sub Command5_Click()
+'''    ' matrix_method_rev_d.pdf Seite 15
+'''    Dim SaturnDemoDate As MyDate
+'''    Dim SaturnDemoTime As MyTime
+'''    Dim SiderialTime As MyTime
+'''    Dim RA_Saturn As MyTime
+'''    Dim tmp As Double
+'''    Dim ttmp As MyTime
+'''    Dim LocalHourAngleHour As Double    'Local hour angle in hour (decimal)
+'''    Dim LocalHourAngleDeg As Double     'Local hour angle in degree
+'''    Dim LocalHourAngleRad As Double     'Local hour angle in radian
+'''
+'''    Dim Longitude As MyTime                     ' Observer’s longitude
+'''    Dim LongitudeDeg As Double
+'''
+'''
+'''    Longitude.h = 0
+'''    Longitude.M = 17
+'''    Longitude.s = 25.94
+'''    Longitude = TimeHMStoDez(Longitude)
+'''    LongitudeDeg = Longitude.TimeDec * 15
+'''
+'''
+'''
+'''    SaturnDemoDate.YY = 1978
+'''    SaturnDemoDate.MM = 11
+'''    SaturnDemoDate.DD = 13
+'''    SaturnDemoTime.h = 4
+'''    SaturnDemoTime.M = 34
+'''    SaturnDemoTime.s = 0
+'''
+'''    'Calculate siderial time
+'''    SiderialTime = GetSiderialTime(SaturnDemoDate, SaturnDemoTime, LongitudeDeg)
+'''
+'''    RA_Saturn.h = 10
+'''    RA_Saturn.M = 57
+'''    RA_Saturn.s = 35.681
+'''    RA_Saturn = TimeHMStoDez(RA_Saturn)
+'''
+'''    'Calculate local hour angle
+'''    LocalHourAngleHour = SiderialTime.TimeDec - RA_Saturn.TimeDec
+'''    LocalHourAngleDeg = LocalHourAngleHour * 15
+'''    LocalHourAngleRad = LocalHourAngleDeg / (180 / Pi)
+'''
+'''    'Calculate Saturn position in rectangular equatorial coordinate system
+'''    Dim LMN_Equatorial As Vector         ' Rectangular equatorial coordinate system
+'''    Dim LMN_EquaMatrix(10, 10) As Double
+'''
+'''    Dim DEC_Saturn As MyTime
+'''    Dim DeclinationDeg As Double
+'''    Dim DeclinationRad As Double
+'''
+'''    DEC_Saturn.h = 8
+'''    DEC_Saturn.M = 25
+'''    DEC_Saturn.s = 58.1
+'''
+'''    DEC_Saturn = TimeHMStoDez(DEC_Saturn)
+'''    DeclinationDeg = DEC_Saturn.TimeDec
+'''    DeclinationRad = DeclinationDeg / (180 / Pi)
+'''    LMN_Equatorial = PolarKarthesisch(LocalHourAngleRad, DeclinationRad)
+'''
+'''    LMN_EquaMatrix(0, 0) = LMN_Equatorial.x
+'''    LMN_EquaMatrix(1, 0) = LMN_Equatorial.Y
+'''    LMN_EquaMatrix(2, 0) = LMN_Equatorial.z
+'''
+'''    'Calculate Saturn position in rectangular horizontal coordinate system
+'''    Dim LMN_Horizontal As Vector                ' Rectangular horizontal coordinate system
+'''    Dim LMN_HorizMatrix(10, 10) As Double
+'''    Dim TransformationMatrix(10, 10) As Double  ' Transformation-Matrix from equatorial Coordinates to horizontal Coordinates
+'''    Dim Latitude As MyTime                     ' Observer’s latitude
+'''    Dim LatitudeDeg As Double
+'''    Dim LatitudeRad As Double
+'''    Dim Phi As Double                           ' Observer’s latitude
+'''
+'''    Latitude.h = 50
+'''    Latitude.M = 47
+'''    Latitude.s = 55
+'''    Latitude = TimeHMStoDez(Latitude)
+'''    LatitudeDeg = Latitude.TimeDec
+'''    LatitudeRad = LatitudeDeg / (180 / Pi)
+'''
+'''    Phi = LatitudeRad
+'''    TransformationMatrix(0, 0) = Cos(Phi - Pi / 2)
+'''    TransformationMatrix(0, 1) = 0
+'''    TransformationMatrix(0, 2) = Sin(Phi - Pi / 2)
+'''    TransformationMatrix(1, 0) = 0
+'''    TransformationMatrix(1, 1) = 1
+'''    TransformationMatrix(1, 2) = 0
+'''    TransformationMatrix(2, 0) = -Sin(Phi - Pi / 2)
+'''    TransformationMatrix(2, 1) = 0
+'''    TransformationMatrix(2, 2) = Cos(Phi - Pi / 2)
+'''
+'''    MatrixProduct TransformationMatrix, 3, 3, LMN_EquaMatrix, 3, 1, LMN_HorizMatrix
+'''
+'''    Dim Lh As Double
+'''    Dim Mh As Double
+'''    Dim Nh As Double
+'''
+'''    Lh = LMN_HorizMatrix(0, 0)                  ' Rectangular horizontal  coordinate system
+'''    Mh = LMN_HorizMatrix(1, 0)
+'''    Nh = LMN_HorizMatrix(2, 0)
+'''
+'''
+'''    'Calculate Saturn position in Altazimuth horizontal coordinate system
+'''    Dim AzRad As Double         'Azimuth in radian
+'''    Dim AzDeg As Double         'Azimuth in degree
+'''    Dim AltRad As Double        'Altitude in radian
+'''    Dim AltDeg As Double        'Altitude in degree
+'''    Dim sin_h As Double
+'''
+'''    AzRad = -Atn(Mh / Lh)
+'''    AzDeg = AzRad / (Pi / 180)
+'''
+'''    sin_h = Cos(Phi) * Cos(LocalHourAngleRad) * Cos(DeclinationRad) + Sin(Phi) * Sin(DeclinationRad)
+'''    AltRad = arcsin(sin_h)
+'''    AltDeg = AltRad / (Pi / 180)
+'''
+'''    L_AzSaturn = AzDeg
+'''    L_AltSaturn = AltDeg
+'''End Sub
 
 Private Sub Form_Load()
     SimOffline = True
@@ -676,6 +850,8 @@ Private Sub InitNexStarComm()
 v24error:
   MsgBox "NexStar RS232 Open error: " & Err.Description, , "Communication NexStar"
 End Sub
+
+
 
 
 

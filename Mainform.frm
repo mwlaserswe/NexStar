@@ -490,6 +490,13 @@ End Sub
 
 
 
+Private Sub Command1_Click()
+    Dim ut As String
+
+    ut = UtcTime(Now)
+ 
+End Sub
+
 Private Sub Command2_Click()
     TestJulianischesDatum.Show
 End Sub
@@ -526,14 +533,14 @@ Private Sub C_TestSiderialTime_Click()
     DemoDate.YY = 2007
     DemoDate.MM = 12
     DemoDate.DD = 25
-    DemoTime.h = 20
+    DemoTime.H = 20
     DemoTime.M = 0
     DemoTime.s = 0
         
     SiderialTimeGreenwich = GMST(DemoDate, DemoTime)
     SiderialTime = TimeDezToHMS(SiderialTimeGreenwich.TimeDec + 13.5 / 15)
     L_SiderialTime = SiderialTime.TimeDec
-    L_SiderialTimeHMS = SiderialTime.h & ":" & SiderialTime.M & ":" & Format(SiderialTime.s, "00.00")
+    L_SiderialTimeHMS = SiderialTime.H & ":" & SiderialTime.M & ":" & Format(SiderialTime.s, "00.00")
 
 End Sub
 
@@ -548,24 +555,24 @@ Private Sub Command4_Click()
     SaturnDemoDate.YY = 1978    '13.11.1978
     SaturnDemoDate.MM = 11
     SaturnDemoDate.DD = 13
-    SaturnDemoTime.h = 4        '4:34:00 UT   5:34:00 Ortszeit
+    SaturnDemoTime.H = 4        '4:34:00 UT   5:34:00 Ortszeit
     SaturnDemoTime.M = 34
     SaturnDemoTime.s = 0
 
     Dim RA_Saturn As MyTime
-    RA_Saturn.h = 10
+    RA_Saturn.H = 10
     RA_Saturn.M = 57              '57
     RA_Saturn.s = 35.681
 
     Dim DEC_Saturn As MyTime
-    DEC_Saturn.h = 8
+    DEC_Saturn.H = 8
     DEC_Saturn.M = 25
     DEC_Saturn.s = 58.1
 
     Lont = TimeDezToHMS(4.35808335) '  -4.358°              ' Observer’s longitude
 
     Dim Longitude As GeoCoord
-    Longitude.Deg = Lont.h
+    Longitude.Deg = Lont.H
     Longitude.Min = Lont.M
     Longitude.Sec = Lont.s
     Longitude.Sign = "E"
@@ -585,7 +592,7 @@ Private Sub Command4_Click()
 '    L_AzStar = AZ
     L_AzStar = CutAngle(AZ)
     L_AltStar = ALT
-    L_HourAngle = HourAngle.h & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
+    L_HourAngle = HourAngle.H & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
     
     
     

@@ -28,7 +28,7 @@ Public Function GetJulianDate(Dt As MyDate, tm As MyTime) As Double
   '  Dim A As Double
   Dim a As Double
   Dim B As Double
-  Dim h As Double
+  Dim H As Double
 
   If Dt.MM <= 2 Then
     Dt.YY = Dt.YY - 1
@@ -39,9 +39,9 @@ Public Function GetJulianDate(Dt As MyDate, tm As MyTime) As Double
   a = Int(Dt.YY / 100)
   B = 2 - a + Int(a / 4)
 
-  h = tm.h / 24 + tm.M / 1440 + tm.s / 86400
+  H = tm.H / 24 + tm.M / 1440 + tm.s / 86400
   
-  GetJulianDate = Int(365.25 * (Dt.YY + 4716)) + Int(30.6001 * (Dt.MM + 1)) + Dt.DD + h + B - 1524.5
+  GetJulianDate = Int(365.25 * (Dt.YY + 4716)) + Int(30.6001 * (Dt.MM + 1)) + Dt.DD + H + B - 1524.5
 End Function
 
 
@@ -61,7 +61,7 @@ Public Function GMST(LocalDate As MyDate, LocalTimeUT As MyTime) As MyTime
     Dim GMSTindividualTime As Double
 
     '1.  Julianische Datum JD um 0h berechnen. Muß immer auf 0,5 enden
-    Time0hGMT.h = 0
+    Time0hGMT.H = 0
     Time0hGMT.M = 0
     Time0hGMT.s = 0
     JD = GetJulianDate(LocalDate, Time0hGMT)
@@ -120,8 +120,8 @@ Public Function TimeDezToHMS(TimeDezimal As Double) As MyTime
     End If
     
     
-    TimeDezToHMS.h = Int(locTDec)
-    locTDec = locTDec - TimeDezToHMS.h
+    TimeDezToHMS.H = Int(locTDec)
+    locTDec = locTDec - TimeDezToHMS.H
     
     TimeDezToHMS.s = locTDec * 3600
     
@@ -132,8 +132,8 @@ End Function
 
 
 Public Function TimeHMStoDez(TimeIn As MyTime) As MyTime
-    TimeHMStoDez.TimeDec = TimeIn.h + TimeIn.M / 60 + TimeIn.s / 3600
-    TimeHMStoDez.h = TimeIn.h
+    TimeHMStoDez.TimeDec = TimeIn.H + TimeIn.M / 60 + TimeIn.s / 3600
+    TimeHMStoDez.H = TimeIn.H
     TimeHMStoDez.M = TimeIn.M
     TimeHMStoDez.s = TimeIn.s
     
@@ -152,11 +152,27 @@ Public Function GeoToDez(Coord As GeoCoord) As Double
 End Function
 
 Public Function GradToTime(Deg As Double) As MyTime
-    Dim h As Double
+    Dim H As Double
     
-    h = Deg * 24 / 360
-    GradToTime = TimeDezToHMS(h)
+    H = Deg * 24 / 360
+    GradToTime = TimeDezToHMS(H)
 End Function
+
+
+Public Function TimeToRad(HMS As MyTime) As Double
+    Dim tmp1 As MyTime
+    Dim tmp2 As Double
+    
+    tmp1 = TimeHMStoDez(HMS)
+    tmp2 = tmp1.TimeDec * 360 / 24
+    TimeToRad = tmp2 / (180 / Pi)
+
+End Function
+
+Public Function DegToRad(Deg As Double) As Double
+    DegToRad = Deg / (180 / Pi)
+End Function
+
 
 
 
@@ -260,6 +276,8 @@ Public Sub RA_DEC_to_AZ_ALT(RA_Star As MyTime, DEC_Star As MyTime, Longitude As 
 End Sub
 
 
+Public Sub DerivateTeleskope(v As Vector)
 
+End Sub
 
 

@@ -174,7 +174,9 @@ Public Function DegToRad(Deg As Double) As Double
 End Function
 
 
-
+Public Function RadToDeg(Rad As Double) As Double
+    RadToDeg = Rad * (180 / Pi)
+End Function
 
 
 Public Function arcsin(x As Double) As Double
@@ -186,7 +188,7 @@ End Function
 
 
 
-Public Sub RA_DEC_to_AZ_ALT(RA_Star As MyTime, DEC_Star As MyTime, Longitude As GeoCoord, Latitude As GeoCoord, LocalTimeUT As MyTime, LocalDate As MyDate, AZ As Double, ALT As Double, HourAngle As MyTime)
+Public Sub RA_DEC_to_AZ_ALT(RA_Star As MyTime, DEC_Star As MyTime, Longitude As GeoCoord, Latitude As GeoCoord, LocalTimeUT As MyTime, LocalDate As MyDate, Az As Double, Alt As Double, HourAngle As MyTime)
     ' matrix_method_rev_d.pdf Seite 15
     Dim SiderialTime As MyTime
     Dim LocalHourAngleHour As Double    'Local hour angle in hour (decimal)
@@ -266,17 +268,25 @@ Public Sub RA_DEC_to_AZ_ALT(RA_Star As MyTime, DEC_Star As MyTime, Longitude As 
     AzRad = -Atn(Mh / Lh)
     AzDeg = AzRad / (Pi / 180)
     
+    'geht möglicherweise einfacher: sin(h) = Nh
     sin_h = Cos(Phi) * Cos(LocalHourAngleRad) * Cos(DeclinationRad) + Sin(Phi) * Sin(DeclinationRad)
     AltRad = arcsin(sin_h)
     AltDeg = AltRad / (Pi / 180)
     
-    AZ = AzDeg
-    ALT = AltDeg
+    Az = AzDeg
+    Alt = AltDeg
 
 End Sub
 
+Public Function VectorToAzAlt(V As Vector) As AzAlt
+    VectorToAzAlt.Az = -Atn(V.Y / V.x)
+    VectorToAzAlt.Alt = arcsin(V.z)
+End Function
 
-Public Sub DerivateTeleskope(v As Vector)
+
+
+
+Public Sub DerivateTeleskope(V As Vector)
 
 End Sub
 

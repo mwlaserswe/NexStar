@@ -35,6 +35,27 @@ Public Type AzAlt
     Alt As Double       ' Altitude as radian
 End Type
 
+Public Type StarDescription
+    ProperName As String
+    Bayer As String
+    Constellation As String
+    Flamsteed As String
+    RA As Double
+    DEC As Double
+    Mag As Double
+    StarDsc1 As String
+    StarDsc2 As String
+    StarDsc3 As String
+    StarDsc4 As String
+    StarDsc5 As String
+End Type
+
+
+
+
+
 Public SimOffline As Boolean
 Public IniFileName As String
+Public AlignmentStarArray() As StarDescription
+
 

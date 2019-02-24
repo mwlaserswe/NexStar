@@ -1,5 +1,6 @@
 VERSION 5.00
 Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form Mainform 
    Caption         =   "Form1"
    ClientHeight    =   11235
@@ -10,6 +11,13 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   8910
    StartUpPosition =   3  'Windows Default
+   Begin MSComDlg.CommonDialog CommonDialog1 
+      Left            =   360
+      Top             =   7200
+      _ExtentX        =   847
+      _ExtentY        =   847
+      _Version        =   393216
+   End
    Begin VB.CommandButton Command6 
       Caption         =   "Command6"
       Height          =   195
@@ -1120,7 +1128,7 @@ Private Sub Form_Load()
     VS_ManualSkewingSpeed.Value = 10
 
 
-
+    LoadAlignmetStarFile
 
 
 End Sub
@@ -1382,3 +1390,45 @@ Private Sub VS_ManualSkewingSpeed_Change()
     tmp = VS_ManualSkewingSpeed.Value
     ManualSkewingSpeed = 1000 * tmp
 End Sub
+
+
+
+
+Private Sub LoadAlignmetStarFile()
+    Dim AlignmetStarFile As Integer
+    Dim AlignmetStarFileName As String
+    Dim i As Integer
+    Dim Zeile As String
+    Dim StarEntities() As String
+    Dim idx As Long
+
+    ReDim AlignmentStarArray(0 To 0)
+    
+    AlignmetStarFile = FreeFile
+    On Error GoTo openErr:
+    AlignmetStarFileName = App.Path & "\Alignment Stars.txt"
+    Open AlignmetStarFileName For Input As AlignmetStarFile
+    While Not EOF(AlignmetStarFile)
+        Line Input #AlignmetStarFile, Zeile
+        SepariereString Zeile, StarEntities, vbTab
+        idx = UBound(AlignmentStarArray)
+        AlignmentStarArray(idx).ProperName = StarEntities(0)
+        AlignmentStarArray(idx).Constellation = StarEntities(1)
+        AlignmentStarArray(idx).Bayer = StarEntities(2)
+        AlignmentStarArray(idx).Flamsteed = StarEntities(3)
+        AlignmentStarArray(idx).RA = Zahl(StarEntities(4))
+        AlignmentStarArray(idx).DEC = Zahl(StarEntities(5))
+        AlignmentStarArray(idx).Mag = Zahl(StarEntities(6))
+       ReDim Preserve AlignmentStarArray(0 To UBound(AlignmentStarArray) + 1)
+    '    IntensitätsStrg2Comm.Output = Zeile & vbCr     'Suche Index
+    Wend
+    Close AlignmetStarFile
+    
+    
+    Exit Sub
+    
+openErr:
+    MsgBox Err.Description & vbCrLf & "Can't read Config File:" & AlignmetStarFileName, , " Error "
+    Close AlignmetStarFile
+End Sub
+

@@ -155,7 +155,6 @@ For k = 0 To System_DIM - 1
          multiplier_1 = Operations_Matrix(N, k) / Operations_Matrix(k, k)
          For M = k To 2 * System_DIM - 1
             Operations_Matrix(N, M) = Operations_Matrix(N, M) - Operations_Matrix(k, M) * multiplier_1
-Mainform.List1.AddItem N & " " & M & " " & Operations_Matrix(N, M)
          Next M
       End If
    Next N

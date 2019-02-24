@@ -166,7 +166,7 @@ Begin VB.Form Mainform
       Top             =   3000
       Width           =   375
    End
-   Begin VB.ListBox List1 
+   Begin VB.ListBox AlignmentStarList 
       Height          =   10395
       Left            =   5880
       TabIndex        =   7
@@ -406,7 +406,6 @@ Private Sub C_GetAz_Click()
     Else
         NexStarComm.Output = Chr$(&H1)
         NexStarAz = ""
-        List1.Clear
         Command = 1
     End If
 End Sub
@@ -420,7 +419,6 @@ Private Sub C_GetAlt_Click()
    Else
         NexStarComm.Output = Chr$(&H15)
         NexStarAlt = ""
-        List1.Clear
         Command = 21
     End If
 End Sub
@@ -1202,7 +1200,6 @@ Private Sub NexStarComm_OnComm()
                     bbuf = vbuf
                     NexStarAz = NexStarAz & Chr$(bbuf(0))
                      key = (bbuf(0))
-                   List1.AddItem (key)
                 Loop While NexStarComm.InBufferCount > 0
                 l = Len(NexStarAz)
                 TelIncrAz = GetNexStarPosition(NexStarAz)
@@ -1212,7 +1209,6 @@ Private Sub NexStarComm_OnComm()
                     bbuf = vbuf
                     NexStarAlt = NexStarAlt & Chr$(bbuf(0))
                      key = (bbuf(0))
-                   List1.AddItem (key)
                 Loop While NexStarComm.InBufferCount > 0
                 l = Len(NexStarAlt)
                 TelIncrAlt = GetNexStarPosition(NexStarAlt)
@@ -1419,8 +1415,10 @@ Private Sub LoadAlignmetStarFile()
         AlignmentStarArray(idx).RA = Zahl(StarEntities(4))
         AlignmentStarArray(idx).DEC = Zahl(StarEntities(5))
         AlignmentStarArray(idx).Mag = Zahl(StarEntities(6))
-       ReDim Preserve AlignmentStarArray(0 To UBound(AlignmentStarArray) + 1)
-    '    IntensitätsStrg2Comm.Output = Zeile & vbCr     'Suche Index
+        
+        AlignmentStarList.AddItem AlignmentStarArray(idx).ProperName
+        
+        ReDim Preserve AlignmentStarArray(0 To UBound(AlignmentStarArray) + 1)
     Wend
     Close AlignmetStarFile
     

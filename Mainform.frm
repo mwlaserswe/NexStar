@@ -167,7 +167,7 @@ Begin VB.Form Mainform
       Width           =   375
    End
    Begin VB.ListBox AlignmentStarList 
-      Height          =   10395
+      Height          =   9615
       Left            =   5880
       TabIndex        =   7
       Top             =   360
@@ -216,6 +216,24 @@ Begin VB.Form Mainform
       RThreshold      =   1
       BaudRate        =   4800
       InputMode       =   1
+   End
+   Begin VB.Label L_CurrentStar 
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "Label2"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   13.5
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   5880
+      TabIndex        =   36
+      Top             =   10200
+      Width           =   2775
    End
    Begin VB.Label L_UT 
       Alignment       =   1  'Right Justify
@@ -396,6 +414,16 @@ Dim SimGotoAlt As Long
 
 
 
+
+Private Sub AlignmentStarList_Click()
+  Dim idx As Long
+  
+  idx = AlignmentStarList.ListIndex
+  
+  L_CurrentStar = AlignmentStarArray(idx).ProperName
+  
+
+End Sub
 
 Private Sub C_GetAz_Click()
     If SimOffline Then

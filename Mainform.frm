@@ -6,11 +6,131 @@ Begin VB.Form Mainform
    ClientHeight    =   11235
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   8910
+   ClientWidth     =   8865
    LinkTopic       =   "Form1"
    ScaleHeight     =   11235
-   ScaleWidth      =   8910
+   ScaleWidth      =   8865
    StartUpPosition =   3  'Windows Default
+   Begin VB.TextBox T_Long_Sign 
+      Height          =   285
+      Left            =   2640
+      TabIndex        =   64
+      Text            =   "Text1"
+      Top             =   9480
+      Width           =   255
+   End
+   Begin VB.CommandButton C_Set_ObserverLocation 
+      Caption         =   "Command7"
+      Height          =   255
+      Left            =   2160
+      TabIndex        =   63
+      Top             =   10080
+      Width           =   1215
+   End
+   Begin VB.TextBox T_Latt_Sign 
+      Height          =   285
+      Left            =   120
+      TabIndex        =   62
+      Text            =   "Text1"
+      Top             =   9480
+      Width           =   255
+   End
+   Begin VB.TextBox T_Latt_Grad 
+      Height          =   285
+      Left            =   480
+      TabIndex        =   55
+      Text            =   "Text1"
+      Top             =   9480
+      Width           =   495
+   End
+   Begin VB.TextBox T_Latt_Min 
+      Height          =   285
+      Left            =   1080
+      TabIndex        =   54
+      Text            =   "Text1"
+      Top             =   9480
+      Width           =   495
+   End
+   Begin VB.TextBox T_Latt_Sek 
+      Height          =   285
+      Left            =   1680
+      TabIndex        =   53
+      Text            =   "Text1"
+      Top             =   9480
+      Width           =   495
+   End
+   Begin VB.TextBox T_Long_Sek 
+      Height          =   285
+      Left            =   4200
+      TabIndex        =   52
+      Text            =   "Text1"
+      Top             =   9480
+      Width           =   495
+   End
+   Begin VB.TextBox T_Long_Min 
+      Height          =   285
+      Left            =   3600
+      TabIndex        =   51
+      Text            =   "Text1"
+      Top             =   9480
+      Width           =   495
+   End
+   Begin VB.TextBox T_Long_Grad 
+      Height          =   285
+      Left            =   3000
+      TabIndex        =   50
+      Text            =   "Text1"
+      Top             =   9480
+      Width           =   495
+   End
+   Begin VB.TextBox T_Tag 
+      Height          =   285
+      Left            =   480
+      TabIndex        =   42
+      Text            =   "Text1"
+      Top             =   8760
+      Width           =   495
+   End
+   Begin VB.TextBox T_Monat 
+      Height          =   285
+      Left            =   1080
+      TabIndex        =   41
+      Text            =   "Text1"
+      Top             =   8760
+      Width           =   495
+   End
+   Begin VB.TextBox T_Jahr 
+      Height          =   285
+      Left            =   1680
+      TabIndex        =   40
+      Text            =   "Text1"
+      Top             =   8760
+      Width           =   495
+   End
+   Begin VB.TextBox T_Sekunden 
+      Height          =   285
+      Left            =   4200
+      TabIndex        =   39
+      Text            =   "Text1"
+      Top             =   8760
+      Width           =   495
+   End
+   Begin VB.TextBox T_Minuten 
+      Height          =   285
+      Left            =   3600
+      TabIndex        =   38
+      Text            =   "Text1"
+      Top             =   8760
+      Width           =   495
+   End
+   Begin VB.TextBox T_Stunden 
+      Height          =   285
+      Left            =   3000
+      TabIndex        =   37
+      Text            =   "Text1"
+      Top             =   8760
+      Width           =   495
+   End
    Begin MSComDlg.CommonDialog CommonDialog1 
       Left            =   360
       Top             =   7200
@@ -58,9 +178,9 @@ Begin VB.Form Mainform
    Begin VB.CommandButton Command2 
       Caption         =   "Test Sternzeit"
       Height          =   495
-      Left            =   600
+      Left            =   0
       TabIndex        =   21
-      Top             =   9360
+      Top             =   10680
       Width           =   1215
    End
    Begin VB.CommandButton Command1 
@@ -216,6 +336,110 @@ Begin VB.Form Mainform
       RThreshold      =   1
       BaudRate        =   4800
       InputMode       =   1
+   End
+   Begin VB.Label Label16 
+      Caption         =   "Sek."
+      Height          =   255
+      Left            =   4200
+      TabIndex        =   61
+      Top             =   9240
+      Width           =   375
+   End
+   Begin VB.Label Label15 
+      Caption         =   "Min."
+      Height          =   255
+      Left            =   3600
+      TabIndex        =   60
+      Top             =   9240
+      Width           =   495
+   End
+   Begin VB.Label Label14 
+      Caption         =   "Grad"
+      Height          =   255
+      Left            =   3000
+      TabIndex        =   59
+      Top             =   9240
+      Width           =   375
+   End
+   Begin VB.Label Label19 
+      Caption         =   "Sek."
+      Height          =   255
+      Left            =   1680
+      TabIndex        =   58
+      Top             =   9240
+      Width           =   375
+   End
+   Begin VB.Label Label18 
+      Caption         =   "Min."
+      Height          =   255
+      Left            =   1080
+      TabIndex        =   57
+      Top             =   9240
+      Width           =   495
+   End
+   Begin VB.Label Label17 
+      Caption         =   "Grad"
+      Height          =   255
+      Left            =   480
+      TabIndex        =   56
+      Top             =   9240
+      Width           =   375
+   End
+   Begin VB.Label Label12 
+      Caption         =   "Jahr"
+      Height          =   255
+      Left            =   1680
+      TabIndex        =   49
+      Top             =   8520
+      Width           =   375
+   End
+   Begin VB.Label Label7 
+      Caption         =   "Monat"
+      Height          =   255
+      Left            =   1080
+      TabIndex        =   48
+      Top             =   8520
+      Width           =   495
+   End
+   Begin VB.Label Label8 
+      Caption         =   "Tag"
+      Height          =   255
+      Left            =   480
+      TabIndex        =   47
+      Top             =   8520
+      Width           =   375
+   End
+   Begin VB.Label Label9 
+      Caption         =   "H"
+      Height          =   255
+      Left            =   3120
+      TabIndex        =   46
+      Top             =   8520
+      Width           =   255
+   End
+   Begin VB.Label Label10 
+      Caption         =   "M"
+      Height          =   255
+      Left            =   3720
+      TabIndex        =   45
+      Top             =   8520
+      Width           =   255
+   End
+   Begin VB.Label Label11 
+      Caption         =   "S"
+      Height          =   255
+      Left            =   4320
+      TabIndex        =   44
+      Top             =   8520
+      Width           =   135
+   End
+   Begin VB.Label Label2 
+      Caption         =   "Ortszeit"
+      Height          =   255
+      Left            =   4920
+      TabIndex        =   43
+      Top             =   8760
+      Width           =   615
    End
    Begin VB.Label L_CurrentStar 
       BorderStyle     =   1  'Fixed Single
@@ -411,18 +635,37 @@ Dim SimGotoAz As Long
 Dim SimGotoAlt As Long
 
 
+Dim ObserverLatt As GeoCoord
+Dim ObserverLong As GeoCoord
+Dim ObserverRA As Double
+Dim ObserverDEC As Double
 
-
+Dim ObserverLocalTime As MyTime
+Dim ObserverDateTimeUT As Date
 
 
 Private Sub AlignmentStarList_Click()
-  Dim idx As Long
+    Dim idx As Long
+    Dim Az As Double
+    Dim Alt As Double
+    Dim HourAngle As Double
+    Dim HourAngleHMS As MyTime
+    
+    idx = AlignmentStarList.ListIndex
+    
+    L_CurrentStar = AlignmentStarArray(idx).ProperName
+    ObserverRA = HourToRad(AlignmentStarArray(idx).RA)
+    ObserverDEC = DegToRad(AlignmentStarArray(idx).DEC)
   
-  idx = AlignmentStarList.ListIndex
+    ObserverDateTimeUT = T_Tag & "." & T_Monat & "." & T_Jahr & " " & T_Stunden & ":" & T_Minuten & ":" & T_Sekunden
+    
+    RA_DEC_to_AZ_ALT_radian ObserverRA, ObserverDEC, ObserverLong, ObserverLatt, ObserverDateTimeUT, Az, Alt, HourAngle
   
-  L_CurrentStar = AlignmentStarArray(idx).ProperName
-  
-
+    T_Az = RadToDeg(Az)
+    T_Alt = RadToDeg(Alt)
+    
+    HourAngleHMS = RadToTime(HourAngle)
+    L_HourAngle = HourAngleHMS.H & ":" & HourAngleHMS.M & ":" & Format(HourAngleHMS.s, "00.00")
 End Sub
 
 Private Sub C_GetAz_Click()
@@ -453,6 +696,25 @@ End Sub
 
 
 
+
+Private Sub C_Set_ObserverLocation_Click()
+    INISetValue IniFileName, "Datum", "Tag", T_Tag
+    INISetValue IniFileName, "Datum", "Monat", T_Monat
+    INISetValue IniFileName, "Datum", "Jahr", T_Jahr
+    INISetValue IniFileName, "Zeit", "Stunden", T_Stunden
+    INISetValue IniFileName, "Zeit", "Minuten", T_Minuten
+    INISetValue IniFileName, "Zeit", "Sekunden", T_Sekunden
+  
+    INISetValue IniFileName, "Ort", "LattGrad", T_Latt_Grad
+    INISetValue IniFileName, "Ort", "LattMin", T_Latt_Min
+    INISetValue IniFileName, "Ort", "LattSek", T_Latt_Sek
+    INISetValue IniFileName, "Ort", "LattSign", T_Latt_Sign
+    INISetValue IniFileName, "Ort", "LongGrad", T_Long_Grad
+    INISetValue IniFileName, "Ort", "LongMin", T_Long_Min
+    INISetValue IniFileName, "Ort", "LongSek", T_Long_Sek
+    INISetValue IniFileName, "Ort", "LongSing", T_Long_Sign
+
+End Sub
 
 Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
@@ -634,25 +896,20 @@ Private Sub Command4_Click()
     Dim Jetzt As String
     Dim Lont As MyTime
 
-' Datensatz Saturn Demo aus dem Sript
-    Dim SaturnDemoDate As MyDate
-    Dim SaturnDemoTime As MyTime
-    SaturnDemoDate.YY = 1978    '13.11.1978
-    SaturnDemoDate.MM = 11
-    SaturnDemoDate.DD = 13
-    SaturnDemoTime.H = 4        '4:34:00 UT   5:34:00 Ortszeit
-    SaturnDemoTime.M = 34
-    SaturnDemoTime.s = 0
+    ' Datensatz Saturn Demo aus dem Sript
+    Dim SaturnDateTime As Date
+    SaturnDateTime = "13.11.1978 4:34:0"
 
     Dim RA_Saturn As MyTime
     RA_Saturn.H = 10
     RA_Saturn.M = 57              '57
     RA_Saturn.s = 35.681
 
-    Dim DEC_Saturn As MyTime
-    DEC_Saturn.H = 8
-    DEC_Saturn.M = 25
-    DEC_Saturn.s = 58.1
+    Dim DEC_Saturn As GeoCoord
+    DEC_Saturn.Deg = 8
+    DEC_Saturn.Min = 25
+    DEC_Saturn.Sec = 58.1
+    DEC_Saturn.Sign = "+"
 
     Lont = TimeDezToHMS(4.35808335) '  -4.358°              ' Observer’s longitude
 
@@ -670,37 +927,38 @@ Private Sub Command4_Click()
 
     Dim Az As Double
     Dim Alt As Double
+    Dim LocalHourAngleRad As Double
     Dim HourAngle As MyTime
 
-    RA_DEC_to_AZ_ALT RA_Saturn, DEC_Saturn, Longitude, Latitude, SaturnDemoTime, SaturnDemoDate, Az, Alt, HourAngle
+    Dim RA_Saturn_Rad As Double
+    RA_Saturn_Rad = TimeToRad(RA_Saturn)
+    Dim DEC_Saturn_Rad As Double
+    DEC_Saturn_Rad = DegToRad(GeoToDez(DEC_Saturn))
 
-'    L_AzStar = AZ
-    L_AzStar = CutAngle(Az)
-    L_AltStar = Alt
+    RA_DEC_to_AZ_ALT_radian RA_Saturn_Rad, DEC_Saturn_Rad, Longitude, Latitude, SaturnDateTime, Az, Alt, LocalHourAngleRad
+
+    If O_OrientationNorth.value Then Az = Az + Pi
+    L_AzStar = CutAngle(RadToDeg(Az))
+    L_AltStar = RadToDeg(Alt)
+
+    HourAngle = RadToTime(LocalHourAngleRad)
     L_HourAngle = HourAngle.H & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
     
-    
-    
-    
-''' ' Capella Kassel
-'''    Dim CapellaDemoDate As MyDate
-'''    Dim CapellaDemoTime As MyTime
-'''    CapellaDemoDate.YY = 2019
-'''    CapellaDemoDate.MM = 2
-'''    CapellaDemoDate.DD = 2
-'''    CapellaDemoTime.h = 19
-'''    CapellaDemoTime.M = 0
-'''    CapellaDemoTime.s = 0
+
+ ' Capella Kassel
+'''    Dim CapellaDateTime As Date
+'''    CapellaDateTime = "2.2.2019 19:00:00"
 '''
 '''    Dim RA_Capella As MyTime
-'''    RA_Capella.h = 5
+'''    RA_Capella.H = 5
 '''    RA_Capella.M = 18
 '''    RA_Capella.s = 6
 '''
-'''    Dim DEC_Capella As MyTime
-'''    DEC_Capella.h = 46
-'''    DEC_Capella.M = 1
-'''    DEC_Capella.s = 0
+'''    Dim DEC_Capella As GeoCoord
+'''    DEC_Capella.Deg = 46
+'''    DEC_Capella.Min = 1
+'''    DEC_Capella.Sec = 0
+'''    DEC_Capella.Sign = "+"
 '''
 '''    Dim Longitude As GeoCoord                     ' Observer’s longitude
 '''    Longitude.Deg = 9
@@ -714,37 +972,39 @@ Private Sub Command4_Click()
 '''    Latitude.Sec = 27
 '''    Latitude.Sign = "N"
 '''
-'''    Dim AZ As Double
-'''    Dim ALT As Double
+'''    Dim Az As Double
+'''    Dim Alt As Double
+'''    Dim LocalHourAngleRad As Double
 '''    Dim HourAngle As MyTime
-'''     RA_DEC_to_AZ_ALT RA_Capella, DEC_Capella, Longitude, Latitude, CapellaDemoTime, CapellaDemoDate, AZ, ALT, HourAngle
 '''
-''''    L_AzStar = AZ
-'''    L_AzStar = CutAngle(AZ)
-'''    L_AltStar = ALT
-'''    L_HourAngle = HourAngle.h & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
+'''    Dim RA_Capella_Rad As Double
+'''    RA_Capella_Rad = TimeToRad(RA_Capella)
+'''    Dim DEC_Capella_Rad As Double
+'''    DEC_Capella_Rad = DegToRad(GeoToDez(DEC_Capella))
+'''
+'''    RA_DEC_to_AZ_ALT_radian RA_Capella_Rad, DEC_Capella_Rad, Longitude, Latitude, CapellaDateTime, Az, Alt, LocalHourAngleRad
+'''
+'''    If O_OrientationNorth.Value Then Az = Az + Pi
+'''    L_AzStar = CutAngle(RadToDeg(Az))
+'''    L_AltStar = RadToDeg(Alt)
+'''
+'''    HourAngle = RadToTime(LocalHourAngleRad)
+'''    L_HourAngle = HourAngle.H & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
     
-    
-    
-''' ' Deneb München
-'''    Dim DenebDemoDate As MyDate
-'''    Dim DenebDemoTime As MyTime
-'''    DenebDemoDate.YY = 2019
-'''    DenebDemoDate.MM = 2
-'''    DenebDemoDate.DD = 2
-'''    DenebDemoTime.h = 19
-'''    DenebDemoTime.M = 0
-'''    DenebDemoTime.s = 0
+ ' Deneb München
+'''    Dim DenebDateTime As Date
+'''    DenebDateTime = "2.2.2019 19:00:00"
 '''
 '''    Dim RA_Deneb As MyTime
-'''    RA_Deneb.h = 20
+'''    RA_Deneb.H = 20
 '''    RA_Deneb.M = 42
 '''    RA_Deneb.s = 4
 '''
-'''    Dim DEC_Deneb As MyTime
-'''    DEC_Deneb.h = 45
-'''    DEC_Deneb.M = 21
-'''    DEC_Deneb.s = 0
+'''    Dim DEC_Deneb As GeoCoord
+'''    DEC_Deneb.Deg = 45
+'''    DEC_Deneb.Min = 21
+'''    DEC_Deneb.Sec = 0
+'''    DEC_Deneb.Sign = "+"
 '''
 '''    Dim Longitude As GeoCoord                     ' Observer’s longitude
 '''    Longitude.Deg = 11
@@ -758,23 +1018,26 @@ Private Sub Command4_Click()
 '''    Latitude.Sec = 0
 '''    Latitude.Sign = "N"
 '''
-'''    Dim AZ As Double
-'''    Dim ALT As Double
+'''    Dim Az As Double
+'''    Dim Alt As Double
+'''    Dim LocalHourAngleRad As Double
 '''    Dim HourAngle As MyTime
 '''
-'''     RA_DEC_to_AZ_ALT RA_Deneb, DEC_Deneb, Longitude, Latitude, DenebDemoTime, DenebDemoDate, AZ, ALT, HourAngle
+'''    Dim RA_Deneb_Rad As Double
+'''    RA_Deneb_Rad = TimeToRad(RA_Deneb)
+'''    Dim DEC_Deneb_Rad As Double
+'''    DEC_Deneb_Rad = DegToRad(GeoToDez(DEC_Deneb))
 '''
-''''    L_AzStar = AZ
-'''    L_AzStar = CutAngle(AZ + 180)
-'''    L_AltStar = ALT
-'''    L_HourAngle = HourAngle.h & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
-   
-    
-    
-    
-    
-    
-    
+'''     RA_DEC_to_AZ_ALT_radian RA_Deneb_Rad, DEC_Deneb_Rad, Longitude, Latitude, DenebDateTime, Az, Alt, LocalHourAngleRad
+'''
+'''    If O_OrientationNorth.value Then Az = Az + Pi
+'''    L_AzStar = CutAngle(RadToDeg(Az))
+'''    L_AltStar = RadToDeg(Alt)
+'''
+'''    HourAngle = RadToTime(LocalHourAngleRad)
+'''    L_HourAngle = HourAngle.H & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
+ 
+
 
 End Sub
 
@@ -1021,141 +1284,46 @@ I33 = i(2, 2)
    
 End Sub
 
-'''Private Sub Command5_Click()
-'''    ' matrix_method_rev_d.pdf Seite 15
-'''    Dim SaturnDemoDate As MyDate
-'''    Dim SaturnDemoTime As MyTime
-'''    Dim SiderialTime As MyTime
-'''    Dim RA_Saturn As MyTime
-'''    Dim tmp As Double
-'''    Dim ttmp As MyTime
-'''    Dim LocalHourAngleHour As Double    'Local hour angle in hour (decimal)
-'''    Dim LocalHourAngleDeg As Double     'Local hour angle in degree
-'''    Dim LocalHourAngleRad As Double     'Local hour angle in radian
-'''
-'''    Dim Longitude As MyTime                     ' Observer’s longitude
-'''    Dim LongitudeDeg As Double
-'''
-'''
-'''    Longitude.h = 0
-'''    Longitude.M = 17
-'''    Longitude.s = 25.94
-'''    Longitude = TimeHMStoDez(Longitude)
-'''    LongitudeDeg = Longitude.TimeDec * 15
-'''
-'''
-'''
-'''    SaturnDemoDate.YY = 1978
-'''    SaturnDemoDate.MM = 11
-'''    SaturnDemoDate.DD = 13
-'''    SaturnDemoTime.h = 4
-'''    SaturnDemoTime.M = 34
-'''    SaturnDemoTime.s = 0
-'''
-'''    'Calculate siderial time
-'''    SiderialTime = GetSiderialTime(SaturnDemoDate, SaturnDemoTime, LongitudeDeg)
-'''
-'''    RA_Saturn.h = 10
-'''    RA_Saturn.M = 57
-'''    RA_Saturn.s = 35.681
-'''    RA_Saturn = TimeHMStoDez(RA_Saturn)
-'''
-'''    'Calculate local hour angle
-'''    LocalHourAngleHour = SiderialTime.TimeDec - RA_Saturn.TimeDec
-'''    LocalHourAngleDeg = LocalHourAngleHour * 15
-'''    LocalHourAngleRad = LocalHourAngleDeg / (180 / Pi)
-'''
-'''    'Calculate Saturn position in rectangular equatorial coordinate system
-'''    Dim LMN_Equatorial As Vector         ' Rectangular equatorial coordinate system
-'''    Dim LMN_EquaMatrix(10, 10) As Double
-'''
-'''    Dim DEC_Saturn As MyTime
-'''    Dim DeclinationDeg As Double
-'''    Dim DeclinationRad As Double
-'''
-'''    DEC_Saturn.h = 8
-'''    DEC_Saturn.M = 25
-'''    DEC_Saturn.s = 58.1
-'''
-'''    DEC_Saturn = TimeHMStoDez(DEC_Saturn)
-'''    DeclinationDeg = DEC_Saturn.TimeDec
-'''    DeclinationRad = DeclinationDeg / (180 / Pi)
-'''    LMN_Equatorial = PolarKarthesisch(LocalHourAngleRad, DeclinationRad)
-'''
-'''    LMN_EquaMatrix(0, 0) = LMN_Equatorial.x
-'''    LMN_EquaMatrix(1, 0) = LMN_Equatorial.Y
-'''    LMN_EquaMatrix(2, 0) = LMN_Equatorial.z
-'''
-'''    'Calculate Saturn position in rectangular horizontal coordinate system
-'''    Dim LMN_Horizontal As Vector                ' Rectangular horizontal coordinate system
-'''    Dim LMN_HorizMatrix(10, 10) As Double
-'''    Dim TransformationMatrix(10, 10) As Double  ' Transformation-Matrix from equatorial Coordinates to horizontal Coordinates
-'''    Dim Latitude As MyTime                     ' Observer’s latitude
-'''    Dim LatitudeDeg As Double
-'''    Dim LatitudeRad As Double
-'''    Dim Phi As Double                           ' Observer’s latitude
-'''
-'''    Latitude.h = 50
-'''    Latitude.M = 47
-'''    Latitude.s = 55
-'''    Latitude = TimeHMStoDez(Latitude)
-'''    LatitudeDeg = Latitude.TimeDec
-'''    LatitudeRad = LatitudeDeg / (180 / Pi)
-'''
-'''    Phi = LatitudeRad
-'''    TransformationMatrix(0, 0) = Cos(Phi - Pi / 2)
-'''    TransformationMatrix(0, 1) = 0
-'''    TransformationMatrix(0, 2) = Sin(Phi - Pi / 2)
-'''    TransformationMatrix(1, 0) = 0
-'''    TransformationMatrix(1, 1) = 1
-'''    TransformationMatrix(1, 2) = 0
-'''    TransformationMatrix(2, 0) = -Sin(Phi - Pi / 2)
-'''    TransformationMatrix(2, 1) = 0
-'''    TransformationMatrix(2, 2) = Cos(Phi - Pi / 2)
-'''
-'''    MatrixProduct TransformationMatrix, 3, 3, LMN_EquaMatrix, 3, 1, LMN_HorizMatrix
-'''
-'''    Dim Lh As Double
-'''    Dim Mh As Double
-'''    Dim Nh As Double
-'''
-'''    Lh = LMN_HorizMatrix(0, 0)                  ' Rectangular horizontal  coordinate system
-'''    Mh = LMN_HorizMatrix(1, 0)
-'''    Nh = LMN_HorizMatrix(2, 0)
-'''
-'''
-'''    'Calculate Saturn position in Altazimuth horizontal coordinate system
-'''    Dim AzRad As Double         'Azimuth in radian
-'''    Dim AzDeg As Double         'Azimuth in degree
-'''    Dim AltRad As Double        'Altitude in radian
-'''    Dim AltDeg As Double        'Altitude in degree
-'''    Dim sin_h As Double
-'''
-'''    AzRad = -Atn(Mh / Lh)
-'''    AzDeg = AzRad / (Pi / 180)
-'''
-'''    sin_h = Cos(Phi) * Cos(LocalHourAngleRad) * Cos(DeclinationRad) + Sin(Phi) * Sin(DeclinationRad)
-'''    AltRad = arcsin(sin_h)
-'''    AltDeg = AltRad / (Pi / 180)
-'''
-'''    L_AzSaturn = AzDeg
-'''    L_AltSaturn = AltDeg
-'''End Sub
 
 Private Sub Form_Load()
     SimOffline = True
     
-    O_OrientationNorth.Value = 1
+    O_OrientationNorth.value = 1
     IniFileName = App.Path & "\NexStar.ini"
     InitNexStarComm
     
     Command = 0
     
-    VS_ManualSkewingSpeed.Value = 10
+    VS_ManualSkewingSpeed.value = 10
 
 
     LoadAlignmetStarFile
 
+    T_Latt_Grad = INIGetValue(IniFileName, "Ort", "LattGrad")
+    T_Latt_Min = INIGetValue(IniFileName, "Ort", "LattMin")
+    T_Latt_Sek = INIGetValue(IniFileName, "Ort", "LattSek")
+    T_Latt_Sign = INIGetValue(IniFileName, "Ort", "LattSign")
+    T_Long_Grad = INIGetValue(IniFileName, "Ort", "LongGrad")
+    T_Long_Min = INIGetValue(IniFileName, "Ort", "LongMin")
+    T_Long_Sek = INIGetValue(IniFileName, "Ort", "LongSek")
+    T_Long_Sign = INIGetValue(IniFileName, "Ort", "LongSing")
+    
+    ObserverLatt.Deg = Zahl(T_Latt_Grad)
+    ObserverLatt.Min = Zahl(T_Latt_Min)
+    ObserverLatt.Sec = Zahl(T_Latt_Sek)
+    ObserverLatt.Sign = T_Latt_Sign
+    ObserverLong.Deg = Zahl(T_Long_Grad)
+    ObserverLong.Min = Zahl(T_Long_Min)
+    ObserverLong.Sec = Zahl(T_Long_Sek)
+    ObserverLong.Sign = T_Long_Sign
+    
+    T_Tag = INIGetValue(IniFileName, "Datum", "Tag")
+    T_Monat = INIGetValue(IniFileName, "Datum", "Monat")
+    T_Jahr = INIGetValue(IniFileName, "Datum", "Jahr")
+    
+    T_Stunden = INIGetValue(IniFileName, "Zeit", "Stunden")
+    T_Minuten = INIGetValue(IniFileName, "Zeit", "Minuten")
+    T_Sekunden = INIGetValue(IniFileName, "Zeit", "Sekunden")
 
 End Sub
 
@@ -1272,9 +1440,9 @@ Private Sub Tim_DisplayUpdate_Timer()
     L_Az = TelIncrAz
     L_Alt = TelIncrAlt
     
-    If O_OrientationNorth.Value Then
+    If O_OrientationNorth.value Then
         TelDegAz = TelIncrAz * 360 / EncoderResolution
-    ElseIf O_OrientationSouth.Value Then
+    ElseIf O_OrientationSouth.value Then
         TelDegAz = (TelIncrAz * 360 / EncoderResolution) + 180
     End If
     
@@ -1354,32 +1522,23 @@ End Sub
 
 
 Private Sub Tim_Tracking_Timer()
-    Dim LocalUT As Date
+    Dim CapellaDateTime As Date
     
-    LocalUT = UtcTime(Now)
-
-    L_UT = LocalUT
+    CapellaDateTime = UtcTime(Now)              ' Get current Time
+    L_UT = CapellaDateTime                      ' Convert to UT
 
  ' Capella Kassel
-    Dim CapellaDemoDate As MyDate
-    Dim CapellaDemoTime As MyTime
-    CapellaDemoDate.YY = Year(LocalUT)
-    CapellaDemoDate.MM = Month(LocalUT)
-    CapellaDemoDate.DD = Day(LocalUT)
-    CapellaDemoTime.H = Hour(LocalUT)
-    CapellaDemoTime.M = Minute(LocalUT)
-    CapellaDemoTime.s = Second(LocalUT)
-
     Dim RA_Capella As MyTime
     RA_Capella.H = 5
     RA_Capella.M = 18
     RA_Capella.s = 6
 
-    Dim DEC_Capella As MyTime
-    DEC_Capella.H = 46
-    DEC_Capella.M = 1
-    DEC_Capella.s = 0
-
+    Dim DEC_Capella As GeoCoord
+    DEC_Capella.Deg = 46
+    DEC_Capella.Min = 1
+    DEC_Capella.Sec = 0
+    DEC_Capella.Sign = "+"
+    
     Dim Longitude As GeoCoord                     ' Observer’s longitude
     Longitude.Deg = 9
     Longitude.Min = 18
@@ -1394,15 +1553,22 @@ Private Sub Tim_Tracking_Timer()
 
     Dim Az As Double
     Dim Alt As Double
+    Dim LocalHourAngleRad As Double
     Dim HourAngle As MyTime
-     RA_DEC_to_AZ_ALT RA_Capella, DEC_Capella, Longitude, Latitude, CapellaDemoTime, CapellaDemoDate, Az, Alt, HourAngle
 
-'    L_AzStar = AZ
-    If O_OrientationNorth.Value Then Az = Az + 180
-    L_AzStar = CutAngle(Az)
-    L_AltStar = Alt
+    Dim RA_Capella_Rad As Double
+    RA_Capella_Rad = TimeToRad(RA_Capella)
+    Dim DEC_Capella_Rad As Double
+    DEC_Capella_Rad = DegToRad(GeoToDez(DEC_Capella))
+     
+    RA_DEC_to_AZ_ALT_radian RA_Capella_Rad, DEC_Capella_Rad, Longitude, Latitude, CapellaDateTime, Az, Alt, LocalHourAngleRad
+
+    If O_OrientationNorth.value Then Az = Az + Pi
+    L_AzStar = CutAngle(RadToDeg(Az))
+    L_AltStar = RadToDeg(Alt)
+
+    HourAngle = RadToTime(LocalHourAngleRad)
     L_HourAngle = HourAngle.H & ":" & HourAngle.M & ":" & Format(HourAngle.s, "00.00")
-    
 
 
 
@@ -1411,7 +1577,7 @@ End Sub
 Private Sub VS_ManualSkewingSpeed_Change()
     Dim tmp As Long
     
-    tmp = VS_ManualSkewingSpeed.Value
+    tmp = VS_ManualSkewingSpeed.value
     ManualSkewingSpeed = 1000 * tmp
 End Sub
 

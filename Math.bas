@@ -180,6 +180,32 @@ Public Function TimeToRad(HMS As MyTime) As Double
 End Function
 
 
+
+Public Function StingsToDate(sTag As String, sMonat As String, sJahr As String, sStunden As String, sMinuten As String, sSekunden As String) As Date
+    Dim iTag As Integer
+    Dim iMonat As Integer
+    Dim iJahr As Integer
+    Dim iStunden As Integer
+    Dim iMinuten As Integer
+    Dim iSekunden As Integer
+    
+    iTag = Int(Zahl(sTag))
+    iMonat = Int(Zahl(sMonat))
+    iJahr = Int(Zahl(sJahr))
+    iStunden = Int(Zahl(sStunden))
+    iMinuten = Int(Zahl(sMinuten))
+    iSekunden = Int(Zahl(sSekunden))
+        
+    If (iTag < 1) Or (iTag > 31) Then iTag = 1
+    If (iMonat < 1) Or (iMonat > 12) Then iMonat = 1
+    If (iStunden < 0) Or (iStunden > 23) Then iStunden = 0
+    If (iMinuten < 0) Or (iMinuten > 59) Then iMinuten = 0
+    If (iSekunden < 0) Or (iSekunden > 59) Then iSekunden = 0
+  
+    StingsToDate = iTag & "." & iMonat & "." & iJahr & " " & iStunden & ":" & iMinuten & ":" & iSekunden
+
+End Function
+
 ' Calculates Hours [0h..24h] in radian [0..6,28]
 ' Example: 12h = 3,14
 Public Function HourToRad(Hours As Double) As Double
@@ -269,11 +295,14 @@ Public Sub RA_DEC_to_AZ_ALT_radian(RA_Star_Rad As Double, DEC_Star_Rad As Double
     Mh = LMN_HorizMatrix(1, 0)
     Nh = LMN_HorizMatrix(2, 0)
     
-    
     'Calculate Star position in Altazimuth horizontal coordinate system
     Dim sin_h As Double
-    
+'    When Lh >= 0, (-A) is in the 1st quadrant or the 4th quadrant.
+'    When Lh < 0, (-A) is in the 2nd quadrant or the 3rd quadrant.
     Az = -Atn(Mh / Lh)
+    If Lh < 0 Then
+        Az = Az + Pi
+    End If
     
     'geht möglicherweise einfacher: sin(h) = Nh
     sin_h = Cos(LatitudeRad) * Cos(LocalHourAngleRad) * Cos(DEC_Star_Rad) + Sin(LatitudeRad) * Sin(DEC_Star_Rad)

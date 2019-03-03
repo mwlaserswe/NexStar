@@ -1,4 +1,6 @@
 Attribute VB_Name = "GlobalVariables"
+'ToDo
+
 Option Explicit
 
 Public Const Pi = 3.14159265359
@@ -36,6 +38,7 @@ Public Type AzAlt
 End Type
 
 Public Type StarDescription
+    Index As Long
     ProperName As String
     Bayer As String
     Constellation As String

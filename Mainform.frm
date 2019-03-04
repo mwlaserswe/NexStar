@@ -11,6 +11,30 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   8865
    StartUpPosition =   3  'Windows Default
+   Begin VB.TextBox Text1 
+      Height          =   285
+      Left            =   480
+      TabIndex        =   63
+      Text            =   "40"
+      Top             =   1200
+      Width           =   615
+   End
+   Begin VB.CommandButton C_SetBacklAlt 
+      Caption         =   "Set Backl. Alt"
+      Height          =   255
+      Left            =   240
+      TabIndex        =   62
+      Top             =   840
+      Width           =   1215
+   End
+   Begin VB.CommandButton C_SetBacklAz 
+      Caption         =   "Set Backl. Az"
+      Height          =   255
+      Left            =   240
+      TabIndex        =   61
+      Top             =   480
+      Width           =   1215
+   End
    Begin VB.Frame Frame2 
       Caption         =   "Frame2"
       Height          =   1095
@@ -40,7 +64,7 @@ Begin VB.Form Mainform
       Height          =   975
       Left            =   480
       TabIndex        =   53
-      Top             =   960
+      Top             =   5400
       Width           =   1455
       Begin VB.OptionButton O_OrientationNorth 
          Caption         =   "North"
@@ -288,10 +312,10 @@ Begin VB.Form Mainform
    End
    Begin VB.CommandButton C_SetEncoder 
       Caption         =   "Set Encoder"
-      Height          =   495
-      Left            =   360
+      Height          =   255
+      Left            =   240
       TabIndex        =   4
-      Top             =   240
+      Top             =   120
       Width           =   1215
    End
    Begin VB.CommandButton C_GetAlt 
@@ -708,6 +732,28 @@ Private Sub C_Set_ObserverLocation_Click()
 
 End Sub
 
+Private Sub C_SetBacklAlt_Click()
+    Dim BacklashAlt As Long    '0..100
+
+    BacklashAlt = Text1
+    
+    If SimOffline Then
+    Else
+        NexStarComm.Output = Chr$(&H1E) & SetNexStarPosition(BacklashAlt)
+    End If
+End Sub
+
+Private Sub C_SetBacklAz_Click()
+    Dim BacklashAz As Long    '0..100
+
+    BacklashAz = Text1
+    
+    If SimOffline Then
+    Else
+        NexStarComm.Output = Chr$(&HA) & SetNexStarPosition(BacklashAz)
+    End If
+End Sub
+
 Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntUp = True
@@ -832,7 +878,7 @@ End Sub
 
 
 Private Sub Form_Load()
-    SimOffline = True
+    SimOffline = False
     
     O_OrientationNorth.Value = 1
     O_TimeSelectLocal.Value = 1
@@ -899,9 +945,6 @@ Private Sub InitNexStarComm()
 v24error:
   MsgBox "NexStar RS232 Open error: " & Err.Description, , "Communication NexStar"
 End Sub
-
-
-
 
 
 Private Sub M_Communication_Click()

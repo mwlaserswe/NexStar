@@ -9,6 +9,14 @@ Begin VB.Form Test
    ScaleHeight     =   7320
    ScaleWidth      =   8655
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton Command7 
+      Caption         =   "Command2"
+      Height          =   495
+      Left            =   240
+      TabIndex        =   15
+      Top             =   4080
+      Width           =   1215
+   End
    Begin VB.ListBox List1 
       Height          =   2985
       Left            =   4920
@@ -55,6 +63,16 @@ Begin VB.Form Test
       TabIndex        =   0
       Top             =   240
       Width           =   1215
+   End
+   Begin VB.Label Label1 
+      Alignment       =   1  'Right Justify
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   255
+      Left            =   1800
+      TabIndex        =   16
+      Top             =   4440
+      Width           =   1575
    End
    Begin VB.Label L_AltStar 
       Alignment       =   1  'Right Justify
@@ -144,6 +162,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
 
 ' Test siderial time
 ' https://de.wikibooks.org/wiki/Astronomische_Berechnungen_f%C3%BCr_Amateure/_Zeit/_Zeitrechnungen
@@ -426,22 +445,22 @@ Private Sub Command5_Click()
     k = 1.00273790935
 
     'Equation (5.4-5)
-    lmn_Tel_1.X = Cos(TelElevAngle1) * Cos(TelHorizAngle1)
+    lmn_Tel_1.x = Cos(TelElevAngle1) * Cos(TelHorizAngle1)
     lmn_Tel_1.Y = Cos(TelElevAngle1) * Sin(TelHorizAngle1)
     lmn_Tel_1.z = Sin(TelElevAngle1)
 
     'Equation (5.4-6)
-    LMN_Equ_1.X = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))
+    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))
     LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - k * (ObservTime1Rad - InitTimerad))
     LMN_Equ_1.z = Sin(DEC1Rad)
 
     'Equation (5.4-7)
-    lmn_Tel_2.X = Cos(TelElevAngle2) * Cos(TelHorizAngle2)
+    lmn_Tel_2.x = Cos(TelElevAngle2) * Cos(TelHorizAngle2)
     lmn_Tel_2.Y = Cos(TelElevAngle2) * Sin(TelHorizAngle2)
     lmn_Tel_2.z = Sin(TelElevAngle2)
 
     'Equation (5.4-8)
-    LMN_Equ_2.X = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))
+    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))
     LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - k * (ObservTime2Rad - InitTimerad))
     LMN_Equ_2.z = Sin(DEC2Rad)
 
@@ -465,9 +484,9 @@ Private Sub Command5_Click()
     Dim lmn_Tel__Matrix(10, 10) As Double
     Dim TransformationMatrix(10, 10) As Double
 
-    LMN_Equ__Matrix(0, 0) = LMN_Equ_1.X
-    LMN_Equ__Matrix(0, 1) = LMN_Equ_2.X
-    LMN_Equ__Matrix(0, 2) = LMN_Equ_3.X
+    LMN_Equ__Matrix(0, 0) = LMN_Equ_1.x
+    LMN_Equ__Matrix(0, 1) = LMN_Equ_2.x
+    LMN_Equ__Matrix(0, 2) = LMN_Equ_3.x
     LMN_Equ__Matrix(1, 0) = LMN_Equ_1.Y
     LMN_Equ__Matrix(1, 1) = LMN_Equ_2.Y
     LMN_Equ__Matrix(1, 2) = LMN_Equ_3.Y
@@ -477,9 +496,9 @@ Private Sub Command5_Click()
 
     Calculate_Inverse 3, LMN_Equ__Matrix, LMN_Equ__MatrixInvers
 
-    lmn_Tel__Matrix(0, 0) = lmn_Tel_1.X
-    lmn_Tel__Matrix(0, 1) = lmn_Tel_2.X
-    lmn_Tel__Matrix(0, 2) = lmn_Tel_3.X
+    lmn_Tel__Matrix(0, 0) = lmn_Tel_1.x
+    lmn_Tel__Matrix(0, 1) = lmn_Tel_2.x
+    lmn_Tel__Matrix(0, 2) = lmn_Tel_3.x
     lmn_Tel__Matrix(1, 0) = lmn_Tel_1.Y
     lmn_Tel__Matrix(1, 1) = lmn_Tel_2.Y
     lmn_Tel__Matrix(1, 2) = lmn_Tel_3.Y
@@ -513,13 +532,13 @@ Private Sub Command5_Click()
     AimTimeRad = TimeToRad(AimTime)
 
     'LMN_Equ_1: Vector points to Beta Cet in equatorial coordinats
-    LMN_Equ_1.X = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
+    LMN_Equ_1.x = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_1.Y = Cos(DEC_BetaCetRad) * Sin(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_1.z = Sin(DEC_BetaCetRad)
 
 
 
-    LMN_Equ__Matrix(0, 0) = LMN_Equ_1.X
+    LMN_Equ__Matrix(0, 0) = LMN_Equ_1.x
     LMN_Equ__Matrix(1, 0) = LMN_Equ_1.Y
     LMN_Equ__Matrix(2, 0) = LMN_Equ_1.z
 
@@ -528,7 +547,7 @@ Private Sub Command5_Click()
 
     'lmn_Tel__Matrix: Vector points to Beta Cet in equatorial coordinats
 
-    lmn_Tel_1.X = lmn_Tel__Matrix(0, 0)
+    lmn_Tel_1.x = lmn_Tel__Matrix(0, 0)
     lmn_Tel_1.Y = lmn_Tel__Matrix(1, 0)
     lmn_Tel_1.z = lmn_Tel__Matrix(2, 0)
 
@@ -549,3 +568,17 @@ Private Sub Command5_Click()
 
 End Sub
 
+Private Sub Command7_Click()
+    Dim i As Long
+    
+    Dim dummy As Double
+    Label1 = "1"
+        For i = 1 To 10000000
+            dummy = dummy * Pi
+        Next i
+    Label1 = "2"
+        For i = 1 To 10000000
+            dummy = dummy * Pi
+        Next i
+    Label1 = "3"
+End Sub

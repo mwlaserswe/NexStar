@@ -1,16 +1,16 @@
 VERSION 5.00
-Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMm32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form Mainform 
    Caption         =   "Form1"
    ClientHeight    =   11235
-   ClientLeft      =   225
-   ClientTop       =   870
+   ClientLeft      =   165
+   ClientTop       =   735
    ClientWidth     =   8865
    LinkTopic       =   "Form1"
    ScaleHeight     =   11235
    ScaleWidth      =   8865
-   StartUpPosition =   3  'Windows Default
+   StartUpPosition =   3  'Windows-Standard
    Begin VB.TextBox Text1 
       Height          =   285
       Left            =   480
@@ -242,7 +242,7 @@ Begin VB.Form Mainform
       Width           =   1335
    End
    Begin VB.TextBox T_AltTel 
-      Alignment       =   1  'Right Justify
+      Alignment       =   1  'Rechts
       Height          =   285
       Left            =   4320
       TabIndex        =   12
@@ -251,7 +251,7 @@ Begin VB.Form Mainform
       Width           =   1215
    End
    Begin VB.TextBox T_AzTel 
-      Alignment       =   1  'Right Justify
+      Alignment       =   1  'Rechts
       Height          =   285
       Left            =   4320
       TabIndex        =   11
@@ -262,44 +262,44 @@ Begin VB.Form Mainform
    Begin VB.VScrollBar VS_ManualSkewingSpeed 
       Height          =   2295
       LargeChange     =   10
-      Left            =   3960
+      Left            =   4560
       Max             =   0
       Min             =   100
       TabIndex        =   10
-      Top             =   2520
+      Top             =   3240
       Value           =   100
       Width           =   255
    End
    Begin VB.CommandButton C_Le 
       Caption         =   "<"
       Height          =   255
-      Left            =   2160
+      Left            =   2760
       TabIndex        =   9
-      Top             =   3360
+      Top             =   4080
       Width           =   375
    End
    Begin VB.CommandButton C_Dn 
       Caption         =   "V"
       Height          =   255
-      Left            =   2640
+      Left            =   3240
       TabIndex        =   8
-      Top             =   3720
+      Top             =   4440
       Width           =   375
    End
    Begin VB.CommandButton C_Ri 
       Caption         =   ">"
       Height          =   255
-      Left            =   3120
+      Left            =   3720
       TabIndex        =   7
-      Top             =   3360
+      Top             =   4080
       Width           =   375
    End
    Begin VB.CommandButton C_Up 
       Caption         =   "^"
       Height          =   255
-      Left            =   2640
+      Left            =   3240
       TabIndex        =   6
-      Top             =   3000
+      Top             =   3720
       Width           =   375
    End
    Begin VB.ListBox AlignmentStarList 
@@ -346,22 +346,54 @@ Begin VB.Form Mainform
       BaudRate        =   4800
       InputMode       =   1
    End
+   Begin VB.Frame Frame3 
+      Caption         =   "Time"
+      Height          =   1455
+      Left            =   240
+      TabIndex        =   64
+      Top             =   1920
+      Width           =   4335
+      Begin VB.Label L_UTime 
+         Caption         =   "UT"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   67
+         Top             =   600
+         Width           =   4095
+      End
+      Begin VB.Label L_SiderialTime 
+         Caption         =   "Siderial Time"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   66
+         Top             =   840
+         Width           =   4095
+      End
+      Begin VB.Label L_LocalTime 
+         Caption         =   "Local Time"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   65
+         Top             =   360
+         Width           =   4095
+      End
+   End
    Begin VB.Label Label13 
       Caption         =   "Skewing Speed"
       Height          =   255
-      Left            =   2280
+      Left            =   2880
       TabIndex        =   60
-      Top             =   4200
+      Top             =   4920
       Width           =   1335
    End
    Begin VB.Label L_SkewingSpeed 
-      Alignment       =   1  'Right Justify
-      BorderStyle     =   1  'Fixed Single
+      Alignment       =   1  'Rechts
+      BorderStyle     =   1  'Fest Einfach
       Caption         =   "--"
       Height          =   255
-      Left            =   2280
+      Left            =   2880
       TabIndex        =   59
-      Top             =   4560
+      Top             =   5280
       Width           =   1215
    End
    Begin VB.Label Label16 
@@ -469,7 +501,7 @@ Begin VB.Form Mainform
       Width           =   615
    End
    Begin VB.Label L_CurrentStar 
-      BorderStyle     =   1  'Fixed Single
+      BorderStyle     =   1  'Fest Einfach
       Caption         =   "Label2"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
@@ -487,8 +519,8 @@ Begin VB.Form Mainform
       Width           =   2775
    End
    Begin VB.Label L_UT 
-      Alignment       =   1  'Right Justify
-      BorderStyle     =   1  'Fixed Single
+      Alignment       =   1  'Rechts
+      BorderStyle     =   1  'Fest Einfach
       Caption         =   "--"
       Height          =   255
       Left            =   2400
@@ -505,8 +537,8 @@ Begin VB.Form Mainform
       Width           =   855
    End
    Begin VB.Label L_HourAngle 
-      Alignment       =   1  'Right Justify
-      BorderStyle     =   1  'Fixed Single
+      Alignment       =   1  'Rechts
+      BorderStyle     =   1  'Fest Einfach
       Caption         =   "--"
       Height          =   255
       Left            =   3120
@@ -531,8 +563,8 @@ Begin VB.Form Mainform
       Width           =   615
    End
    Begin VB.Label L_AzStar 
-      Alignment       =   1  'Right Justify
-      BorderStyle     =   1  'Fixed Single
+      Alignment       =   1  'Rechts
+      BorderStyle     =   1  'Fest Einfach
       Caption         =   "--"
       Height          =   255
       Left            =   3120
@@ -541,8 +573,8 @@ Begin VB.Form Mainform
       Width           =   1575
    End
    Begin VB.Label L_AltStar 
-      Alignment       =   1  'Right Justify
-      BorderStyle     =   1  'Fixed Single
+      Alignment       =   1  'Rechts
+      BorderStyle     =   1  'Fest Einfach
       Caption         =   "--"
       Height          =   255
       Left            =   3120
@@ -551,8 +583,8 @@ Begin VB.Form Mainform
       Width           =   1575
    End
    Begin VB.Label L_TelDegAlt 
-      Alignment       =   1  'Right Justify
-      BorderStyle     =   1  'Fixed Single
+      Alignment       =   1  'Rechts
+      BorderStyle     =   1  'Fest Einfach
       Caption         =   "--"
       Height          =   375
       Left            =   4800
@@ -561,8 +593,8 @@ Begin VB.Form Mainform
       Width           =   1215
    End
    Begin VB.Label L_TelDegAz 
-      Alignment       =   1  'Right Justify
-      BorderStyle     =   1  'Fixed Single
+      Alignment       =   1  'Rechts
+      BorderStyle     =   1  'Fest Einfach
       Caption         =   "--"
       Height          =   375
       Left            =   4800
@@ -571,8 +603,8 @@ Begin VB.Form Mainform
       Width           =   1215
    End
    Begin VB.Label L_Az 
-      Alignment       =   1  'Right Justify
-      BorderStyle     =   1  'Fixed Single
+      Alignment       =   1  'Rechts
+      BorderStyle     =   1  'Fest Einfach
       Caption         =   "--"
       Height          =   375
       Left            =   3360
@@ -581,8 +613,8 @@ Begin VB.Form Mainform
       Width           =   1215
    End
    Begin VB.Label L_Alt 
-      Alignment       =   1  'Right Justify
-      BorderStyle     =   1  'Fixed Single
+      Alignment       =   1  'Rechts
+      BorderStyle     =   1  'Fest Einfach
       Caption         =   "--"
       Height          =   375
       Left            =   3360
@@ -754,7 +786,7 @@ Private Sub C_SetBacklAz_Click()
     End If
 End Sub
 
-Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntUp = True
     Else
@@ -762,7 +794,7 @@ Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntUp = False
     Else
@@ -770,7 +802,7 @@ Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntDn = True
     Else
@@ -778,7 +810,7 @@ Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntDn = False
     Else
@@ -786,7 +818,7 @@ Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntLe = True
     Else
@@ -794,7 +826,7 @@ Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntLe = False
     Else
@@ -802,7 +834,7 @@ Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntRi = True
     Else
@@ -810,7 +842,7 @@ Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntRi = False
     Else
@@ -878,7 +910,7 @@ End Sub
 
 
 Private Sub Form_Load()
-    SimOffline = False
+    SimOffline = True
     
     O_OrientationNorth.Value = 1
     O_TimeSelectLocal.Value = 1
@@ -945,6 +977,8 @@ Private Sub InitNexStarComm()
 v24error:
   MsgBox "NexStar RS232 Open error: " & Err.Description, , "Communication NexStar"
 End Sub
+
+
 
 
 Private Sub M_Communication_Click()
@@ -1120,10 +1154,30 @@ End Sub
 
 
 Private Sub Tim_Tracking_Timer()
+    Dim tTime As MyTime
+    Dim tDate As MyDate
+    Dim tTs As MyTime
+  
+    
 
     If O_TimeSelectLocal.Value = True Then
         ObserverDateTimeUT = UtcTime(Now)              ' Get current Time
         L_UT = ObserverDateTimeUT                      ' Convert to UT
+        
+        L_LocalTime = " Local time:   " & Now
+        L_UTime = " UT:              " & ObserverDateTimeUT
+        
+        tTime.H = Hour(ObserverDateTimeUT)
+        tTime.M = Minute(ObserverDateTimeUT)
+        tTime.s = Second(ObserverDateTimeUT)
+        tDate.YY = Year(ObserverDateTimeUT)
+        tDate.MM = Month(ObserverDateTimeUT)
+        tDate.DD = Day(ObserverDateTimeUT)
+        tTs = GMST(tDate, tTime)
+        L_SiderialTime = "Siderial time: " & tTs.H & ":" & tTs.M & ":" & CInt(tTs.s)
+        
+        
+        
     Else
         ' Take simulation time
         ObserverDateTimeUT = StingsToDate(T_Tag, T_Monat, T_Jahr, T_Stunden, T_Minuten, T_Sekunden)

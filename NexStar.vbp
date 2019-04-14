@@ -11,6 +11,7 @@ Module=Matrix; Matrix.bas
 Module=Timefcts; Timefcts.bas
 Object={648A5603-2C6E-101B-82B6-000000000014}#1.1#0; MSCOMM32.OCX
 Form=Test.frm
+Form=Communication.frm
 IconForm="Mainform"
 Startup="Mainform"
 ExeName32="NexStar.exe"

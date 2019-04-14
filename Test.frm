@@ -9,6 +9,22 @@ Begin VB.Form Test
    ScaleHeight     =   7320
    ScaleWidth      =   8655
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton C_TestKalibrierung_3 
+      Caption         =   "3. Test Kal."
+      Height          =   435
+      Left            =   240
+      TabIndex        =   18
+      Top             =   2400
+      Width           =   1215
+   End
+   Begin VB.CommandButton C_TestKalibrierung_2 
+      Caption         =   "2. Test der Kalibrierung"
+      Height          =   435
+      Left            =   240
+      TabIndex        =   17
+      Top             =   1560
+      Width           =   1215
+   End
    Begin VB.CommandButton Command7 
       Caption         =   "Command2"
       Height          =   495
@@ -32,20 +48,20 @@ Begin VB.Form Test
       Top             =   3120
       Width           =   1335
    End
-   Begin VB.CommandButton Command5 
-      Caption         =   "Command5"
-      Height          =   315
+   Begin VB.CommandButton C_TestKalibrierung 
+      Caption         =   "Test der Kalibrierung"
+      Height          =   435
       Left            =   240
       TabIndex        =   6
-      Top             =   2400
+      Top             =   840
       Width           =   1215
    End
    Begin VB.CommandButton Command3 
       Caption         =   "Command3"
       Height          =   255
-      Left            =   240
+      Left            =   360
       TabIndex        =   5
-      Top             =   960
+      Top             =   6240
       Width           =   1215
    End
    Begin VB.CommandButton Command1 
@@ -53,7 +69,7 @@ Begin VB.Form Test
       Height          =   255
       Left            =   240
       TabIndex        =   4
-      Top             =   1680
+      Top             =   5520
       Width           =   1215
    End
    Begin VB.CommandButton C_TestSiderialTime 
@@ -163,6 +179,406 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+Private Sub C_TestKalibrierung_2_Click()
+    ' matrix_method_rev_d.pdf Seite 37
+    Dim tmp As Vector
+
+    Dim tst As MyTime
+    Dim InitTimerad As Double
+    Dim ObservTime1Rad As Double
+    Dim ObservTime2Rad As Double
+    Dim RA1Rad As Double
+    Dim RA2Rad As Double
+    Dim RA1Deg As Double
+    Dim RA2Deg As Double
+    Dim DEC1Rad As Double
+    Dim DEC2Rad As Double
+    Dim TelHorizAngle1 As Double
+    Dim TelHorizAngle2 As Double
+    Dim TelElevAngle1 As Double
+    Dim TelElevAngle2 As Double
+
+    'Observation date/time 1.8.2000 22:00:00 UT
+    'Observation location: Munich: 48°08'00"N (-)11°34'00"E
+
+    'Initial time
+    tst.H = 22
+    tst.M = 0
+    tst.s = 0
+    InitTimerad = TimeToRad(tst)
+
+    'time pointing to 1. reference star
+    tst.H = 22
+    tst.M = 0
+    tst.s = 0
+    ObservTime1Rad = TimeToRad(tst)
+
+    'RA DEC of 1. star (Alpheratz oder Sirrah - Alpha And)
+    tst.H = 0
+    tst.M = 7
+    tst.s = 54
+    RA1Rad = TimeToRad(tst)
+    RA1Deg = RadToDeg(RA1Rad)   '1.975°
+    DEC1Rad = DegToRad(29.038)
+    'Telescope cooridinates 1. star
+    TelHorizAngle1 = DegToRad(83.119)
+    TelElevAngle1 = DegToRad(34.248)
+
+    'time Ppointing to 2. reference star
+    tst.H = 22
+    tst.M = 0
+    tst.s = 0
+    ObservTime2Rad = TimeToRad(tst)
+
+    'RA DEC of 2. star (Polaris - Alpha Umi)
+    tst.H = 2
+    tst.M = 21
+    tst.s = 45
+    RA2Rad = TimeToRad(tst)
+    RA2Deg = RadToDeg(RA2Rad)   '35,4375°
+    DEC2Rad = DegToRad(89.222)
+    'Telescope cooridinates 2. star
+    TelHorizAngle2 = DegToRad(1.058)
+    TelElevAngle2 = DegToRad(47.931)
+
+
+    Dim lmn_Tel_1 As Vector     ' Telescope coordinates
+    Dim lmn_Tel_2 As Vector
+    Dim lmn_Tel_3 As Vector
+    Dim LMN_Equ_1 As Vector
+    Dim LMN_Equ_2 As Vector
+    Dim LMN_Equ_3 As Vector
+    Dim k As Double         ' Umrechnung Sonnenzeit in siderische Zeit 1.00273790935
+    k = 1.00273790935
+
+    'Equation (5.4-5)
+    'Telescope coordinates star 1
+    lmn_Tel_1.x = Cos(TelElevAngle1) * Cos(TelHorizAngle1)  '0.099
+    lmn_Tel_1.Y = Cos(TelElevAngle1) * Sin(TelHorizAngle1)  '0.8207
+    lmn_Tel_1.z = Sin(TelElevAngle1)                        '0.5628
+
+
+    'Equation (5.4-6)
+    'RA DEC star 1
+    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))   '0.8738
+    LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - k * (ObservTime1Rad - InitTimerad))   '0.0301
+    LMN_Equ_1.z = Sin(DEC1Rad)                                                      '0.4854
+
+    'Equation (5.4-7)
+    'Telescope coordinates star 2
+    lmn_Tel_2.x = Cos(TelElevAngle2) * Cos(TelHorizAngle2)  '0.6699
+    lmn_Tel_2.Y = Cos(TelElevAngle2) * Sin(TelHorizAngle2)  '0.0124
+    lmn_Tel_2.z = Sin(TelElevAngle2)                        '0.7423
+
+    'Equation (5.4-8)
+    'RA DEC star 2
+    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))   '0.0111
+    LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - k * (ObservTime2Rad - InitTimerad))   '0.0079
+    LMN_Equ_2.z = Sin(DEC2Rad)                                                      '0.9999
+
+    Dim V1_cross_V2 As Vector
+    Dim Len_V1_cross_V2 As Double
+
+    'Equation (5.4-13)
+    V1_cross_V2 = CrossProduct(lmn_Tel_1, lmn_Tel_2)
+    Len_V1_cross_V2 = LenghtVector(V1_cross_V2)
+    lmn_Tel_3 = ScalarProduct((1 / Len_V1_cross_V2), V1_cross_V2)
+
+    'Equation (5.4-14)
+    V1_cross_V2 = CrossProduct(LMN_Equ_1, LMN_Equ_2)
+    Len_V1_cross_V2 = LenghtVector(V1_cross_V2)
+    LMN_Equ_3 = ScalarProduct((1 / Len_V1_cross_V2), V1_cross_V2)
+
+
+    'From equation(5.4 - 11)
+    Dim LMN_Equ_Matrix(10, 10) As Double
+    Dim LMN_Equ_MatrixInvers(10, 10) As Double
+    Dim lmn_Tel_Matrix(10, 10) As Double
+    Dim TransformationMatrix(10, 10) As Double
+
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x
+    LMN_Equ_Matrix(0, 1) = LMN_Equ_2.x
+    LMN_Equ_Matrix(0, 2) = LMN_Equ_3.x
+    LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y
+    LMN_Equ_Matrix(1, 1) = LMN_Equ_2.Y
+    LMN_Equ_Matrix(1, 2) = LMN_Equ_3.Y
+    LMN_Equ_Matrix(2, 0) = LMN_Equ_1.z
+    LMN_Equ_Matrix(2, 1) = LMN_Equ_2.z
+    LMN_Equ_Matrix(2, 2) = LMN_Equ_3.z
+
+    Calculate_Inverse 3, LMN_Equ_Matrix, LMN_Equ_MatrixInvers
+
+    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.x
+    lmn_Tel_Matrix(0, 1) = lmn_Tel_2.x
+    lmn_Tel_Matrix(0, 2) = lmn_Tel_3.x
+    lmn_Tel_Matrix(1, 0) = lmn_Tel_1.Y
+    lmn_Tel_Matrix(1, 1) = lmn_Tel_2.Y
+    lmn_Tel_Matrix(1, 2) = lmn_Tel_3.Y
+    lmn_Tel_Matrix(2, 0) = lmn_Tel_1.z
+    lmn_Tel_Matrix(2, 1) = lmn_Tel_2.z
+    lmn_Tel_Matrix(2, 2) = lmn_Tel_3.z
+
+    '==================================================================================================
+    'This is the TransformationMatrix which transforms a vector from eqatorial to telescope coordinates
+    '==================================================================================================
+    MatrixProduct lmn_Tel_Matrix, 3, 3, LMN_Equ_MatrixInvers, 3, 3, TransformationMatrix
+
+
+
+    '=================================
+    ' Example:Deneb
+    '=================================
+
+    Dim RA_BetaCet As MyTime
+    Dim DEC_BetaCet As Double
+    Dim AimTime As MyTime
+    Dim RA_BetaCetRad As Double
+    Dim DEC_BetaCetRad As Double
+    Dim AimTimeRad As Double
+
+    ' if you want to aim the telescope at Deneb (RA = 20h41m26s, DEC = 45.28°) at 22h0m0s
+    RA_BetaCet.H = 20: RA_BetaCet.M = 41: RA_BetaCet.s = 26
+    RA_BetaCetRad = TimeToRad(RA_BetaCet)
+    DEC_BetaCetRad = DegToRad(45.28)
+    AimTime.H = 22: AimTime.M = 0: AimTime.s = 0
+    AimTimeRad = TimeToRad(AimTime)
+
+    'LMN_Equ_Result: Vector points to Deneb in equatorial coordinats
+    Dim LMN_Equ_Result  As Vector
+    LMN_Equ_Result.x = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.Y = Cos(DEC_BetaCetRad) * Sin(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.z = Sin(DEC_BetaCetRad)
+
+
+
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_Result.x
+    LMN_Equ_Matrix(1, 0) = LMN_Equ_Result.Y
+    LMN_Equ_Matrix(2, 0) = LMN_Equ_Result.z
+
+    MatrixProduct TransformationMatrix, 3, 3, LMN_Equ_Matrix, 3, 1, lmn_Tel_Matrix
+
+    'lmn_Tel_Matrix: Vector points to Deneb in equatorial coordinats
+
+    Dim lmn_Tel_Result  As Vector
+    lmn_Tel_Result.x = lmn_Tel_Matrix(0, 0)
+    lmn_Tel_Result.Y = lmn_Tel_Matrix(1, 0)
+    lmn_Tel_Result.z = lmn_Tel_Matrix(2, 0)
+
+    Dim AzAlt_BetaCet As AzAlt
+    Dim Az_BetaCetRad As Double
+    Dim Alt_BetaCetRad As Double
+    Dim Az_BetaCet As Double
+    Dim Alt_BetaCet As Double
+
+    AzAlt_BetaCet = VectorToAzAlt(lmn_Tel_Result)
+    Az_BetaCetRad = AzAlt_BetaCet.Az
+    Alt_BetaCetRad = AzAlt_BetaCet.Alt
+
+    ' !!! hier muß möglicherweise noch 180° addiert werden !!!
+    Az_BetaCet = RadToDeg(Az_BetaCetRad)
+
+    Alt_BetaCet = RadToDeg(Alt_BetaCetRad)
+
+
+End Sub
+
+Private Sub C_TestKalibrierung_3_Click()
+    ' matrix_method_rev_d.pdf Seite 37
+    Dim tmp As Vector
+
+    Dim tst As MyTime
+    Dim InitTimerad As Double
+    Dim ObservTime1Rad As Double
+    Dim ObservTime2Rad As Double
+    Dim RA1Rad As Double
+    Dim RA2Rad As Double
+    Dim RA1Deg As Double
+    Dim RA2Deg As Double
+    Dim DEC1Rad As Double
+    Dim DEC2Rad As Double
+    Dim TelHorizAngle1 As Double
+    Dim TelHorizAngle2 As Double
+    Dim TelElevAngle1 As Double
+    Dim TelElevAngle2 As Double
+
+
+    tst.H = 21
+    tst.M = 0
+    tst.s = 0
+    InitTimerad = TimeToRad(tst)
+
+    tst.H = 21
+    tst.M = 27
+    tst.s = 56
+    ObservTime1Rad = TimeToRad(tst)
+
+    tst.H = 0
+    tst.M = 7
+    tst.s = 54
+    RA1Rad = TimeToRad(tst)
+    RA1Deg = RadToDeg(RA1Rad)
+    DEC1Rad = DegToRad(29.038)
+    TelHorizAngle1 = DegToRad(99.25)
+    TelElevAngle1 = DegToRad(83.87)
+
+    tst.H = 21
+    tst.M = 37
+    tst.s = 2
+    ObservTime2Rad = TimeToRad(tst)
+
+    tst.H = 2
+    tst.M = 21
+    tst.s = 45
+    RA2Rad = TimeToRad(tst)
+    RA2Deg = RadToDeg(RA2Rad)
+    DEC2Rad = DegToRad(89.222)
+    TelHorizAngle2 = DegToRad(310.98)
+    TelElevAngle2 = DegToRad(35.04)
+
+
+    Dim lmn_Tel_1 As Vector     ' Telescope coordinates
+    Dim lmn_Tel_2 As Vector
+    Dim lmn_Tel_3 As Vector
+    Dim LMN_Equ_1 As Vector
+    Dim LMN_Equ_2 As Vector
+    Dim LMN_Equ_3 As Vector
+    Dim k As Double         ' Umrechnung Sonnenzeit in siderische Zeit 1.00273790935
+    k = 1.00273790935
+
+    'Equation (5.4-5)
+    lmn_Tel_1.x = Cos(TelElevAngle1) * Cos(TelHorizAngle1)
+    lmn_Tel_1.Y = Cos(TelElevAngle1) * Sin(TelHorizAngle1)
+    lmn_Tel_1.z = Sin(TelElevAngle1)
+
+    'Equation (5.4-6)
+    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))
+    LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - k * (ObservTime1Rad - InitTimerad))
+    LMN_Equ_1.z = Sin(DEC1Rad)
+
+    'Equation (5.4-7)
+    lmn_Tel_2.x = Cos(TelElevAngle2) * Cos(TelHorizAngle2)
+    lmn_Tel_2.Y = Cos(TelElevAngle2) * Sin(TelHorizAngle2)
+    lmn_Tel_2.z = Sin(TelElevAngle2)
+
+    'Equation (5.4-8)
+    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))
+    LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - k * (ObservTime2Rad - InitTimerad))
+    LMN_Equ_2.z = Sin(DEC2Rad)
+
+    Dim V1_cross_V2 As Vector
+    Dim Len_V1_cross_V2 As Double
+
+    'Equation (5.4-13)
+    V1_cross_V2 = CrossProduct(lmn_Tel_1, lmn_Tel_2)
+    Len_V1_cross_V2 = LenghtVector(V1_cross_V2)
+    lmn_Tel_3 = ScalarProduct((1 / Len_V1_cross_V2), V1_cross_V2)
+
+    'Equation (5.4-14)
+    V1_cross_V2 = CrossProduct(LMN_Equ_1, LMN_Equ_2)
+    Len_V1_cross_V2 = LenghtVector(V1_cross_V2)
+    LMN_Equ_3 = ScalarProduct((1 / Len_V1_cross_V2), V1_cross_V2)
+
+
+    'From equation(5.4 - 11)
+    Dim LMN_Equ_Matrix(10, 10) As Double
+    Dim LMN_Equ_MatrixInvers(10, 10) As Double
+    Dim lmn_Tel_Matrix(10, 10) As Double
+    Dim TransformationMatrix(10, 10) As Double
+
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x
+    LMN_Equ_Matrix(0, 1) = LMN_Equ_2.x
+    LMN_Equ_Matrix(0, 2) = LMN_Equ_3.x
+    LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y
+    LMN_Equ_Matrix(1, 1) = LMN_Equ_2.Y
+    LMN_Equ_Matrix(1, 2) = LMN_Equ_3.Y
+    LMN_Equ_Matrix(2, 0) = LMN_Equ_1.z
+    LMN_Equ_Matrix(2, 1) = LMN_Equ_2.z
+    LMN_Equ_Matrix(2, 2) = LMN_Equ_3.z
+
+    Calculate_Inverse 3, LMN_Equ_Matrix, LMN_Equ_MatrixInvers
+
+    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.x
+    lmn_Tel_Matrix(0, 1) = lmn_Tel_2.x
+    lmn_Tel_Matrix(0, 2) = lmn_Tel_3.x
+    lmn_Tel_Matrix(1, 0) = lmn_Tel_1.Y
+    lmn_Tel_Matrix(1, 1) = lmn_Tel_2.Y
+    lmn_Tel_Matrix(1, 2) = lmn_Tel_3.Y
+    lmn_Tel_Matrix(2, 0) = lmn_Tel_1.z
+    lmn_Tel_Matrix(2, 1) = lmn_Tel_2.z
+    lmn_Tel_Matrix(2, 2) = lmn_Tel_3.z
+
+    '==================================================================================================
+    'This is the TransformationMatrix which transforms a vector from eqatorial to telescope coordinates
+    '==================================================================================================
+    MatrixProduct lmn_Tel_Matrix, 3, 3, LMN_Equ_MatrixInvers, 3, 3, TransformationMatrix
+
+
+
+
+
+    '=================================
+    ' Example: Beta Cet: Deneb Kaitos
+    '=================================
+
+    Dim RA_BetaCet As MyTime
+    Dim DEC_BetaCet As Double
+    Dim AimTime As MyTime
+    Dim RA_BetaCetRad As Double
+    Dim DEC_BetaCetRad As Double
+    Dim AimTimeRad As Double
+
+    ' if you want to aim the telescope at Beta Cet (RA = 0h43m07s, DEC = -18.038°) at 21h52m12s
+    RA_BetaCet.H = 2: RA_BetaCet.M = 21: RA_BetaCet.s = 45
+    RA_BetaCetRad = TimeToRad(RA_BetaCet)
+    DEC_BetaCetRad = DegToRad(89.222)
+    AimTime.H = 21: AimTime.M = 37: AimTime.s = 2
+    AimTimeRad = TimeToRad(AimTime)
+
+ 
+    'LMN_Equ_1: Vector points to Beta Cet in equatorial coordinats
+    LMN_Equ_1.x = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
+    LMN_Equ_1.Y = Cos(DEC_BetaCetRad) * Sin(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
+    LMN_Equ_1.z = Sin(DEC_BetaCetRad)
+
+
+
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x
+    LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y
+    LMN_Equ_Matrix(2, 0) = LMN_Equ_1.z
+
+
+    MatrixProduct TransformationMatrix, 3, 3, LMN_Equ_Matrix, 3, 1, lmn_Tel_Matrix
+
+    'lmn_Tel__Matrix: Vector points to Beta Cet in equatorial coordinats
+
+    lmn_Tel_1.x = lmn_Tel_Matrix(0, 0)
+    lmn_Tel_1.Y = lmn_Tel_Matrix(1, 0)
+    lmn_Tel_1.z = lmn_Tel_Matrix(2, 0)
+
+    Dim AzAlt_BetaCet As AzAlt
+    Dim Az_BetaCetRad As Double
+    Dim Alt_BetaCetRad As Double
+    Dim Az_BetaCet As Double
+    Dim Az_BetaCet_corrected_1 As Double
+    Dim Az_BetaCet_corrected_2 As Double
+    Dim Alt_BetaCet As Double
+
+    AzAlt_BetaCet = VectorToAzAlt(lmn_Tel_1)
+    Az_BetaCetRad = AzAlt_BetaCet.Az
+    Alt_BetaCetRad = AzAlt_BetaCet.Alt
+
+    Az_BetaCet = RadToDeg(Az_BetaCetRad)
+    
+    ' !!! hier muß möglicherweise noch 180° addiert werden !!!
+    Az_BetaCet_corrected_1 = 180 - Az_BetaCet
+    Az_BetaCet_corrected_2 = Az_BetaCet_corrected_1 + 180
+
+    Alt_BetaCet = RadToDeg(Alt_BetaCetRad)
+
+
+
+End Sub
 
 ' Test siderial time
 ' https://de.wikibooks.org/wiki/Astronomische_Berechnungen_f%C3%BCr_Amateure/_Zeit/_Zeitrechnungen
@@ -385,7 +801,7 @@ Private Sub Command4_Click()
 
 
 End Sub
-Private Sub Command5_Click()
+Private Sub C_TestKalibrierung_Click()
     ' matrix_method_rev_d.pdf Seite 37
     Dim tmp As Vector
 
@@ -395,6 +811,8 @@ Private Sub Command5_Click()
     Dim ObservTime2Rad As Double
     Dim RA1Rad As Double
     Dim RA2Rad As Double
+    Dim RA1Deg As Double
+    Dim RA2Deg As Double
     Dim DEC1Rad As Double
     Dim DEC2Rad As Double
     Dim TelHorizAngle1 As Double
@@ -417,6 +835,7 @@ Private Sub Command5_Click()
     tst.M = 7
     tst.s = 54
     RA1Rad = TimeToRad(tst)
+    RA1Deg = RadToDeg(RA1Rad)
     DEC1Rad = DegToRad(29.038)
     TelHorizAngle1 = DegToRad(99.25)
     TelElevAngle1 = DegToRad(83.87)
@@ -430,6 +849,7 @@ Private Sub Command5_Click()
     tst.M = 21
     tst.s = 45
     RA2Rad = TimeToRad(tst)
+    RA2Deg = RadToDeg(RA2Rad)
     DEC2Rad = DegToRad(89.222)
     TelHorizAngle2 = DegToRad(310.98)
     TelElevAngle2 = DegToRad(35.04)
@@ -479,37 +899,39 @@ Private Sub Command5_Click()
 
 
     'From equation(5.4 - 11)
-    Dim LMN_Equ__Matrix(10, 10) As Double
-    Dim LMN_Equ__MatrixInvers(10, 10) As Double
-    Dim lmn_Tel__Matrix(10, 10) As Double
+    Dim LMN_Equ_Matrix(10, 10) As Double
+    Dim LMN_Equ_MatrixInvers(10, 10) As Double
+    Dim lmn_Tel_Matrix(10, 10) As Double
     Dim TransformationMatrix(10, 10) As Double
 
-    LMN_Equ__Matrix(0, 0) = LMN_Equ_1.x
-    LMN_Equ__Matrix(0, 1) = LMN_Equ_2.x
-    LMN_Equ__Matrix(0, 2) = LMN_Equ_3.x
-    LMN_Equ__Matrix(1, 0) = LMN_Equ_1.Y
-    LMN_Equ__Matrix(1, 1) = LMN_Equ_2.Y
-    LMN_Equ__Matrix(1, 2) = LMN_Equ_3.Y
-    LMN_Equ__Matrix(2, 0) = LMN_Equ_1.z
-    LMN_Equ__Matrix(2, 1) = LMN_Equ_2.z
-    LMN_Equ__Matrix(2, 2) = LMN_Equ_3.z
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x
+    LMN_Equ_Matrix(0, 1) = LMN_Equ_2.x
+    LMN_Equ_Matrix(0, 2) = LMN_Equ_3.x
+    LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y
+    LMN_Equ_Matrix(1, 1) = LMN_Equ_2.Y
+    LMN_Equ_Matrix(1, 2) = LMN_Equ_3.Y
+    LMN_Equ_Matrix(2, 0) = LMN_Equ_1.z
+    LMN_Equ_Matrix(2, 1) = LMN_Equ_2.z
+    LMN_Equ_Matrix(2, 2) = LMN_Equ_3.z
 
-    Calculate_Inverse 3, LMN_Equ__Matrix, LMN_Equ__MatrixInvers
+    Calculate_Inverse 3, LMN_Equ_Matrix, LMN_Equ_MatrixInvers
 
-    lmn_Tel__Matrix(0, 0) = lmn_Tel_1.x
-    lmn_Tel__Matrix(0, 1) = lmn_Tel_2.x
-    lmn_Tel__Matrix(0, 2) = lmn_Tel_3.x
-    lmn_Tel__Matrix(1, 0) = lmn_Tel_1.Y
-    lmn_Tel__Matrix(1, 1) = lmn_Tel_2.Y
-    lmn_Tel__Matrix(1, 2) = lmn_Tel_3.Y
-    lmn_Tel__Matrix(2, 0) = lmn_Tel_1.z
-    lmn_Tel__Matrix(2, 1) = lmn_Tel_2.z
-    lmn_Tel__Matrix(2, 2) = lmn_Tel_3.z
+    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.x
+    lmn_Tel_Matrix(0, 1) = lmn_Tel_2.x
+    lmn_Tel_Matrix(0, 2) = lmn_Tel_3.x
+    lmn_Tel_Matrix(1, 0) = lmn_Tel_1.Y
+    lmn_Tel_Matrix(1, 1) = lmn_Tel_2.Y
+    lmn_Tel_Matrix(1, 2) = lmn_Tel_3.Y
+    lmn_Tel_Matrix(2, 0) = lmn_Tel_1.z
+    lmn_Tel_Matrix(2, 1) = lmn_Tel_2.z
+    lmn_Tel_Matrix(2, 2) = lmn_Tel_3.z
 
     '==================================================================================================
     'This is the TransformationMatrix which transforms a vector from eqatorial to telescope coordinates
     '==================================================================================================
-    MatrixProduct lmn_Tel__Matrix, 3, 3, LMN_Equ__MatrixInvers, 3, 3, TransformationMatrix
+    MatrixProduct lmn_Tel_Matrix, 3, 3, LMN_Equ_MatrixInvers, 3, 3, TransformationMatrix
+
+
 
 
 
@@ -531,6 +953,7 @@ Private Sub Command5_Click()
     AimTime.H = 21: AimTime.M = 52: AimTime.s = 12
     AimTimeRad = TimeToRad(AimTime)
 
+ 
     'LMN_Equ_1: Vector points to Beta Cet in equatorial coordinats
     LMN_Equ_1.x = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_1.Y = Cos(DEC_BetaCetRad) * Sin(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
@@ -538,33 +961,39 @@ Private Sub Command5_Click()
 
 
 
-    LMN_Equ__Matrix(0, 0) = LMN_Equ_1.x
-    LMN_Equ__Matrix(1, 0) = LMN_Equ_1.Y
-    LMN_Equ__Matrix(2, 0) = LMN_Equ_1.z
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x
+    LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y
+    LMN_Equ_Matrix(2, 0) = LMN_Equ_1.z
 
 
-    MatrixProduct TransformationMatrix, 3, 3, LMN_Equ__Matrix, 3, 1, lmn_Tel__Matrix
+    MatrixProduct TransformationMatrix, 3, 3, LMN_Equ_Matrix, 3, 1, lmn_Tel_Matrix
 
     'lmn_Tel__Matrix: Vector points to Beta Cet in equatorial coordinats
 
-    lmn_Tel_1.x = lmn_Tel__Matrix(0, 0)
-    lmn_Tel_1.Y = lmn_Tel__Matrix(1, 0)
-    lmn_Tel_1.z = lmn_Tel__Matrix(2, 0)
+    lmn_Tel_1.x = lmn_Tel_Matrix(0, 0)
+    lmn_Tel_1.Y = lmn_Tel_Matrix(1, 0)
+    lmn_Tel_1.z = lmn_Tel_Matrix(2, 0)
 
     Dim AzAlt_BetaCet As AzAlt
     Dim Az_BetaCetRad As Double
     Dim Alt_BetaCetRad As Double
     Dim Az_BetaCet As Double
+    Dim Az_BetaCet_corrected_1 As Double
+    Dim Az_BetaCet_corrected_2 As Double
     Dim Alt_BetaCet As Double
 
     AzAlt_BetaCet = VectorToAzAlt(lmn_Tel_1)
     Az_BetaCetRad = AzAlt_BetaCet.Az
     Alt_BetaCetRad = AzAlt_BetaCet.Alt
 
-    ' !!! hier muß möglicherweise noch 180° addiert werden !!!
     Az_BetaCet = RadToDeg(Az_BetaCetRad)
+    
+    ' !!! hier muß möglicherweise noch 180° addiert werden !!!
+    Az_BetaCet_corrected_1 = 180 - Az_BetaCet
+    Az_BetaCet_corrected_2 = Az_BetaCet_corrected_1 + 180
 
     Alt_BetaCet = RadToDeg(Alt_BetaCetRad)
+
 
 End Sub
 

@@ -315,6 +315,14 @@ End Sub
 
 Public Function VectorToAzAlt(V As Vector) As AzAlt
     VectorToAzAlt.Az = -Atn(V.Y / V.x)
+'''    '    When V.x >= 0, (-A) is in the 1st quadrant or the 4th quadrant.
+'''    '    When V.x < 0, (-A) is in the 2nd quadrant or the 3rd quadrant.
+'''
+'''    If V.x < 0 Then
+'''        VectorToAzAlt.Az = VectorToAzAlt.Az + Pi
+'''    End If
+
+
     VectorToAzAlt.Alt = arcsin(V.z)
 End Function
 

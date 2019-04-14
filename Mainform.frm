@@ -18,7 +18,7 @@ Begin VB.Form Mainform
       _Version        =   393216
       DTREnable       =   -1  'True
    End
-   Begin VB.TextBox Text1 
+   Begin VB.TextBox T_Backlash 
       Height          =   285
       Left            =   480
       TabIndex        =   58
@@ -185,15 +185,6 @@ Begin VB.Form Mainform
       Text            =   "Text1"
       Top             =   8760
       Width           =   495
-   End
-   Begin VB.PictureBox CommonDialog1 
-      Height          =   480
-      Left            =   7320
-      ScaleHeight     =   420
-      ScaleWidth      =   1140
-      TabIndex        =   65
-      Top             =   6840
-      Width           =   1200
    End
    Begin VB.Timer Tim_Tracking 
       Interval        =   1000
@@ -738,7 +729,7 @@ End Sub
 Private Sub C_SetBacklAlt_Click()
     Dim BacklashAlt As Long    '0..100
 
-    BacklashAlt = Text1
+    BacklashAlt = T_Backlash
     
     If SimOffline Then
     Else
@@ -749,7 +740,7 @@ End Sub
 Private Sub C_SetBacklAz_Click()
     Dim BacklashAz As Long    '0..100
 
-    BacklashAz = Text1
+    BacklashAz = T_Backlash
     
     If SimOffline Then
     Else
@@ -848,36 +839,6 @@ Private Sub C_SetEncoder_Click()
     End If
 End Sub
 
-
-
-
-
-' Test siderial time
-' https://de.wikibooks.org/wiki/Astronomische_Berechnungen_f%C3%BCr_Amateure/_Zeit/_Zeitrechnungen
-' Welchen Wert hatte die mittlere Sternzeit?
-' Berlin (Länge = +13.5°) am 25. Dezember 2007 um 20 h UT (entspricht 21 MEZ in Berlin)?
-' Ergebnis: 3,1634161794371 = 3h 09m 48,3s
-Private Sub C_TestSiderialTime_Click()
-
-    Dim DemoDate As MyDate
-    Dim DemoTime As MyTime
-    Dim SiderialTime As MyTime
-    Dim SiderialTimeGreenwich As MyTime
-    Dim s As String
-    
-    DemoDate.YY = 2007
-    DemoDate.MM = 12
-    DemoDate.DD = 25
-    DemoTime.H = 20
-    DemoTime.M = 0
-    DemoTime.s = 0
-        
-    SiderialTimeGreenwich = GMST(DemoDate, DemoTime)
-    SiderialTime = TimeDezToHMS(SiderialTimeGreenwich.TimeDec + 13.5 / 15)
-    L_SiderialTime = SiderialTime.TimeDec
-    L_SiderialTimeHMS = SiderialTime.H & ":" & SiderialTime.M & ":" & Format(SiderialTime.s, "00.00")
-
-End Sub
 
 
 
@@ -1155,6 +1116,7 @@ Private Sub Tim_Tracking_Timer()
     LongitudeDeg = GeoToDez(ObserverLong)
     LongitudeRad = DegToRad(LongitudeDeg)
     
+    'double check siderial time: https://tycho.usno.navy.mil/sidereal.html
     tTsRad = TimeToRad(GMST(tDate, tTime)) - LongitudeRad
     tTs = RadToTime(tTsRad)
     L_SiderialTime = "Siderial time: " & tTs.H & ":" & Format(tTs.M, "00") & ":" & Format(tTs.s, "00")

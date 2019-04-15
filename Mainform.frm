@@ -5,11 +5,131 @@ Begin VB.Form Mainform
    ClientHeight    =   11235
    ClientLeft      =   225
    ClientTop       =   870
-   ClientWidth     =   8865
+   ClientWidth     =   12690
    LinkTopic       =   "Form1"
    ScaleHeight     =   11235
-   ScaleWidth      =   8865
+   ScaleWidth      =   12690
    StartUpPosition =   3  'Windows Default
+   Begin VB.Frame F_StarInfo 
+      Caption         =   "--"
+      Height          =   5655
+      Left            =   8160
+      TabIndex        =   65
+      Top             =   360
+      Width           =   3855
+      Begin VB.Label Label25 
+         Caption         =   "Horiz. xyz:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   79
+         Top             =   1800
+         Width           =   855
+      End
+      Begin VB.Label L_I_HorXYZ 
+         Caption         =   "Alt:"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   78
+         Top             =   1800
+         Width           =   2415
+      End
+      Begin VB.Label L_I_EquXYZ 
+         Caption         =   "Alt:"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   77
+         Top             =   1560
+         Width           =   2415
+      End
+      Begin VB.Label Label22 
+         Caption         =   "Equ. xyz:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   76
+         Top             =   1560
+         Width           =   855
+      End
+      Begin VB.Label Label23 
+         Caption         =   "Hour Angle:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   75
+         Top             =   1320
+         Width           =   855
+      End
+      Begin VB.Label L_I_HourAngle 
+         Caption         =   "Alt:"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   74
+         Top             =   1320
+         Width           =   1455
+      End
+      Begin VB.Label L_I_Alt 
+         Caption         =   "Alt:"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   73
+         Top             =   1080
+         Width           =   1455
+      End
+      Begin VB.Label L_I_Az 
+         Caption         =   "Az:"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   72
+         Top             =   840
+         Width           =   1455
+      End
+      Begin VB.Label L_I_DEC 
+         Caption         =   "DEC:"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   71
+         Top             =   600
+         Width           =   1455
+      End
+      Begin VB.Label L_I_RA 
+         Caption         =   "RA:"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   70
+         Top             =   360
+         Width           =   1455
+      End
+      Begin VB.Label Label21 
+         Caption         =   "Alt:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   69
+         Top             =   1080
+         Width           =   375
+      End
+      Begin VB.Label Label20 
+         Caption         =   "Az:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   68
+         Top             =   840
+         Width           =   375
+      End
+      Begin VB.Label Label3 
+         Caption         =   "DEC:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   67
+         Top             =   600
+         Width           =   375
+      End
+      Begin VB.Label Label1 
+         Caption         =   "RA:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   66
+         Top             =   360
+         Width           =   375
+      End
+   End
    Begin MSCommLib.MSComm NexStarComm 
       Left            =   6120
       Top             =   3000
@@ -276,7 +396,7 @@ Begin VB.Form Mainform
       Sorted          =   -1  'True
       TabIndex        =   5
       Top             =   360
-      Width           =   2775
+      Width           =   1815
    End
    Begin VB.CommandButton C_SetEncoder 
       Caption         =   "Set Encoder"
@@ -634,6 +754,13 @@ Dim ObserverLong As GeoCoord
 Dim ObserverRA As Double
 Dim ObserverDEC As Double
 
+Private Enum NxMode
+    Unchanged = 0
+    HMS = 1
+    HourDec = 2
+    DegDec = 3
+End Enum
+
 
 Private Sub AlignmentStarList_Click()
     Dim idx As Long
@@ -748,7 +875,7 @@ Private Sub C_SetBacklAz_Click()
     End If
 End Sub
 
-Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     If SimOffline Then
         SimBntUp = True
     Else
@@ -756,7 +883,7 @@ Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     If SimOffline Then
         SimBntUp = False
     Else
@@ -764,7 +891,7 @@ Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     If SimOffline Then
         SimBntDn = True
     Else
@@ -772,7 +899,7 @@ Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     If SimOffline Then
         SimBntDn = False
     Else
@@ -780,7 +907,7 @@ Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     If SimOffline Then
         SimBntLe = True
     Else
@@ -788,7 +915,7 @@ Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     If SimOffline Then
         SimBntLe = False
     Else
@@ -796,7 +923,7 @@ Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     If SimOffline Then
         SimBntRi = True
     Else
@@ -804,7 +931,7 @@ Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     If SimOffline Then
         SimBntRi = False
     Else
@@ -927,7 +1054,7 @@ Private Sub NexStarComm_OnComm()
   Dim vbuf As Variant
   Dim bbuf() As Byte
   Dim key As Integer
-  Dim l As Long
+  Dim L As Long
   
   
   On Error GoTo msgError
@@ -962,7 +1089,7 @@ Private Sub NexStarComm_OnComm()
                     NexStarAz = NexStarAz & Chr$(bbuf(0))
                      key = (bbuf(0))
                 Loop While NexStarComm.InBufferCount > 0
-                l = Len(NexStarAz)
+                L = Len(NexStarAz)
                 TelIncrAz = GetNexStarPosition(NexStarAz)
             ElseIf Command = 21 Then
                 Do
@@ -971,7 +1098,7 @@ Private Sub NexStarComm_OnComm()
                     NexStarAlt = NexStarAlt & Chr$(bbuf(0))
                      key = (bbuf(0))
                 Loop While NexStarComm.InBufferCount > 0
-                l = Len(NexStarAlt)
+                L = Len(NexStarAlt)
                 TelIncrAlt = GetNexStarPosition(NexStarAlt)
             End If
         
@@ -1143,17 +1270,54 @@ Private Sub Tim_Tracking_Timer()
         idx = idx + 1
     Loop Until (AlignmentStarArray(idx).ProperName = AlignmentStarList.Text) Or (idx >= UBound(AlignmentStarArray))
     L_CurrentStar = AlignmentStarArray(idx).ProperName
+    F_StarInfo.Caption = AlignmentStarArray(idx).ProperName
     
     ObserverRA = HourToRad(AlignmentStarArray(idx).RA)
     ObserverDEC = DegToRad(AlignmentStarArray(idx).DEC)
+    DisplayCoordinate L_I_RA, ObserverRA, HMS
+    DisplayCoordinate L_I_DEC, ObserverDEC, DegDec
      
     RA_DEC_to_AZ_ALT_radian ObserverRA, ObserverDEC, ObserverLong, ObserverLatt, ObserverDateTimeUT, Az, Alt, HourAngle
 
     If O_OrientationNorth.Value Then Az = Az + Pi
+    'function CutRadian is still missing
+    Dim TmpAz As Double
+        TmpAz = CutAngle(RadToDeg(Az))
+        TmpAz = DegToRad(TmpAz)
+    DisplayCoordinate L_I_Az, TmpAz, DegDec
+    DisplayCoordinate L_I_Alt, Alt, DegDec
+    DisplayCoordinate L_I_HourAngle, HourAngle, HMS
+    
     L_AzStar = CutAngle(RadToDeg(Az))
     L_AltStar = RadToDeg(Alt)
 
+
+
+    Dim x As Double
+    Dim y As Double
+    Dim z As Double
+    Dim HorizAngle As Double
+    Dim ElevAngle As Double
+    
+    HorizAngle = ObserverRA
+    ElevAngle = ObserverDEC
+    x = Cos(ElevAngle) * Cos(HorizAngle)
+    y = Cos(ElevAngle) * Sin(HorizAngle)
+    z = Sin(ElevAngle)
+    L_I_EquXYZ = Format(x, "0.0000") & " " & Format(y, "0.0000") & " " & Format(z, "0.0000")
+
+    HorizAngle = TmpAz
+    ElevAngle = Alt
+    x = Cos(ElevAngle) * Cos(HorizAngle)
+    y = Cos(ElevAngle) * Sin(HorizAngle)
+    z = Sin(ElevAngle)
+    L_I_HorXYZ = Format(x, "0.0000") & " " & Format(y, "0.0000") & " " & Format(z, "0.0000")
+
+
+
+
     HourAngleHMS = RadToTime(HourAngle)
+    L_HourAngle = HourAngleHMS.H & ":" & HourAngleHMS.M & ":" & Format(HourAngleHMS.s, "00.00")
 
     T_AzTel = CutAngle(RadToDeg(Az))
     T_AltTel = RadToDeg(Alt)
@@ -1167,9 +1331,8 @@ Private Sub Tim_Tracking_Timer()
     End If
     
     
-    L_HourAngle = HourAngleHMS.H & ":" & HourAngleHMS.M & ":" & Format(HourAngleHMS.s, "00.00")
     
-
+    
 
 End Sub
 
@@ -1186,7 +1349,19 @@ Private Sub VS_ManualSkewingSpeed_Change()
     
 End Sub
 
-
+'Coordinate [radian]
+Private Sub DisplayCoordinate(L As Label, Coord As Double, Mode As NxMode)
+    Dim TmpTime As MyTime
+    
+    If Mode = HMS Then
+        TmpTime = RadToTime(Coord)
+        L = TmpTime.H & ":" & TmpTime.M & ":" & Format(TmpTime.s, "00.00")
+    ElseIf Mode = DegDec Then
+        L = Format(RadToDeg(Coord), "0.0000") & "°"
+    Else
+        L = Coord
+    End If
+End Sub
 
 
 Private Sub LoadAlignmetStarFile()

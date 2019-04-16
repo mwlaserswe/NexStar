@@ -312,6 +312,116 @@ End Sub
 
 
 
+Public Sub CalibrateTelescope(InitTimerad As Double, RA1Rad As Double, DEC1Rad As Double, TelHorizAngle1 As Double, TelElevAngle1 As Double, ObservTime1Rad As Double, RA2Rad As Double, DEC2Rad As Double, TelHorizAngle2 As Double, TelElevAngle2 As Double, ObservTime2Rad As Double, TransformationMatrix() As Double)
+    Dim lmn_Tel_1 As Vector     ' Telescope coordinates
+    Dim lmn_Tel_2 As Vector
+    Dim lmn_Tel_3 As Vector
+    Dim LMN_Equ_1 As Vector
+    Dim LMN_Equ_2 As Vector
+    Dim LMN_Equ_3 As Vector
+
+    'Equation (5.4-5)
+    lmn_Tel_1.x = Cos(TelElevAngle1) * Cos(TelHorizAngle1)
+    lmn_Tel_1.Y = Cos(TelElevAngle1) * Sin(TelHorizAngle1)
+    lmn_Tel_1.z = Sin(TelElevAngle1)
+
+    'Equation (5.4-6)
+    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - SidConst * (ObservTime1Rad - InitTimerad))
+    LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - SidConst * (ObservTime1Rad - InitTimerad))
+    LMN_Equ_1.z = Sin(DEC1Rad)
+
+    'Equation (5.4-7)
+    lmn_Tel_2.x = Cos(TelElevAngle2) * Cos(TelHorizAngle2)
+    lmn_Tel_2.Y = Cos(TelElevAngle2) * Sin(TelHorizAngle2)
+    lmn_Tel_2.z = Sin(TelElevAngle2)
+
+    'Equation (5.4-8)
+    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - SidConst * (ObservTime2Rad - InitTimerad))
+    LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - SidConst * (ObservTime2Rad - InitTimerad))
+    LMN_Equ_2.z = Sin(DEC2Rad)
+
+    Dim V1_cross_V2 As Vector
+    Dim Len_V1_cross_V2 As Double
+
+    'Equation (5.4-13)
+    V1_cross_V2 = CrossProduct(lmn_Tel_1, lmn_Tel_2)
+    Len_V1_cross_V2 = LenghtVector(V1_cross_V2)
+    lmn_Tel_3 = ScalarProduct((1 / Len_V1_cross_V2), V1_cross_V2)
+
+    'Equation (5.4-14)
+    V1_cross_V2 = CrossProduct(LMN_Equ_1, LMN_Equ_2)
+    Len_V1_cross_V2 = LenghtVector(V1_cross_V2)
+    LMN_Equ_3 = ScalarProduct((1 / Len_V1_cross_V2), V1_cross_V2)
+
+
+    'From equation(5.4 - 11)
+    Dim LMN_Equ_Matrix(10, 10) As Double
+    Dim LMN_Equ_MatrixInvers(10, 10) As Double
+    Dim lmn_Tel_Matrix(10, 10) As Double
+
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x: LMN_Equ_Matrix(0, 1) = LMN_Equ_2.x: LMN_Equ_Matrix(0, 2) = LMN_Equ_3.x
+    LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y: LMN_Equ_Matrix(1, 1) = LMN_Equ_2.Y: LMN_Equ_Matrix(1, 2) = LMN_Equ_3.Y
+    LMN_Equ_Matrix(2, 0) = LMN_Equ_1.z: LMN_Equ_Matrix(2, 1) = LMN_Equ_2.z: LMN_Equ_Matrix(2, 2) = LMN_Equ_3.z
+
+    Calculate_Inverse 3, LMN_Equ_Matrix, LMN_Equ_MatrixInvers
+                Dim dmy As Double
+                dmy = LMN_Equ_MatrixInvers(0, 0): dmy = LMN_Equ_MatrixInvers(0, 1): dmy = LMN_Equ_MatrixInvers(0, 2)
+                dmy = LMN_Equ_MatrixInvers(1, 0): dmy = LMN_Equ_MatrixInvers(1, 1): dmy = LMN_Equ_MatrixInvers(1, 2)
+                dmy = LMN_Equ_MatrixInvers(2, 0): dmy = LMN_Equ_MatrixInvers(2, 1): dmy = LMN_Equ_MatrixInvers(2, 2)
+
+    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.x: lmn_Tel_Matrix(0, 1) = lmn_Tel_2.x: lmn_Tel_Matrix(0, 2) = lmn_Tel_3.x
+    lmn_Tel_Matrix(1, 0) = lmn_Tel_1.Y: lmn_Tel_Matrix(1, 1) = lmn_Tel_2.Y: lmn_Tel_Matrix(1, 2) = lmn_Tel_3.Y
+    lmn_Tel_Matrix(2, 0) = lmn_Tel_1.z: lmn_Tel_Matrix(2, 1) = lmn_Tel_2.z: lmn_Tel_Matrix(2, 2) = lmn_Tel_3.z
+
+    '==================================================================================================
+    'This is the TransformationMatrix which transforms a vector from eqatorial to telescope coordinates
+    '==================================================================================================
+    MatrixProduct lmn_Tel_Matrix, 3, 3, LMN_Equ_MatrixInvers, 3, 3, TransformationMatrix
+                dmy = TransformationMatrix(0, 0): dmy = TransformationMatrix(0, 1): dmy = TransformationMatrix(0, 2)
+                dmy = TransformationMatrix(1, 0): dmy = TransformationMatrix(1, 1): dmy = TransformationMatrix(1, 2)
+                dmy = TransformationMatrix(2, 0): dmy = TransformationMatrix(2, 1): dmy = TransformationMatrix(2, 2)
+
+
+
+
+End Sub
+
+Public Sub CalculateTelescopeCoordinates(InitTimerad As Double, RA_CurrStarRad As Double, DEC_CurrStarRad As Double, AimTimeRad As Double, TransformationMatrix() As Double, AzAlt_CurrStar As AzAlt)
+    'LMN_Equ_Result: Vector points to Deneb in equatorial coordinats
+    Dim LMN_Equ_Result  As Vector
+    LMN_Equ_Result.x = Cos(DEC_CurrStarRad) * Cos(RA_CurrStarRad - SidConst * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.Y = Cos(DEC_CurrStarRad) * Sin(RA_CurrStarRad - SidConst * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.z = Sin(DEC_CurrStarRad)
+
+
+    Dim LMN_Equ_ResultMatrix(10, 10) As Double
+    Dim lmn_Tel_ResultMatrix(10, 10) As Double
+    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.x
+    LMN_Equ_ResultMatrix(1, 0) = LMN_Equ_Result.Y
+    LMN_Equ_ResultMatrix(2, 0) = LMN_Equ_Result.z
+
+    MatrixProduct TransformationMatrix, 3, 3, LMN_Equ_ResultMatrix, 3, 1, lmn_Tel_ResultMatrix
+
+    'lmn_Tel__Matrix: Vector points to Beta Cet in equatorial coordinats
+
+    Dim lmn_Tel_Result  As Vector
+    lmn_Tel_Result.x = lmn_Tel_ResultMatrix(0, 0)
+    lmn_Tel_Result.Y = lmn_Tel_ResultMatrix(1, 0)
+    lmn_Tel_Result.z = lmn_Tel_ResultMatrix(2, 0)
+
+'    Dim AzAlt_CurrStar As AzAlt
+    Dim Az_CurrStarRad As Double
+    Dim Alt_CurrStarRad As Double
+    Dim Az_CurrStar As Double
+    Dim Az_CurrStar_corrected_1 As Double
+    Dim Az_CurrStar_corrected_2 As Double
+    Dim Alt_CurrStar As Double
+
+    AzAlt_CurrStar = VectorToAzAlt(lmn_Tel_Result)
+
+End Sub
+
+
 
 Public Function VectorToAzAlt(V As Vector) As AzAlt
     VectorToAzAlt.Az = -Atn(V.Y / V.x)

@@ -5,6 +5,7 @@ Option Explicit
 
 Public Const Pi = 3.14159265359
 Public Const EncoderResolution = 726559
+Public Const SidConst = 1.00273790935
 
 Public Type MyDate
     YY As Double
@@ -32,6 +33,11 @@ Public Type Vector
   z As Double
 End Type
 
+Public Type RaDec
+    Ra As Double        ' Rectascension as randian
+    Dec As Double       ' Declination as radian
+End Type
+
 Public Type AzAlt
     Az As Double        ' Azimut as randian
     Alt As Double       ' Altitude as radian
@@ -43,8 +49,8 @@ Public Type StarDescription
     Bayer As String
     Constellation As String
     Flamsteed As String
-    RA As Double
-    DEC As Double
+    Ra As Double
+    Dec As Double
     Mag As Double
     StarDsc1 As String
     StarDsc2 As String

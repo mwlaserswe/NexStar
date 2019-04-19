@@ -105,6 +105,19 @@ Public Function CutAngle(ByVal Angle As Double) As Double
 End Function
 
 
+Public Function CutRad(ByVal Angle As Double) As Double
+  Dim AngleInt As Long
+  AngleInt = Int(Angle / (2 * Pi))
+  CutRad = Angle - (AngleInt * 2 * Pi)
+End Function
+
+Public Function CutIncr(ByVal Incr As Double) As Double
+  Dim IncrInt As Long
+  IncrInt = Int(Incr / EncoderResolution)
+  CutIncr = Incr - (IncrInt * EncoderResolution)
+End Function
+
+
 Public Function TimeDezToHMS(TimeDezimal As Double) As MyTime
     Dim locTDec As Double
     Dim Negative As Boolean
@@ -143,7 +156,7 @@ Public Function GeoToDez(Coord As GeoCoord) As Double
     Dim s As String
     
     s = Mid(Coord.Sign, 1, 1)
-    GeoToDez = Coord.Deg + Coord.Min / 60 + Coord.Sec / 3600
+    GeoToDez = Coord.deg + Coord.Min / 60 + Coord.Sec / 3600
     If s = "o" Or s = "O" Or s = "E" Or s = "-" Or s = "s" Or s = "S" Or s = "e" Then
         GeoToDez = -GeoToDez
     ElseIf s = "w" Or s = "W" Or s = "n" Or s = "N" Or s = "+" Then
@@ -151,20 +164,20 @@ Public Function GeoToDez(Coord As GeoCoord) As Double
     End If
 End Function
 
-Public Function GradToTime(Deg As Double) As MyTime
+Public Function GradToTime(deg As Double) As MyTime
     Dim H As Double
     
-    H = Deg * 24 / 360
+    H = deg * 24 / 360
     GradToTime = TimeDezToHMS(H)
 End Function
 
 Public Function RadToTime(Rad As Double) As MyTime
     Dim H As Double
-    Dim Deg As Double
+    Dim deg As Double
     
-    Deg = CutAngle(RadToDeg(Rad))
+    deg = CutAngle(RadToDeg(Rad))
 
-    H = Deg * 24 / 360
+    H = deg * 24 / 360
     RadToTime = TimeDezToHMS(H)
 End Function
 
@@ -213,8 +226,8 @@ Public Function HourToRad(Hours As Double) As Double
 End Function
 
 
-Public Function DegToRad(Deg As Double) As Double
-    DegToRad = Deg / (180 / Pi)
+Public Function DegToRad(deg As Double) As Double
+    DegToRad = deg / (180 / Pi)
 End Function
 
 
@@ -303,6 +316,10 @@ Public Sub RA_DEC_to_AZ_ALT_radian(RA_Star_Rad As Double, DEC_Star_Rad As Double
     If Lh < 0 Then
         Az = Az + Pi
     End If
+    
+    ' Standard: North = 0° so add 180°
+     Az = Az + Pi
+    
     
     'geht möglicherweise einfacher: sin(h) = Nh
     sin_h = Cos(LatitudeRad) * Cos(LocalHourAngleRad) * Cos(DEC_Star_Rad) + Sin(LatitudeRad) * Sin(DEC_Star_Rad)
@@ -437,10 +454,21 @@ Public Function VectorToAzAlt(V As Vector) As AzAlt
 End Function
 
 
+Public Function MatrixSystem_to_MotorIncrSystem(phi As Double) As Double
+    Dim tmp As Double
+    tmp = CutRad(-phi) * EncoderResolution / (2 * Pi)
+    MatrixSystem_to_MotorIncrSystem = tmp
+End Function
 
+Public Function MotorIncrSystem_to_MatrixSystem(Incr As Double) As Double
+    Dim tmp As Double
+'    tmp = CutRad(-phi) * EncoderResolution / (2 * Pi)
+    tmp = CutIncr(-Incr) * (2 * Pi) / EncoderResolution
+    MotorIncrSystem_to_MatrixSystem = tmp
+End Function
 
-Public Sub DerivateTeleskope(V As Vector)
-
-End Sub
+Public Function AzAltSystem_to_MatrixSystem(Az As Double) As Double
+   AzAltSystem_to_MatrixSystem = CutRad(-Az + GlobalAzOffset)
+End Function
 
 

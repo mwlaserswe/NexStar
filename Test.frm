@@ -9,6 +9,22 @@ Begin VB.Form Test
    ScaleHeight     =   7320
    ScaleWidth      =   8655
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton Command5 
+      Caption         =   "Command5"
+      Height          =   495
+      Left            =   2760
+      TabIndex        =   20
+      Top             =   6000
+      Width           =   1215
+   End
+   Begin VB.CommandButton Command2 
+      Caption         =   "Command2"
+      Height          =   495
+      Left            =   2880
+      TabIndex        =   19
+      Top             =   5280
+      Width           =   1215
+   End
    Begin VB.CommandButton C_TestKalibrierung_3 
       Caption         =   "3. Test Kal. using sub()"
       Height          =   435
@@ -926,8 +942,16 @@ Private Sub Command4_Click()
 
 
 End Sub
-Private Sub C_TestKalibrierung_Click()
- 
+
+
+Private Sub Command5_Click()
+    Dim tst As Double
+    Dim t1 As Double
+    Dim t2 As Double
+    
+  
+    
+    tst = MotorIncrSystem_to_MatrixSystem(EncoderResolution / 4)
 End Sub
 
 Private Sub Command7_Click()

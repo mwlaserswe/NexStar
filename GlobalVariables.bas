@@ -21,7 +21,7 @@ Public Type MyTime
 End Type
 
 Public Type GeoCoord
-    Deg As Double
+    deg As Double
     Min As Double
     Sec As Double
     Sign As String
@@ -66,5 +66,14 @@ End Type
 Public SimOffline As Boolean
 Public IniFileName As String
 Public AlignmentStarArray() As StarDescription
+
+Public GlobalAzOffset As Double        ' Offset AzAlt-System to Main Horizontal System [radian]
+
+Public MatrixSystemSoll As Double          'SetPoint Main Horizontal System  [radian]
+
+Public MatrixSystem As Double          ' Main Horizontal System für die Matrixmetode in [radian]
+                                    ' mathematischer Sinn gegen den Uhtzeigersinn (CCW)
+Public MotorIncrSystem As Double       ' Horizontalsystem in [Increments] 0..726559 [CW]
+Public AzAltSystem As Double           ' Horzontsystem in [radian] aus RA DEC berechnet
 
 

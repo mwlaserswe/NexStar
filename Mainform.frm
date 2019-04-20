@@ -962,18 +962,25 @@ End Sub
 
 Private Sub C_GetAz_Click()
     Dim tmp As Double
+       
     
     If SimOffline Then
         TelIncrAz = SimIncrAz
-                L_MotorIncrSystem = TelIncrAz
-                tmp = MotorIncrSystem_to_MatrixSystem(CDbl(TelIncrAz))
-                tmp = RadToDeg(tmp)
-                L_MatrixSystem = Format(tmp, "0.0000") & "°"
+'                L_MotorIncrSystem = TelIncrAz
+'                tmp = MotorIncrSystem_to_MatrixSystem(CDbl(TelIncrAz))
+'                tmp = RadToDeg(tmp)
+'                L_MatrixSystem = Format(tmp, "0.0000") & "°"
     Else
         NexStarComm.Output = Chr$(&H1)
         NexStarAz = ""
         Command = 1
     End If
+    
+    
+    L_MotorIncrSystem = TelIncrAz
+    tmp = MotorIncrSystem_to_MatrixSystem(CDbl(TelIncrAz))
+    tmp = RadToDeg(tmp)
+    L_MatrixSystem = Format(tmp, "0.0000") & "°"
 End Sub
 
 Private Sub C_GetAlt_Click()
@@ -981,14 +988,19 @@ Private Sub C_GetAlt_Click()
     
     If SimOffline Then
         TelIncrAlt = SimIncrAlt
-                L_AltMotorIncr = TelIncrAlt
-                tmp = TelIncrAlt * 360 / EncoderResolution
-                L_AltMatrixSys = Format(tmp, "0.0000") & "°"
+'                L_AltMotorIncr = TelIncrAlt
+'                tmp = TelIncrAlt * 360 / EncoderResolution
+'                L_AltMatrixSys = Format(tmp, "0.0000") & "°"
    Else
         NexStarComm.Output = Chr$(&H15)
         NexStarAlt = ""
         Command = 21
     End If
+    
+    L_AltMotorIncr = TelIncrAlt
+    tmp = TelIncrAlt * 360 / EncoderResolution
+    L_AltMatrixSys = Format(tmp, "0.0000") & "°"
+
 End Sub
 
 
@@ -1235,6 +1247,9 @@ Private Sub InitNexStarComm()
   Else
     NexStarComm.CommPort = 6
     NexStarComm.Settings = "4800,n,8,1"
+    NexStarComm.InputLen = 1
+    NexStarComm.DTREnable = False
+    NexStarComm.RThreshold = 1
     NexStarComm.PortOpen = True
   End If
 

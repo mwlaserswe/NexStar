@@ -67,13 +67,55 @@ Public SimOffline As Boolean
 Public IniFileName As String
 Public AlignmentStarArray() As StarDescription
 
-Public GlobalAzOffset As Double        ' Offset AzAlt-System to Main Horizontal System [radian]
 
-Public MatrixSystemSoll As Double          'SetPoint Main Horizontal System  [radian]
+Public ObserverDateTimeUT As Date
+Public ObserverTimeUT As MyTime
+Public ObserverLatt As GeoCoord
+Public ObserverLong As GeoCoord
+Public ObserverRA As Double
+Public ObserverDEC As Double
+Public ObserverAz As Double
+Public ObserverAlt As Double
+
+
+Public GlobalAzOffset As Double        ' Offset AzAlt-System to Main Horizontal System [radian]
+Public GlobalAltOffset As Double        ' Offset AzAlt-System to Main Horizontal System [radian]
+
+Public MatrixSystemAzSoll As Double          'SetPoint Main Horizontal System  [radian]
+Public MatrixSystemAzIst As Double          'SetPoint Main Horizontal System  [radian]
+Public MatrixSystemAltSoll As Double          'SetPoint Main Horizontal System  [radian]
+Public MatrixSystemAltIst As Double          'SetPoint Main Horizontal System  [radian]
 
 Public MatrixSystem As Double          ' Main Horizontal System für die Matrixmetode in [radian]
                                     ' mathematischer Sinn gegen den Uhtzeigersinn (CCW)
 Public MotorIncrSystem As Double       ' Horizontalsystem in [Increments] 0..726559 [CW]
 Public AzAltSystem As Double           ' Horzontsystem in [radian] aus RA DEC berechnet
+
+
+'==== Calibration ====
+
+'==== Init Time ====
+Public Cal_InitTime As Double
+Public TransformationMatrix(10, 10) As Double
+
+'==== Reference Star 1 ====
+Public Cal_RaStar_1 As Double
+Public Cal_DecStar_1 As Double
+Public Cal_TelHorizAngle_1 As Double
+Public Cal_TelElevAngle_1 As Double
+Public Cal_Time_1 As Double
+
+'==== Reference Star 2 ====
+Public Cal_RaStar_2 As Double
+Public Cal_DecStar_2 As Double
+Public Cal_TelHorizAngle_2 As Double
+Public Cal_TelElevAngle_2 As Double
+Public Cal_Time_2 As Double
+
+
+
+
+
+
 
 

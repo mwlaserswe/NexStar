@@ -629,7 +629,6 @@ Private Sub C_TestKalibrierung_3_Click()
     Dim TelHorizAngle2 As Double
     Dim TelElevAngle1 As Double
     Dim TelElevAngle2 As Double
-    Dim TransformationMatrix(10, 10) As Double
 
 
     'Observation date/time: unknown
@@ -808,7 +807,7 @@ Private Sub Command4_Click()
     RA_Saturn.s = 35.681
 
     Dim DEC_Saturn As GeoCoord
-    DEC_Saturn.Deg = 8
+    DEC_Saturn.deg = 8
     DEC_Saturn.Min = 25
     DEC_Saturn.Sec = 58.1
     DEC_Saturn.Sign = "+"
@@ -816,13 +815,13 @@ Private Sub Command4_Click()
     Lont = TimeDezToHMS(4.35808335) '  -4.358°              ' Observer’s longitude
 
     Dim Longitude As GeoCoord
-    Longitude.Deg = Lont.H
+    Longitude.deg = Lont.H
     Longitude.Min = Lont.M
     Longitude.Sec = Lont.s
     Longitude.Sign = "E"
 
     Dim Latitude As GeoCoord    '  50°47'55''                 ' Observer’s latitude
-    Latitude.Deg = 50
+    Latitude.deg = 50
     Latitude.Min = 47
     Latitude.Sec = 55
     Latitude.Sign = "N"

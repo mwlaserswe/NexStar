@@ -10,6 +10,30 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   12690
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton C_CalibrateNow 
+      Caption         =   "Calibrate now"
+      Height          =   495
+      Left            =   3000
+      TabIndex        =   104
+      Top             =   7560
+      Width           =   2295
+   End
+   Begin VB.CommandButton C_SetCalibrationStar_2 
+      Caption         =   "Set Calibration Star 2"
+      Height          =   495
+      Left            =   3000
+      TabIndex        =   103
+      Top             =   6960
+      Width           =   2295
+   End
+   Begin VB.CommandButton C_SetCalibrationStar_1 
+      Caption         =   "Set Calibration Star 1"
+      Height          =   495
+      Left            =   3000
+      TabIndex        =   102
+      Top             =   6360
+      Width           =   2295
+   End
    Begin VB.CommandButton C_GotoStar 
       Caption         =   "GotoStar in Martix System"
       Height          =   255
@@ -19,11 +43,11 @@ Begin VB.Form Mainform
       Width           =   2175
    End
    Begin VB.CommandButton C_SetNorth 
-      Caption         =   "Set Noth"
+      Caption         =   "Set North"
       Height          =   495
       Left            =   3000
       TabIndex        =   100
-      Top             =   6120
+      Top             =   5760
       Width           =   2295
    End
    Begin VB.Frame Frame4 
@@ -209,7 +233,7 @@ Begin VB.Form Mainform
          Top             =   840
          Width           =   1455
       End
-      Begin VB.Label L_MatrixSystemSoll 
+      Begin VB.Label L_MatrixSystemAzSoll 
          Caption         =   "Alt:"
          Height          =   255
          Left            =   1200
@@ -911,13 +935,6 @@ Dim SimGotoAz As Long
 Dim SimGotoAlt As Long
 
 
-Dim ObserverDateTimeUT As Date
-Dim ObserverLatt As GeoCoord
-Dim ObserverLong As GeoCoord
-Dim ObserverRA As Double
-Dim ObserverDEC As Double
-Dim ObserverAz As Double
-Dim ObserverAlt As Double
 
 Private Enum NxMode
     Unchanged = 0
@@ -960,8 +977,16 @@ Private Sub AlignmentStarList_Click()
 
 End Sub
 
+Private Sub C_CalibrateNow_Click()
+    
+    CalibrateTelescope Cal_InitTime, _
+                       Cal_RaStar_1, Cal_DecStar_1, Cal_TelHorizAngle_1, Cal_TelElevAngle_1, Cal_Time_1, _
+                       Cal_RaStar_2, Cal_DecStar_2, Cal_TelHorizAngle_2, Cal_TelElevAngle_2, Cal_Time_2, _
+                       TransformationMatrix
+
+End Sub
+
 Private Sub C_GetAz_Click()
-    Dim tmp As Double
        
     
     If SimOffline Then
@@ -978,9 +1003,8 @@ Private Sub C_GetAz_Click()
     
     
     L_MotorIncrSystem = TelIncrAz
-    tmp = MotorIncrSystem_to_MatrixSystem(CDbl(TelIncrAz))
-    tmp = RadToDeg(tmp)
-    L_MatrixSystem = Format(tmp, "0.0000") & "°"
+    MatrixSystemAzIst = MotorIncrSystem_to_MatrixSystem(CDbl(TelIncrAz))
+    L_MatrixSystem = Format(RadToDeg(MatrixSystemAzIst), "0.0000") & "°"
 End Sub
 
 Private Sub C_GetAlt_Click()
@@ -998,8 +1022,10 @@ Private Sub C_GetAlt_Click()
     End If
     
     L_AltMotorIncr = TelIncrAlt
-    tmp = TelIncrAlt * 360 / EncoderResolution
-    L_AltMatrixSys = Format(tmp, "0.0000") & "°"
+   
+    MatrixSystemAltIst = TelIncrAlt * (2 * Pi) / EncoderResolution
+   
+    L_AltMatrixSys = Format(RadToDeg(MatrixSystemAltIst), "0.0000") & "°"
 
 End Sub
 
@@ -1007,7 +1033,7 @@ End Sub
 
 
 Private Sub C_GotoStar_Click()
-     MatrixSystemSoll = AzAltSystem_to_MatrixSystem(ObserverAz)
+     MatrixSystemAzSoll = AzAltSystem_to_MatrixSystem(ObserverAz)
 
 
 
@@ -1015,7 +1041,7 @@ Private Sub C_GotoStar_Click()
     Dim MotorIncrAz As Long
     Dim MotorIncrAlt As Long
     
-    MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemSoll)
+    MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
     MotorIncrAlt = CLng(Zahl(T_AltTel) * EncoderResolution / 360)
 
     SimGotoAzAltActive = True
@@ -1081,12 +1107,42 @@ Private Sub C_SetBacklAz_Click()
     End If
 End Sub
 
+Private Sub C_SetCalibrationStar_1_Click()
+   
+    Cal_RaStar_1 = ObserverRA
+    Cal_DecStar_1 = ObserverDEC
+    Cal_TelHorizAngle_1 = MatrixSystemAzIst
+    Cal_TelElevAngle_1 = MatrixSystemAltIst
+
+    'Set time reference star 1 for calibration
+    Cal_Time_1 = TimeToRad(ObserverTimeUT)
+
+End Sub
+
+Private Sub C_SetCalibrationStar_2_Click()
+    Cal_RaStar_2 = ObserverRA
+    Cal_DecStar_2 = ObserverDEC
+    Cal_TelHorizAngle_2 = MatrixSystemAzIst
+    Cal_TelElevAngle_2 = MatrixSystemAltIst
+
+    'Set time reference star 2 for calibration
+    Cal_Time_2 = TimeToRad(ObserverTimeUT)
+
+
+
+
+
+End Sub
+
 Private Sub C_SetNorth_Click()
     Dim d1 As Double
     Dim d2 As Double
     
     MatrixSystem = MotorIncrSystem_to_MatrixSystem(CDbl(TelIncrAz))
     GlobalAzOffset = CutRad(MatrixSystem)
+    
+    'Set Initial for calibration
+    Cal_InitTime = TimeToRad(ObserverTimeUT)
     
     
     d1 = RadToDeg(MatrixSystem)
@@ -1363,7 +1419,7 @@ Private Sub Tim_DisplayUpdate_Timer()
 
 
     L_GlobalAzOffset = Format(RadToDeg(GlobalAzOffset), "0.0000") & "°"
-    L_MatrixSystemSoll = Format(RadToDeg(MatrixSystemSoll), "0.0000") & "°"
+    L_MatrixSystemAzSoll = Format(RadToDeg(MatrixSystemAzSoll), "0.0000") & "°"
 
 
 '    L_Az = TelIncrAz
@@ -1451,7 +1507,7 @@ End Sub
 
 
 Private Sub Tim_Tracking_Timer()
-    Dim tTime As MyTime
+'    Dim tTime As MyTime
     Dim tDate As MyDate
     Dim tTs As MyTime
     Dim tTsRad As Double
@@ -1470,9 +1526,9 @@ Private Sub Tim_Tracking_Timer()
     End If
 
     L_UTime = " UT:              " & ObserverDateTimeUT
-    tTime.H = Hour(ObserverDateTimeUT)
-    tTime.M = Minute(ObserverDateTimeUT)
-    tTime.s = Second(ObserverDateTimeUT)
+    ObserverTimeUT.H = Hour(ObserverDateTimeUT)
+    ObserverTimeUT.M = Minute(ObserverDateTimeUT)
+    ObserverTimeUT.s = Second(ObserverDateTimeUT)
     tDate.YY = Year(ObserverDateTimeUT)
     tDate.MM = Month(ObserverDateTimeUT)
     tDate.DD = Day(ObserverDateTimeUT)
@@ -1481,7 +1537,7 @@ Private Sub Tim_Tracking_Timer()
     LongitudeRad = DegToRad(LongitudeDeg)
     
     'double check siderial time: https://tycho.usno.navy.mil/sidereal.html
-    tTsRad = TimeToRad(GMST(tDate, tTime)) - LongitudeRad
+    tTsRad = TimeToRad(GMST(tDate, ObserverTimeUT)) - LongitudeRad
     tTs = RadToTime(tTsRad)
     L_SiderialTime = "Siderial time: " & tTs.H & ":" & Format(tTs.M, "00") & ":" & Format(tTs.s, "00")
 

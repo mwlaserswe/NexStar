@@ -86,7 +86,7 @@ Public MatrixSystemAzIst As Double          'SetPoint Main Horizontal System  [r
 Public MatrixSystemAltSoll As Double          'SetPoint Main Horizontal System  [radian]
 Public MatrixSystemAltIst As Double          'SetPoint Main Horizontal System  [radian]
 
-Public MatrixSystem As Double          ' Main Horizontal System für die Matrixmetode in [radian]
+'Public MatrixSystem As Double          ' Main Horizontal System für die Matrixmetode in [radian]
                                     ' mathematischer Sinn gegen den Uhtzeigersinn (CCW)
 Public MotorIncrSystem As Double       ' Horizontalsystem in [Increments] 0..726559 [CW]
 Public AzAltSystem As Double           ' Horzontsystem in [radian] aus RA DEC berechnet

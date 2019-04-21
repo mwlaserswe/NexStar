@@ -329,7 +329,7 @@ End Sub
 
 
 
-Public Sub CalibrateTelescope(InitTimeRad As Double, RA1Rad As Double, DEC1Rad As Double, TelHorizAngle1 As Double, TelElevAngle1 As Double, ObservTime1Rad As Double, RA2Rad As Double, DEC2Rad As Double, TelHorizAngle2 As Double, TelElevAngle2 As Double, ObservTime2Rad As Double, TransformationMatrix() As Double)
+Public Sub CalibrateTelescope(InitTimerad As Double, RA1Rad As Double, DEC1Rad As Double, TelHorizAngle1 As Double, TelElevAngle1 As Double, ObservTime1Rad As Double, RA2Rad As Double, DEC2Rad As Double, TelHorizAngle2 As Double, TelElevAngle2 As Double, ObservTime2Rad As Double, TransformationMatrix() As Double)
     Dim lmn_Tel_1 As Vector     ' Telescope coordinates
     Dim lmn_Tel_2 As Vector
     Dim lmn_Tel_3 As Vector
@@ -343,8 +343,8 @@ Public Sub CalibrateTelescope(InitTimeRad As Double, RA1Rad As Double, DEC1Rad A
     lmn_Tel_1.z = Sin(TelElevAngle1)
 
     'Equation (5.4-6)
-    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - SidConst * (ObservTime1Rad - InitTimeRad))
-    LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - SidConst * (ObservTime1Rad - InitTimeRad))
+    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - SidConst * (ObservTime1Rad - InitTimerad))
+    LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - SidConst * (ObservTime1Rad - InitTimerad))
     LMN_Equ_1.z = Sin(DEC1Rad)
 
     'Equation (5.4-7)
@@ -353,8 +353,8 @@ Public Sub CalibrateTelescope(InitTimeRad As Double, RA1Rad As Double, DEC1Rad A
     lmn_Tel_2.z = Sin(TelElevAngle2)
 
     'Equation (5.4-8)
-    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - SidConst * (ObservTime2Rad - InitTimeRad))
-    LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - SidConst * (ObservTime2Rad - InitTimeRad))
+    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - SidConst * (ObservTime2Rad - InitTimerad))
+    LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - SidConst * (ObservTime2Rad - InitTimerad))
     LMN_Equ_2.z = Sin(DEC2Rad)
 
     Dim V1_cross_V2 As Vector
@@ -398,7 +398,7 @@ Public Sub CalibrateTelescope(InitTimeRad As Double, RA1Rad As Double, DEC1Rad A
                 dmy = TransformationMatrix(1, 0): dmy = TransformationMatrix(1, 1): dmy = TransformationMatrix(1, 2)
                 dmy = TransformationMatrix(2, 0): dmy = TransformationMatrix(2, 1): dmy = TransformationMatrix(2, 2)
 
-                INISetValue IniFileName, "TransformationMatrix", "Cal_InitTime", InitTimeRad
+                INISetValue IniFileName, "TransformationMatrix", "Cal_InitTime", InitTimerad
                 INISetValue IniFileName, "TransformationMatrix", "00", TransformationMatrix(0, 0)
                 INISetValue IniFileName, "TransformationMatrix", "01", TransformationMatrix(0, 1)
                 INISetValue IniFileName, "TransformationMatrix", "02", TransformationMatrix(0, 2)
@@ -412,11 +412,11 @@ Public Sub CalibrateTelescope(InitTimeRad As Double, RA1Rad As Double, DEC1Rad A
 
 End Sub
 
-Public Sub CalculateTelescopeCoordinates(InitTimeRad As Double, RA_CurrStarRad As Double, DEC_CurrStarRad As Double, AimTimeRad As Double, TransformationMatrix() As Double, AzAlt_CurrStar As AzAlt)
+Public Sub CalculateTelescopeCoordinates(InitTimerad As Double, RA_CurrStarRad As Double, DEC_CurrStarRad As Double, AimTimeRad As Double, TransformationMatrix() As Double, AzAlt_CurrStar As AzAlt)
     'LMN_Equ_Result: Vector points to Deneb in equatorial coordinats
     Dim LMN_Equ_Result  As Vector
-    LMN_Equ_Result.x = Cos(DEC_CurrStarRad) * Cos(RA_CurrStarRad - SidConst * (AimTimeRad - InitTimeRad))
-    LMN_Equ_Result.Y = Cos(DEC_CurrStarRad) * Sin(RA_CurrStarRad - SidConst * (AimTimeRad - InitTimeRad))
+    LMN_Equ_Result.x = Cos(DEC_CurrStarRad) * Cos(RA_CurrStarRad - SidConst * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.Y = Cos(DEC_CurrStarRad) * Sin(RA_CurrStarRad - SidConst * (AimTimeRad - InitTimerad))
     LMN_Equ_Result.z = Sin(DEC_CurrStarRad)
 
 
@@ -445,10 +445,10 @@ Public Sub CalculateTelescopeCoordinates(InitTimeRad As Double, RA_CurrStarRad A
 
     AzAlt_CurrStar = VectorToAzAlt(lmn_Tel_Result)
     
-    If lmn_Tel_Result.x >= 0 Then
-        Mainform.Label6 = "plus"
-    Else
+    If lmn_Tel_Result.x < 0 Then
         Mainform.Label6 = "minus"
+    Else
+        Mainform.Label6 = "plus"
     End If
 
 End Sub
@@ -456,14 +456,12 @@ End Sub
 
 
 Public Function VectorToAzAlt(V As Vector) As AzAlt
-    VectorToAzAlt.Az = -Atn(V.Y / V.x)
-'''    '    When V.x >= 0, (-A) is in the 1st quadrant or the 4th quadrant.
-'''    '    When V.x < 0, (-A) is in the 2nd quadrant or the 3rd quadrant.
-'''
-'''    If V.x < 0 Then
-'''        VectorToAzAlt.Az = VectorToAzAlt.Az + Pi
-'''    End If
-
+    VectorToAzAlt.Az = Atn(V.Y / V.x)
+    '    When V.x >= 0, (-A) is in the 1st quadrant or the 4th quadrant.
+    '    When V.x < 0, (-A) is in the 2nd quadrant or the 3rd quadrant.
+    If V.x < 0 Then
+        VectorToAzAlt.Az = VectorToAzAlt.Az + Pi
+    End If
 
     VectorToAzAlt.Alt = arcsin(V.z)
 End Function

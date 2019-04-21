@@ -1062,10 +1062,13 @@ Private Sub C_GotoStarCalibrated_Click()
 
 
     'Set Az     'Muß hier scheinbar invertiert werden  -->beobachten
-    MatrixSystemAzSoll = CutRad(-AzAlt_BetaCet.Az)      'plus
+'    MatrixSystemAzSoll = CutRad(-AzAlt_BetaCet.Az)      'plus
 '    MatrixSystemAzSoll = CutRad(Pi - AzAlt_BetaCet.Az)  'minus
+
+     MatrixSystemAzSoll = CutRad(AzAlt_BetaCet.Az)
+     
+     
     'Set Alt
-    
     MatrixSystemAltSoll = AzAlt_BetaCet.Alt
 
 
@@ -1307,7 +1310,7 @@ End Sub
 
 
 Private Sub Form_Load()
-    SimOffline = False
+    SimOffline = True
     
     O_OrientationNorth.Value = 1
     O_TimeSelectLocal.Value = 1

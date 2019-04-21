@@ -10,6 +10,14 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   12690
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton C_SingleStarAlignment 
+      Caption         =   "Single Star Alignment"
+      Height          =   495
+      Left            =   480
+      TabIndex        =   99
+      Top             =   6600
+      Width           =   1455
+   End
    Begin VB.CommandButton C_GotoStarCalibrated 
       Caption         =   "GotoStar calibrated"
       Height          =   255
@@ -702,6 +710,15 @@ Begin VB.Form Mainform
          Width           =   2895
       End
    End
+   Begin VB.Label Label6 
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "Label6"
+      Height          =   255
+      Left            =   8280
+      TabIndex        =   100
+      Top             =   9240
+      Width           =   1215
+   End
    Begin VB.Label Label13 
       Caption         =   "Skewing Speed"
       Height          =   255
@@ -930,7 +947,7 @@ Private Sub AlignmentStarList_Click()
 End Sub
 
 Private Sub C_CalibrateNow_Click()
-    
+Label6 = "--"
     CalibrateTelescope Cal_InitTime, _
                        Cal_RaStar_1, Cal_DecStar_1, Cal_TelHorizAngle_1, Cal_TelElevAngle_1, Cal_Time_1, _
                        Cal_RaStar_2, Cal_DecStar_2, Cal_TelHorizAngle_2, Cal_TelElevAngle_2, Cal_Time_2, _
@@ -1021,33 +1038,35 @@ Private Sub C_GotoStarCalibrated_Click()
                                   AzAlt_BetaCet
 
  
-    Dim Az_BetaCetRad As Double
-    Dim Alt_BetaCetRad As Double
-    Dim Az_BetaCet_corrected_1 As Double
-    Dim Az_BetaCet_corrected_2 As Double
-    Dim Az_BetaCet As Double
-    Dim Alt_BetaCet As Double
-    
-    Az_BetaCetRad = CutRad(AzAlt_BetaCet.Az)
-    Alt_BetaCetRad = AzAlt_BetaCet.Alt
+'''    Dim Az_BetaCetRad As Double
+'''    Dim Alt_BetaCetRad As Double
+'''    Dim Az_BetaCet_corrected_1 As Double
+'''    Dim Az_BetaCet_corrected_2 As Double
+'''    Dim Az_BetaCet_corrected_3 As Double
+'''    Dim Az_BetaCet As Double
+'''    Dim Alt_BetaCet As Double
+'''
+'''    Az_BetaCetRad = CutRad(AzAlt_BetaCet.Az)
+'''    Alt_BetaCetRad = AzAlt_BetaCet.Alt
+'''
+'''    Az_BetaCet = RadToDeg(Az_BetaCetRad)
+'''
+'''    ' !!! hier muß möglicherweise noch 180° addiert werden !!!
+'''    Az_BetaCet_corrected_1 = 180 - Az_BetaCet
+'''    Az_BetaCet_corrected_2 = Az_BetaCet_corrected_1 + 180
+'''
+'''    Alt_BetaCet = RadToDeg(Alt_BetaCetRad)
+'''
+'''    Az_BetaCet_corrected_3 = RadToDeg(CutRad(-AzAlt_BetaCet.Az))
 
-    Az_BetaCet = RadToDeg(Az_BetaCetRad)
-    
-    ' !!! hier muß möglicherweise noch 180° addiert werden !!!
-    Az_BetaCet_corrected_1 = 180 - Az_BetaCet
-    Az_BetaCet_corrected_2 = Az_BetaCet_corrected_1 + 180
-
-    Alt_BetaCet = RadToDeg(Alt_BetaCetRad)
 
 
-
-
-
-    'Set Az
-    MatrixSystemAzSoll = Az_BetaCetRad
+    'Set Az     'Muß hier scheinbar invertiert werden  -->beobachten
+    MatrixSystemAzSoll = CutRad(-AzAlt_BetaCet.Az)      'plus
+'    MatrixSystemAzSoll = CutRad(Pi - AzAlt_BetaCet.Az)  'minus
     'Set Alt
     
-    MatrixSystemAltSoll = Alt_BetaCetRad
+    MatrixSystemAltSoll = AzAlt_BetaCet.Alt
 
 
     Dim MotorIncrAz As Long
@@ -1173,6 +1192,24 @@ Private Sub C_SetNorth_Click()
     
     d1 = RadToDeg(MatrixSystem)
     d2 = RadToDeg(tmp)
+End Sub
+
+Private Sub C_SingleStarAlignment_Click()
+    Dim t1 As Double
+    Dim t2 As Double
+    Dim t3 As Double
+    Dim t4 As Double
+    
+    
+    t1 = MatrixSystemAzSoll
+    t2 = MatrixSystemAzIst
+    
+    t3 = MatrixSystemAltIst - MatrixSystemAltSoll
+    GlobalAltOffset = GlobalAltOffset + t3
+    
+    t4 = MatrixSystemAzIst - MatrixSystemAzSoll
+     GlobalAzOffset = GlobalAzOffset + t4
+   
 End Sub
 
 Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)

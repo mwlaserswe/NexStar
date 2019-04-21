@@ -444,6 +444,12 @@ Public Sub CalculateTelescopeCoordinates(InitTimeRad As Double, RA_CurrStarRad A
     Dim Alt_CurrStar As Double
 
     AzAlt_CurrStar = VectorToAzAlt(lmn_Tel_Result)
+    
+    If lmn_Tel_Result.x >= 0 Then
+        Mainform.Label6 = "plus"
+    Else
+        Mainform.Label6 = "minus"
+    End If
 
 End Sub
 

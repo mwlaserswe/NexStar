@@ -64,6 +64,7 @@ End Type
 
 
 Public SimOffline As Boolean
+Public CommTest As Boolean
 Public IniFileName As String
 Public AlignmentStarArray() As StarDescription
 
@@ -112,8 +113,19 @@ Public Cal_TelHorizAngle_2 As Double
 Public Cal_TelElevAngle_2 As Double
 Public Cal_Time_2 As Double
 
+Public TrackingisON As Boolean
+Public LastMotorIncrAz As Long
+Public LastMotorIncrAlt As Long
 
 
+
+
+'=== Communication Test ===
+Public TestCommHandheldToMotor As Boolean
+Public TestCommMotorToHandheld As Boolean
+Public NexStarChar1 As String
+Public NexStarChar2 As String
+Public NexStarChar3 As String
 
 
 

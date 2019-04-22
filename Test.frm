@@ -947,10 +947,17 @@ Private Sub Command5_Click()
     Dim tst As Double
     Dim t1 As Double
     Dim t2 As Double
+    Dim s1 As String
+    Dim s2 As String
+    
+    s1 = "A"
+    
+    s2 = Hex(Asc(s1))
     
   
     
-    tst = MotorIncrSystem_to_MatrixSystem(EncoderResolution / 4)
+   
+   
 End Sub
 
 Private Sub Command7_Click()

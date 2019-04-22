@@ -10,6 +10,15 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   12690
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton C_Tracking 
+      Caption         =   "Tracking"
+      Height          =   495
+      Left            =   10200
+      Style           =   1  'Graphical
+      TabIndex        =   101
+      Top             =   9240
+      Width           =   1215
+   End
    Begin VB.CommandButton C_SingleStarAlignment 
       Caption         =   "Single Star Alignment"
       Height          =   495
@@ -710,6 +719,15 @@ Begin VB.Form Mainform
          Width           =   2895
       End
    End
+   Begin VB.Label Label27 
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "Label6"
+      Height          =   255
+      Left            =   8280
+      TabIndex        =   102
+      Top             =   9600
+      Width           =   1215
+   End
    Begin VB.Label Label6 
       BorderStyle     =   1  'Fixed Single
       Caption         =   "Label6"
@@ -1038,29 +1056,6 @@ Private Sub C_GotoStarCalibrated_Click()
                                   AzAlt_BetaCet
 
  
-'''    Dim Az_BetaCetRad As Double
-'''    Dim Alt_BetaCetRad As Double
-'''    Dim Az_BetaCet_corrected_1 As Double
-'''    Dim Az_BetaCet_corrected_2 As Double
-'''    Dim Az_BetaCet_corrected_3 As Double
-'''    Dim Az_BetaCet As Double
-'''    Dim Alt_BetaCet As Double
-'''
-'''    Az_BetaCetRad = CutRad(AzAlt_BetaCet.Az)
-'''    Alt_BetaCetRad = AzAlt_BetaCet.Alt
-'''
-'''    Az_BetaCet = RadToDeg(Az_BetaCetRad)
-'''
-'''    ' !!! hier muß möglicherweise noch 180° addiert werden !!!
-'''    Az_BetaCet_corrected_1 = 180 - Az_BetaCet
-'''    Az_BetaCet_corrected_2 = Az_BetaCet_corrected_1 + 180
-'''
-'''    Alt_BetaCet = RadToDeg(Alt_BetaCetRad)
-'''
-'''    Az_BetaCet_corrected_3 = RadToDeg(CutRad(-AzAlt_BetaCet.Az))
-
-
-
     'Set Az     'Muß hier scheinbar invertiert werden  -->beobachten
 '    MatrixSystemAzSoll = CutRad(-AzAlt_BetaCet.Az)      'plus
 '    MatrixSystemAzSoll = CutRad(Pi - AzAlt_BetaCet.Az)  'minus
@@ -1077,6 +1072,9 @@ Private Sub C_GotoStarCalibrated_Click()
     
     MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
     MotorIncrAlt = MatrixSystemAltSoll * EncoderResolution / (2 * Pi)
+    
+    LastMotorIncrAz = MotorIncrAz
+    LastMotorIncrAlt = MotorIncrAlt
 
     SimGotoAzAltActive = True
     
@@ -1215,6 +1213,14 @@ Private Sub C_SingleStarAlignment_Click()
    
 End Sub
 
+Private Sub C_Tracking_Click()
+    If TrackingisON Then
+        TrackingisON = False
+    Else
+        TrackingisON = True
+    End If
+End Sub
+
 Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntUp = True
@@ -1311,6 +1317,7 @@ End Sub
 
 Private Sub Form_Load()
     SimOffline = True
+    CommTest = False
     
     O_OrientationNorth.Value = 1
     O_TimeSelectLocal.Value = 1
@@ -1410,12 +1417,20 @@ Private Sub M_Test_Click()
     Test.Show
 End Sub
 
-' Goto AzAlt        0xO2 Az (3 Byte) Alt (3 Bype)
+' Goto AzAlt        0xO2 Az (3 Byte) 0x16 Alt (3 Bype)
+' Move UP           0x06 0 (3 Byte) 0x1A & Speed  (3 Bype)
+' Move DOWN         0x06 0 (3 Byte) 0x1B & Speed  (3 Bype)
+' Move LEFT         0x07 Speed (3 Byte) 0x1A 0 (3 Bype)
+' Move RIGHT        0x06 Speed (3 Byte) 0x1A 0 (3 Bype)
 ' Set EncRes        0x0C EncResAz (3 Byte) EncResAlt (3 Bype)
-' Set Az Backlash   0x1A BacklashAz (3 Byte)
+' Set Az Backlash   0x0A BacklashAz (3 Byte)
 ' Set Alt Backlash  0x1E BacklashAlt (3 Byte)
 ' Get Az Incr       0x01                            Antwort Az (3 Byte)
 ' Get Alt Incr      0x15                            Antwort Az (3 Byte)
+
+' Skewing rate      [1/10 Motor Incr/sec]  i.e.  Skewing rate 10000: 10000 Incr in 10sec
+
+
 
 
 
@@ -1470,6 +1485,16 @@ Private Sub NexStarComm_OnComm()
                 Loop While NexStarComm.InBufferCount > 0
                 l = Len(NexStarAlt)
                 TelIncrAlt = GetNexStarPosition(NexStarAlt)
+            ElseIf TestCommMotorToHandheld Then
+                NexStarChar1 = ""
+                Do
+                    vbuf = NexStarComm.Input
+                    bbuf = vbuf
+                    NexStarChar1 = NexStarChar1 & Chr$(bbuf(0))
+                     key = (bbuf(0))
+                Loop While NexStarComm.InBufferCount > 0
+                l = Len(NexStarChar1)
+                Communication.DisplayAzAltTracking NexStarChar1
             End If
         
     Case comEvSend  ' Im Sendepuffer befinden sich SThreshold Zeichen
@@ -1491,34 +1516,22 @@ End Sub
 Private Sub Tim_DisplayUpdate_Timer()
     Static Toggle As Boolean
     
-    If Toggle Then
-        Toggle = False
-        C_GetAz_Click
-    Else
-        Toggle = True
-        C_GetAlt_Click
+    If Not CommTest Then
+    
+        If Toggle Then
+            Toggle = False
+            C_GetAz_Click
+        Else
+            Toggle = True
+            C_GetAlt_Click
+        End If
+
     End If
-
-
+    
     L_GlobalAzOffset = Format(RadToDeg(GlobalAzOffset), "0.0000") & "°"
     L_GlobalAltOffset = Format(RadToDeg(GlobalAltOffset), "0.0000") & "°"
     L_MatrixSystemAzSoll = Format(RadToDeg(MatrixSystemAzSoll), "0.0000") & "°"
     L_MatrixSystemAltSoll = Format(RadToDeg(MatrixSystemAltSoll), "0.0000") & "°"
-
-
-'    L_Az = TelIncrAz
-'    L_Alt = TelIncrAlt
-
-'    If O_OrientationNorth.Value Then
-'        TelDegAz = TelIncrAz * 360 / EncoderResolution
-'    ElseIf O_OrientationSouth.Value Then
-'        TelDegAz = (TelIncrAz * 360 / EncoderResolution) + 180
-'    End If
-'
-'    TelDegAlt = TelIncrAlt * 360 / EncoderResolution
-'    L_TelDegAz = Format(CutAngle(TelDegAz), "0.0000")
-'    L_TelDegAlt = Format(TelDegAlt, "0.0000")
-    
     
 End Sub
 
@@ -1697,6 +1710,80 @@ Private Sub Tim_Tracking_Timer()
     Else
         L_CurrentStar.BackColor = RGB(0, 255, 0)
     End If
+    
+    
+    
+    
+    
+    Static TrackCount As Long
+    Const TrackInterval = 10        'calculate new star positition ever ... sec
+    Dim n As Long
+    
+    n = (TrackInterval * 1000) / Tim_Tracking.Interval
+
+    If TrackingisON Then
+            TrackCount = TrackCount + 1
+            If TrackCount >= n Then
+                TrackCount = 0
+                
+                C_Tracking.BackColor = RGB(0, 255, 0)
+            
+            
+                Dim AimTimeRad As Double
+                Dim AzAlt_BetaCet As AzAlt
+                AimTimeRad = TimeToRad(ObserverTimeUT)
+            
+                CalculateTelescopeCoordinates Cal_InitTime, _
+                                              ObserverRA, ObserverDEC, AimTimeRad, TransformationMatrix, _
+                                              AzAlt_BetaCet
+    
+                'Set Az
+                MatrixSystemAzSoll = CutRad(AzAlt_BetaCet.Az)
+                 
+                'Set Alt
+                MatrixSystemAltSoll = AzAlt_BetaCet.Alt
+            
+                Dim MotorIncrAz As Long
+                Dim MotorIncrAlt As Long
+                Dim DiffMotorIncrAz As Long
+                Dim DiffMotorIncrAlt As Long
+                
+                MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
+                MotorIncrAlt = MatrixSystemAltSoll * EncoderResolution / (2 * Pi)
+                DiffMotorIncrAz = MotorIncrAz - LastMotorIncrAz
+                DiffMotorIncrAlt = MotorIncrAlt - LastMotorIncrAlt
+                LastMotorIncrAz = MotorIncrAz
+                LastMotorIncrAlt = MotorIncrAlt
+            
+                Label6 = DiffMotorIncrAz
+                Label27 = DiffMotorIncrAlt
+    
+''                SimGotoAzAltActive = True
+''
+''                If SimOffline Then
+''                    SimGotoAz = MotorIncrAz
+''                    SimGotoAlt = MotorIncrAlt
+''                Else
+''                    NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(MotorIncrAz) & Chr$(&H16) & SetNexStarPosition(MotorIncrAlt)
+''                End If
+                
+                
+            End If
+
+
+
+    
+    
+    
+    
+    
+    
+    Else
+            C_Tracking.BackColor = &H8000000F
+    End If
+
+    
+    
     
     
     

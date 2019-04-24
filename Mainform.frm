@@ -904,9 +904,6 @@ Dim NexStarAz As String
 Dim NexStarAlt As String
 Dim TelIncrAz As Long
 Dim TelIncrAlt As Long
-'Dim TelDegAz As Double
-'Dim TelDegAlt As Double
-
 
 Dim ManualSkewingSpeed As Long
 
@@ -973,57 +970,46 @@ Label6 = "--"
 
 End Sub
 
+
 Private Sub C_GetAz_Click()
        
     
     If SimOffline Then
         TelIncrAz = SimIncrAz
-'                L_MotorIncrSystem = TelIncrAz
-'                tmp = MotorIncrSystem_to_MatrixSystem(CDbl(TelIncrAz))
-'                tmp = RadToDeg(tmp)
-'                L_MatrixSystem = Format(tmp, "0.0000") & "°"
     Else
         NexStarComm.Output = Chr$(&H1)
         NexStarAz = ""
         Command = 1
     End If
     
-    
     L_AzMotorIncr = TelIncrAz
     MatrixSystemAzIst = MotorIncrSystem_to_MatrixSystem(CDbl(TelIncrAz))
     L_MatrixSystemAzIst = Format(RadToDeg(MatrixSystemAzIst), "0.0000") & "°"
 End Sub
+
 
 Private Sub C_GetAlt_Click()
     Dim tmp As Double
     
     If SimOffline Then
         TelIncrAlt = SimIncrAlt
-'                L_AltMotorIncr = TelIncrAlt
-'                tmp = TelIncrAlt * 360 / EncoderResolution
-'                L_AltMatrixSys = Format(tmp, "0.0000") & "°"
-   Else
+    Else
         NexStarComm.Output = Chr$(&H15)
         NexStarAlt = ""
         Command = 21
     End If
     
     L_AltMotorIncr = TelIncrAlt
-   
     MatrixSystemAltIst = TelIncrAlt * (2 * Pi) / EncoderResolution
-   
     L_MatrixSystemAltIst = Format(RadToDeg(MatrixSystemAltIst), "0.0000") & "°"
 
 End Sub
-
-
 
 
 Private Sub C_GotoStar_Click()
     'Set Az
     MatrixSystemAzSoll = AzAltSystem_to_MatrixSystem(ObserverAz)
     'Set Alt
-    
     MatrixSystemAltSoll = ObserverAlt + GlobalAltOffset
 
 
@@ -1539,7 +1525,7 @@ Private Sub Tim_Simulation_Timer()
     Dim SimScaling As Long
     Dim SimGotoStep As Long
 
-    SimScaling = 10
+    SimScaling = 100
     SimGotoStep = 1000
 
     If SimBntUp Then
@@ -1570,7 +1556,7 @@ Private Sub Tim_Simulation_Timer()
         SimIncrAlt = EncoderResolution
     End If
     
-    
+    ' movement active
     If SimGotoAzAltActive Then
         If Abs(SimGotoAz - SimIncrAz) < SimGotoStep Then
             SimIncrAz = SimGotoAz
@@ -1588,16 +1574,13 @@ Private Sub Tim_Simulation_Timer()
             SimIncrAlt = SimIncrAlt - SimGotoStep
         End If
         
-        
+        ' movement finished
         If (SimIncrAz = SimGotoAz) And (SimIncrAlt = SimGotoAlt) Then
             SimGotoAzAltActive = False
         End If
 
     End If
     
-    
-    
-    'Dim SimGotoAlt As Long
 
 End Sub
 
@@ -1716,14 +1699,21 @@ Private Sub Tim_Tracking_Timer()
     
     
     Static TrackCount As Long
+    Static TrackingMem As Boolean
     Const TrackInterval = 10        'calculate new star positition ever ... sec
-    Dim n As Long
+    Dim N As Long
     
-    n = (TrackInterval * 1000) / Tim_Tracking.Interval
+    N = (TrackInterval * 1000) / Tim_Tracking.Interval
+
+    ' start with tracking immediately
+    If Not TrackingisON Then
+        TrackCount = N
+    End If
 
     If TrackingisON Then
             TrackCount = TrackCount + 1
-            If TrackCount >= n Then
+            If TrackCount >= N Then
+        
                 TrackCount = 0
                 
                 C_Tracking.BackColor = RGB(0, 255, 0)
@@ -1731,7 +1721,12 @@ Private Sub Tim_Tracking_Timer()
             
                 Dim AimTimeRad As Double
                 Dim AzAlt_BetaCet As AzAlt
-                AimTimeRad = TimeToRad(ObserverTimeUT)
+                Dim TimeDiff As MyTime
+                
+                
+                TimeDiff.s = TrackInterval
+                
+                AimTimeRad = TimeToRad(ObserverTimeUT) + TimeToRad(TimeDiff)
             
                 CalculateTelescopeCoordinates Cal_InitTime, _
                                               ObserverRA, ObserverDEC, AimTimeRad, TransformationMatrix, _
@@ -1757,15 +1752,19 @@ Private Sub Tim_Tracking_Timer()
             
                 Label6 = DiffMotorIncrAz
                 Label27 = DiffMotorIncrAlt
-    
-''                SimGotoAzAltActive = True
-''
-''                If SimOffline Then
-''                    SimGotoAz = MotorIncrAz
-''                    SimGotoAlt = MotorIncrAlt
-''                Else
-''                    NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(MotorIncrAz) & Chr$(&H16) & SetNexStarPosition(MotorIncrAlt)
-''                End If
+                
+               
+
+                If SimOffline Then
+                SimGotoAzAltActive = True
+                    SimIncrAz = DiffMotorIncrAz
+                    SimIncrAlt = DiffMotorIncrAlt
+                
+'                    SimGotoAz = MotorIncrAz
+'                    SimGotoAlt = MotorIncrAlt
+                Else
+                    NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(MotorIncrAz) & Chr$(&H16) & SetNexStarPosition(MotorIncrAlt)
+                End If
                 
                 
             End If

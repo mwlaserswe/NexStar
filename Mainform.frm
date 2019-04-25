@@ -13,7 +13,7 @@ Begin VB.Form Mainform
    Begin VB.CommandButton C_Tracking 
       Caption         =   "Tracking"
       Height          =   495
-      Left            =   10200
+      Left            =   10800
       Style           =   1  'Graphical
       TabIndex        =   101
       Top             =   9240
@@ -719,6 +719,24 @@ Begin VB.Form Mainform
          Width           =   2895
       End
    End
+   Begin VB.Label Label29 
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "Label6"
+      Height          =   255
+      Left            =   8760
+      TabIndex        =   104
+      Top             =   10440
+      Width           =   2415
+   End
+   Begin VB.Label Label28 
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "Label6"
+      Height          =   255
+      Left            =   8760
+      TabIndex        =   103
+      Top             =   10080
+      Width           =   2415
+   End
    Begin VB.Label Label27 
       BorderStyle     =   1  'Fixed Single
       Caption         =   "Label6"
@@ -726,7 +744,7 @@ Begin VB.Form Mainform
       Left            =   8280
       TabIndex        =   102
       Top             =   9600
-      Width           =   1215
+      Width           =   2415
    End
    Begin VB.Label Label6 
       BorderStyle     =   1  'Fixed Single
@@ -735,7 +753,7 @@ Begin VB.Form Mainform
       Left            =   8280
       TabIndex        =   100
       Top             =   9240
-      Width           =   1215
+      Width           =   2415
    End
    Begin VB.Label Label13 
       Caption         =   "Skewing Speed"
@@ -915,8 +933,12 @@ Dim SimBntDn As Boolean
 Dim SimBntLe As Boolean
 Dim SimBntRi As Boolean
 Dim SimGotoAzAltActive As Boolean
+Dim SimTrackingActive As Boolean
 Dim SimGotoAz As Long
 Dim SimGotoAlt As Long
+Dim SimTrackingAzStep As Long
+Dim SimTrackingAltStep As Long
+
 
 
 
@@ -1059,8 +1081,10 @@ Private Sub C_GotoStarCalibrated_Click()
     MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
     MotorIncrAlt = MatrixSystemAltSoll * EncoderResolution / (2 * Pi)
     
-    LastMotorIncrAz = MotorIncrAz
-    LastMotorIncrAlt = MotorIncrAlt
+                LastMotorIncrAz = MotorIncrAz
+                LastMotorIncrAlt = MotorIncrAlt
+    MatrixSystemAzLast = MatrixSystemAzSoll
+    MatrixSystemAltLast = MatrixSystemAltSoll
 
     SimGotoAzAltActive = True
     
@@ -1518,6 +1542,7 @@ Private Sub Tim_DisplayUpdate_Timer()
     L_GlobalAltOffset = Format(RadToDeg(GlobalAltOffset), "0.0000") & "°"
     L_MatrixSystemAzSoll = Format(RadToDeg(MatrixSystemAzSoll), "0.0000") & "°"
     L_MatrixSystemAltSoll = Format(RadToDeg(MatrixSystemAltSoll), "0.0000") & "°"
+'    L_AzMotorIncr = TelIncrAz
     
 End Sub
 
@@ -1526,7 +1551,7 @@ Private Sub Tim_Simulation_Timer()
     Dim SimGotoStep As Long
 
     SimScaling = 100
-    SimGotoStep = 1000
+    SimGotoStep = 10000
 
     If SimBntUp Then
         SimIncrAlt = SimIncrAlt + (ManualSkewingSpeed / SimScaling)
@@ -1543,22 +1568,24 @@ Private Sub Tim_Simulation_Timer()
     If SimBntRi Then
         SimIncrAz = SimIncrAz + (ManualSkewingSpeed / SimScaling)
     End If
-        
-    If SimIncrAz > EncoderResolution Then
-        SimIncrAz = 0
-    ElseIf SimIncrAz < 0 Then
-        SimIncrAz = EncoderResolution
-    End If
-        
-    If SimIncrAlt > EncoderResolution Then
-        SimIncrAlt = 0
-    ElseIf SimIncrAlt < 0 Then
-        SimIncrAlt = EncoderResolution
-    End If
+       
+'' sieht unsinnig aus
+''
+''    If SimIncrAz > EncoderResolution Then
+''        SimIncrAz = 0
+''    ElseIf SimIncrAz < 0 Then
+''        SimIncrAz = EncoderResolution
+''    End If
+''
+''    If SimIncrAlt > EncoderResolution Then
+''        SimIncrAlt = 0
+''    ElseIf SimIncrAlt < 0 Then
+''        SimIncrAlt = EncoderResolution
+''    End If
     
     ' movement active
     If SimGotoAzAltActive Then
-        If Abs(SimGotoAz - SimIncrAz) < SimGotoStep Then
+        If (Abs(SimGotoAz) - Abs(SimIncrAz)) < SimGotoStep * 2 Then
             SimIncrAz = SimGotoAz
         ElseIf SimGotoAz > SimIncrAz Then
             SimIncrAz = SimIncrAz + SimGotoStep
@@ -1566,7 +1593,7 @@ Private Sub Tim_Simulation_Timer()
             SimIncrAz = SimIncrAz - SimGotoStep
         End If
     
-        If Abs(SimGotoAlt - SimIncrAlt) < SimGotoStep Then
+        If (Abs(SimGotoAlt) - Abs(SimIncrAlt)) < SimGotoStep * 2 Then
             SimIncrAlt = SimGotoAlt
         ElseIf SimGotoAlt > SimIncrAlt Then
             SimIncrAlt = SimIncrAlt + SimGotoStep
@@ -1581,7 +1608,16 @@ Private Sub Tim_Simulation_Timer()
 
     End If
     
-
+    
+    ' tracking active
+    If SimTrackingActive Then
+        SimIncrAz = SimIncrAz + SimTrackingAzStep
+        SimIncrAlt = SimIncrAlt + SimTrackingAltStep
+        SimTrackingAzStep = 0
+        SimTrackingAltStep = 0
+       SimTrackingActive = False
+    End If
+    
 End Sub
 
 
@@ -1700,7 +1736,7 @@ Private Sub Tim_Tracking_Timer()
     
     Static TrackCount As Long
     Static TrackingMem As Boolean
-    Const TrackInterval = 10        'calculate new star positition ever ... sec
+    Const TrackInterval = 5        'calculate new star positition ever ... sec
     Dim N As Long
     
     N = (TrackInterval * 1000) / Tim_Tracking.Interval
@@ -1712,6 +1748,8 @@ Private Sub Tim_Tracking_Timer()
 
     If TrackingisON Then
             TrackCount = TrackCount + 1
+            
+            ' this code only every "TrackInterval" sec
             If TrackCount >= N Then
         
                 TrackCount = 0
@@ -1738,44 +1776,78 @@ Private Sub Tim_Tracking_Timer()
                 'Set Alt
                 MatrixSystemAltSoll = AzAlt_BetaCet.Alt
             
-                Dim MotorIncrAz As Long
-                Dim MotorIncrAlt As Long
-                Dim DiffMotorIncrAz As Long
-                Dim DiffMotorIncrAlt As Long
-                
-                MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
-                MotorIncrAlt = MatrixSystemAltSoll * EncoderResolution / (2 * Pi)
-                DiffMotorIncrAz = MotorIncrAz - LastMotorIncrAz
-                DiffMotorIncrAlt = MotorIncrAlt - LastMotorIncrAlt
-                LastMotorIncrAz = MotorIncrAz
-                LastMotorIncrAlt = MotorIncrAlt
+''                Dim MotorIncrAz As Long
+''                Dim MotorIncrAlt As Long
+''                Dim DiffMotorIncrAz As Long
+''                Dim DiffMotorIncrAlt As Long
+''
+''                MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
+''                MotorIncrAlt = MatrixSystemAltSoll * EncoderResolution / (2 * Pi)
+'''                DiffMotorIncrAz = MotorIncrAz - LastMotorIncrAz
+'''                DiffMotorIncrAlt = MotorIncrAlt - LastMotorIncrAlt
+''                DiffMotorIncrAz = MotorIncrAz - TelIncrAz
+''                DiffMotorIncrAlt = MotorIncrAlt - TelIncrAlt
+''                LastMotorIncrAz = MotorIncrAz
+''                LastMotorIncrAlt = MotorIncrAlt
             
-                Label6 = DiffMotorIncrAz
-                Label27 = DiffMotorIncrAlt
+            
+            
+            
+                'Alternativ: mit dem Matrixsystem
+                Dim MatrixSystemAzDiff As Double
+                Dim MatrixSystemAltDiff As Double
                 
-               
-
-                If SimOffline Then
-                SimGotoAzAltActive = True
-                    SimIncrAz = DiffMotorIncrAz
-                    SimIncrAlt = DiffMotorIncrAlt
+                MatrixSystemAzDiff = MatrixSystemAzSoll - MatrixSystemAzLast
+                MatrixSystemAltDiff = MatrixSystemAltSoll - MatrixSystemAltLast
+                MatrixSystemAzLast = MatrixSystemAzSoll
+                MatrixSystemAltLast = MatrixSystemAltSoll
+            
+            
+            
+            
+            
+                Static LifeCounter As Long
+                Dim i As Long
+                Dim s As String
                 
-'                    SimGotoAz = MotorIncrAz
-'                    SimGotoAlt = MotorIncrAlt
+                
+                
+                If LifeCounter >= 10 Then
+                    LifeCounter = 0
+                    s = ""
                 Else
-                    NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(MotorIncrAz) & Chr$(&H16) & SetNexStarPosition(MotorIncrAlt)
+                    LifeCounter = LifeCounter + 1
+                    For i = 0 To LifeCounter
+                        s = s & "."
+                    Next i
                 End If
                 
+'                Label6 = DiffMotorIncrAz & s
+'                Label27 = DiffMotorIncrAlt & s
+                Label6 = Format(RadToDeg(MatrixSystemAzDiff), "0.0000") & "° pro " & TrackInterval & " sec"
+                Label27 = Format(RadToDeg(MatrixSystemAltDiff), "0.0000") & "° pro " & TrackInterval & " sec"
+
+                Dim DiffMotorIncrAz As Double
+                Dim DiffMotorIncrAlt As Double
                 
+                DiffMotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzDiff)
+                DiffMotorIncrAlt = MatrixSystemAltDiff * EncoderResolution / (2 * Pi)
+                
+                Label28 = DiffMotorIncrAz
+                Label29 = DiffMotorIncrAlt
+
+                    
+                If Not SimOffline Then
+'                    NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(MotorIncrAz) & Chr$(&H16) & SetNexStarPosition(MotorIncrAlt)
+                End If
+            End If
+                
+            If SimOffline Then
+                SimTrackingActive = True
+                SimTrackingAzStep = (DiffMotorIncrAz * 10) / (5 * 10)
+                SimTrackingAltStep = (DiffMotorIncrAlt * 10) / (5 * 10)
             End If
 
-
-
-    
-    
-    
-    
-    
     
     Else
             C_Tracking.BackColor = &H8000000F

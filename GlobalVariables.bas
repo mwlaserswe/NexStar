@@ -116,7 +116,8 @@ Public Cal_Time_2 As Double
 Public TrackingisON As Boolean
 Public LastMotorIncrAz As Long
 Public LastMotorIncrAlt As Long
-
+Public MatrixSystemAzLast As Double
+Public MatrixSystemAltLast As Double
 
 
 

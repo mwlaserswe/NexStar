@@ -580,7 +580,7 @@ Begin VB.Form Mainform
       Top             =   1560
       Width           =   1215
    End
-   Begin VB.VScrollBar VS_ManualSkewingSpeed 
+   Begin VB.VScrollBar VS_ManualSlewingSpeed 
       Height          =   2295
       LargeChange     =   10
       Left            =   4560
@@ -740,14 +740,14 @@ Begin VB.Form Mainform
       Width           =   2415
    End
    Begin VB.Label Label13 
-      Caption         =   "Skewing Speed"
+      Caption         =   "Slewing Speed"
       Height          =   255
       Left            =   2880
       TabIndex        =   42
       Top             =   4920
       Width           =   1335
    End
-   Begin VB.Label L_SkewingSpeed 
+   Begin VB.Label L_SlewingSpeed 
       Alignment       =   1  'Right Justify
       BorderStyle     =   1  'Fixed Single
       Caption         =   "--"
@@ -907,7 +907,7 @@ Dim NexStarAlt As String
 Dim TelIncrAz As Long
 Dim TelIncrAlt As Long
 
-Dim ManualSkewingSpeed As Long
+Dim ManualSlewingSpeed As Long
 
 'Simulation
 Dim SimIncrAz As Long
@@ -954,17 +954,6 @@ Private Sub AlignmentStarList_Click()
       
     RA_DEC_to_AZ_ALT_radian ObserverRA, ObserverDEC, ObserverLong, ObserverLatt, ObserverDateTimeUT, Az, Alt, HourAngle
   
-'''    If O_OrientationNorth.Value Then Az = Az + Pi
-'''    L_AzStar = CutAngle(RadToDeg(Az))
-'''    L_AltStar = RadToDeg(Alt)
-'''
-'''    HourAngleHMS = RadToTime(HourAngle)
-'''    L_HourAngle = HourAngleHMS.H & ":" & HourAngleHMS.M & ":" & Format(HourAngleHMS.s, "00.00")
-'''
-'''    T_AzTel = CutAngle(RadToDeg(Az))
-'''    T_AltTel = RadToDeg(Alt)
-'''
-
 End Sub
 
 Private Sub C_CalibrateNow_Click()
@@ -1043,14 +1032,16 @@ Private Sub C_GotoStarCalibrated_Click()
     Dim AzAlt_BetaCet As AzAlt
     AimTimeRad = TimeToRad(ObserverTimeUT)
 
+    TrackingisON = False
+
     CalculateTelescopeCoordinates Cal_InitTime, _
                                   ObserverRA, ObserverDEC, AimTimeRad, TransformationMatrix, _
                                   AzAlt_BetaCet
 
  
     'Set Az
-     MatrixSystemAzSoll = CutRad(AzAlt_BetaCet.Az)
-     'Set Alt
+    MatrixSystemAzSoll = CutRad(AzAlt_BetaCet.Az)
+    'Set Alt
     MatrixSystemAltSoll = AzAlt_BetaCet.Alt
 
     Dim MotorIncrAz As Long
@@ -1058,9 +1049,7 @@ Private Sub C_GotoStarCalibrated_Click()
     
     MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
     MotorIncrAlt = MatrixSystemAltSoll * EncoderResolution / (2 * Pi)
-    
-'                LastMotorIncrAz = MotorIncrAz
-'                LastMotorIncrAlt = MotorIncrAlt
+
     SimGotoAzAltActive = True
     
     If SimOffline Then
@@ -1069,13 +1058,6 @@ Private Sub C_GotoStarCalibrated_Click()
     Else
         NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(MotorIncrAz) & Chr$(&H16) & SetNexStarPosition(MotorIncrAlt)
     End If
-
-
-
-
-
-
-
 
 
 End Sub
@@ -1152,10 +1134,6 @@ Private Sub C_SetCalibrationStar_2_Click()
     'Set time reference star 2 for calibration
     Cal_Time_2 = TimeToRad(ObserverTimeUT)
 
-
-
-
-
 End Sub
 
 Private Sub C_SetNorth_Click()
@@ -1180,23 +1158,12 @@ Private Sub C_SetNorth_Click()
     d2 = RadToDeg(tmp)
 End Sub
 
+
 Private Sub C_SingleStarAlignment_Click()
-    Dim t1 As Double
-    Dim t2 As Double
-    Dim t3 As Double
-    Dim t4 As Double
-    
-    
-    t1 = MatrixSystemAzSoll
-    t2 = MatrixSystemAzIst
-    
-    t3 = MatrixSystemAltIst - MatrixSystemAltSoll
-    GlobalAltOffset = GlobalAltOffset + t3
-    
-    t4 = MatrixSystemAzIst - MatrixSystemAzSoll
-     GlobalAzOffset = GlobalAzOffset + t4
-   
+    GlobalAltOffset = GlobalAltOffset + (MatrixSystemAltIst - MatrixSystemAltSoll)
+    GlobalAzOffset = GlobalAzOffset + (MatrixSystemAzIst - MatrixSystemAzSoll)
 End Sub
+
 
 Private Sub C_Tracking_Click()
     If TrackingisON Then
@@ -1206,11 +1173,12 @@ Private Sub C_Tracking_Click()
     End If
 End Sub
 
+
 Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntUp = True
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(ManualSkewingSpeed)
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(ManualSlewingSpeed)
     End If
 End Sub
 
@@ -1226,7 +1194,7 @@ Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     If SimOffline Then
         SimBntDn = True
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1B) & SetNexStarPosition(ManualSkewingSpeed)
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1B) & SetNexStarPosition(ManualSlewingSpeed)
     End If
 End Sub
 
@@ -1242,7 +1210,7 @@ Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     If SimOffline Then
         SimBntLe = True
     Else
-        NexStarComm.Output = Chr$(&H7) & SetNexStarPosition(ManualSkewingSpeed) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarComm.Output = Chr$(&H7) & SetNexStarPosition(ManualSlewingSpeed) & Chr$(&H1A) & SetNexStarPosition(0)
     End If
 End Sub
 
@@ -1258,7 +1226,7 @@ Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     If SimOffline Then
         SimBntRi = True
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(ManualSkewingSpeed) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(ManualSlewingSpeed) & Chr$(&H1A) & SetNexStarPosition(0)
     End If
 End Sub
 
@@ -1298,8 +1266,6 @@ Private Sub C_SetEncoder_Click()
 End Sub
 
 
-
-
 Private Sub Form_Load()
     SimOffline = True
     CommTest = False
@@ -1310,7 +1276,7 @@ Private Sub Form_Load()
     
     Command = 0
     
-    VS_ManualSkewingSpeed.Value = 10
+    VS_ManualSlewingSpeed.Value = 10
 
 
     LoadAlignmetStarFile
@@ -1352,11 +1318,6 @@ Private Sub Form_Load()
     TransformationMatrix(2, 1) = Zahl(INIGetValue(IniFileName, "TransformationMatrix", "21"))
     TransformationMatrix(2, 2) = Zahl(INIGetValue(IniFileName, "TransformationMatrix", "22"))
     
-    
-    
-    
-    
-
 End Sub
 
 
@@ -1412,9 +1373,9 @@ End Sub
 ' Get Az Incr       0x01                            Antwort Az (3 Byte)
 ' Get Alt Incr      0x15                            Antwort Az (3 Byte)
 
-' Skewing rate      [1/10 Motor Incr/sec]  i.e.  Skewing rate 10000: 10000 Incr in 10sec
+' Slewing rate      [1/10 Motor Incr/sec]  i.e.  Slewing rate 10000: 10000 Incr in 10sec
 
-
+' Slewing rate 9: "CE BB 02" = "CE BB 02" = 13548290 = 1354829,0 [Incr pro sec]
 
 
 
@@ -1516,8 +1477,7 @@ Private Sub Tim_DisplayUpdate_Timer()
     L_GlobalAltOffset = Format(RadToDeg(GlobalAltOffset), "0.0000") & "°"
     L_MatrixSystemAzSoll = Format(RadToDeg(MatrixSystemAzSoll), "0.0000") & "°"
     L_MatrixSystemAltSoll = Format(RadToDeg(MatrixSystemAltSoll), "0.0000") & "°"
-'    L_AzMotorIncr = TelIncrAz
-    
+ 
 End Sub
 
 Private Sub Tim_Simulation_Timer()
@@ -1528,19 +1488,19 @@ Private Sub Tim_Simulation_Timer()
     SimGotoStep = 10000
 
     If SimBntUp Then
-        SimIncrAlt = SimIncrAlt + (ManualSkewingSpeed / SimScaling)
+        SimIncrAlt = SimIncrAlt + (ManualSlewingSpeed / SimScaling)
     End If
         
     If SimBntDn Then
-        SimIncrAlt = SimIncrAlt - (ManualSkewingSpeed / SimScaling)
+        SimIncrAlt = SimIncrAlt - (ManualSlewingSpeed / SimScaling)
     End If
     
     If SimBntLe Then
-        SimIncrAz = SimIncrAz - (ManualSkewingSpeed / SimScaling)
+        SimIncrAz = SimIncrAz - (ManualSlewingSpeed / SimScaling)
     End If
         
     If SimBntRi Then
-        SimIncrAz = SimIncrAz + (ManualSkewingSpeed / SimScaling)
+        SimIncrAz = SimIncrAz + (ManualSlewingSpeed / SimScaling)
     End If
        
 '' sieht unsinnig aus
@@ -1711,7 +1671,7 @@ Private Sub Tim_Tracking_Timer()
     
     Static TrackCount As Long
     Static TrackingMem As Boolean
-    Const TrackInterval = 5        'calculate new star positition ever ... sec
+    Const TrackInterval = 10        'calculate new star positition ever ... sec
     Dim N As Long
     
     N = (TrackInterval * 1000) / Tim_Tracking.Interval
@@ -1777,17 +1737,49 @@ Private Sub Tim_Tracking_Timer()
                 
                 Label6 = Format(RadToDeg(MatrixSystemAzDiff), "0.0000") & "° = " & Format(DiffMotorIncrAz, "0.0") & " Incr pro " & TrackInterval & " sec"
                 Label27 = Format(RadToDeg(MatrixSystemAltDiff), "0.0000") & "° = " & Format(DiffMotorIncrAlt, "0.0") & " Incr pro " & TrackInterval & " sec"
-                    
+                
+                
+                
+                Dim SlewingSpeedAz As Long
+                Dim SlewingSpeedAlt As Long
+                
+                SlewingSpeedAz = (DiffMotorIncrAz * 10) / TrackInterval
+                SlewingSpeedAlt = (DiffMotorIncrAlt * 10) / TrackInterval
+                  
                 If Not SimOffline Then
-'                    NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(MotorIncrAz) & Chr$(&H16) & SetNexStarPosition(MotorIncrAlt)
+                    Dim AzString As String
+                    Dim AltString As String
+                    
+                    Label28 = SlewingSpeedAz
+                    Label29 = SlewingSpeedAz
+                    
+                    
+                    If DiffMotorIncrAz < 0 Then
+                        'CCW
+                        AzString = Chr$(&H7) & SetNexStarPosition(-SlewingSpeedAz)
+                    Else
+                        'CW (normal direction)
+                        AzString = Chr$(&H6) & SetNexStarPosition(SlewingSpeedAz)
+                    End If
+                    
+                    If DiffMotorIncrAlt < 0 Then
+                        'descending
+                        AltString = Chr$(&H1B) & SetNexStarPosition(-SlewingSpeedAlt)
+                    Else
+                        'ascending
+                        AltString = Chr$(&H1A) & SetNexStarPosition(SlewingSpeedAlt)
+                    End If
+                    
+                    NexStarComm.Output = AzString & AltString
+                    
                 End If
             End If
                 
             If SimOffline Then
                 SimTrackingActive = True
 
-                SimTrackingAzStep = (DiffMotorIncrAz / 5) * (500# / 1000#)
-                SimTrackingAltStep = (DiffMotorIncrAlt / 5) * (500# / 1000#)
+                SimTrackingAzStep = (DiffMotorIncrAz / TrackInterval) * (Tim_Tracking.Interval / 1000#)
+                SimTrackingAltStep = (DiffMotorIncrAlt / TrackInterval) * (Tim_Tracking.Interval / 1000#)
 
                 Dim dummy As Boolean
                 If SimTrackingAzStep > 0 Then
@@ -1803,25 +1795,17 @@ Private Sub Tim_Tracking_Timer()
             C_Tracking.BackColor = &H8000000F
     End If
 
-    
-    
-    
-    
-    
-    
-
 End Sub
 
-Private Sub VS_ManualSkewingSpeed_Change()
+Private Sub VS_ManualSlewingSpeed_Change()
     Dim tmp As Long
     
-    tmp = VS_ManualSkewingSpeed.Value
-    ManualSkewingSpeed = 1000 * tmp
-    L_SkewingSpeed = ManualSkewingSpeed
+    tmp = VS_ManualSlewingSpeed.Value
+    ManualSlewingSpeed = 1000 * tmp
+    L_SlewingSpeed = ManualSlewingSpeed
     
-    'SkewingSpeed[Incr/sec] = ManualSkewingSpeed[Incr/sec] * 0,1 [Incr/sec]
-    '
-    
+    'SlewingSpeed[Incr/sec] = ManualSlewingSpeed[Incr/sec] * 0,1 [Incr/sec]
+
     
 End Sub
 

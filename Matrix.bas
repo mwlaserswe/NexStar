@@ -1,6 +1,7 @@
 Attribute VB_Name = "Matrix"
 Option Explicit
 
+
 Public Sub MatrixAddition(matrix1() As Double, ByVal row1 As Integer, ByVal col1 As Integer, matrix2() As Double, ByVal row2 As Integer, ByVal col2 As Integer, matrix3() As Double)
     Dim i As Integer
     Dim j As Integer
@@ -13,6 +14,7 @@ Public Sub MatrixAddition(matrix1() As Double, ByVal row1 As Integer, ByVal col1
     Next
 End Sub
 
+
 'Public Sub PolarKarthesisch(AZ As Double, ELEV As Double, V As Vector)
 '  'https://de.wikipedia.org/wiki/Kugelkoordinaten
 '  '   Absatz "Andere Konventionen"
@@ -21,6 +23,7 @@ End Sub
 '  V.y = Cos(ELEV) * Sin(AZ)
 '  V.z = Sin(ELEV)
 'End Sub
+
 
 Public Function PolarKarthesisch(HourAngle As Double, Declination As Double) As Vector
   'https://de.wikipedia.org/wiki/Kugelkoordinaten
@@ -51,8 +54,6 @@ End Function
 Public Function LenghtVector(V As Vector) As Double
     LenghtVector = Sqr(V.x * V.x + V.Y * V.Y + V.z * V.z)
 End Function
-
-
 
 
 Public Sub MatrixProduct(matrix1() As Double, ByVal row1 As Integer, ByVal col1 As Integer, matrix2() As Double, ByVal row2 As Integer, ByVal col2 As Integer, matrix3() As Double)
@@ -91,88 +92,88 @@ Public Sub Calculate_Inverse(System_DIM As Long, Matrix_A() As Double, Inverse_M
 
     Dim Solution_Problem As Boolean
 
-'Uses Gauss elimination method in order to calculate the inverse matrix [A]-1
-'Method: Puts matrix [A] at the left and the singular matrix [I] at the right:
-'[ a11 a12 a13 | 1 0 0 ]
-'[ a21 a22 a23 | 0 1 0 ]
-'[ a31 a32 a33 | 0 0 1 ]
-'Then using line operations, we try to build the singular matrix [I] at the left.
-'After we have finished, the inverse matrix [A]-1 (bij) will be at the right:
-'[ 1 0 0 | b11 b12 b13 ]
-'[ 0 1 0 | b21 b22 b23 ]
-'[ 0 0 1 | b31 b32 b33 ]
-
-On Error GoTo errhandler 'In case the inverse cannot be found (Determinant = 0)
-
-Solution_Problem = False
-MAX_DIM = 10
-
-'Assign values from matrix [A] at the left
-For N = 0 To System_DIM - 1
-    For M = 0 To System_DIM - 1
-        Operations_Matrix(M, N) = Matrix_A(M, N)
+    'Uses Gauss elimination method in order to calculate the inverse matrix [A]-1
+    'Method: Puts matrix [A] at the left and the singular matrix [I] at the right:
+    '[ a11 a12 a13 | 1 0 0 ]
+    '[ a21 a22 a23 | 0 1 0 ]
+    '[ a31 a32 a33 | 0 0 1 ]
+    'Then using line operations, we try to build the singular matrix [I] at the left.
+    'After we have finished, the inverse matrix [A]-1 (bij) will be at the right:
+    '[ 1 0 0 | b11 b12 b13 ]
+    '[ 0 1 0 | b21 b22 b23 ]
+    '[ 0 0 1 | b31 b32 b33 ]
+    
+    On Error GoTo errhandler 'In case the inverse cannot be found (Determinant = 0)
+    
+    Solution_Problem = False
+    MAX_DIM = 10
+    
+    'Assign values from matrix [A] at the left
+    For N = 0 To System_DIM - 1
+        For M = 0 To System_DIM - 1
+            Operations_Matrix(M, N) = Matrix_A(M, N)
+        Next
     Next
-Next
-
-'Assign values from singular matrix [I] at the right
-For N = 0 To System_DIM - 1
-    For M = 0 To System_DIM - 1
-        If N = M Then
-            Operations_Matrix(M, N + System_DIM) = 1
-        Else
-            Operations_Matrix(M, N + System_DIM) = 0
-        End If
+    
+    'Assign values from singular matrix [I] at the right
+    For N = 0 To System_DIM - 1
+        For M = 0 To System_DIM - 1
+            If N = M Then
+                Operations_Matrix(M, N + System_DIM) = 1
+            Else
+                Operations_Matrix(M, N + System_DIM) = 0
+            End If
+        Next
     Next
-Next
-
-'Build the Singular matrix [I] at the left
-For k = 0 To System_DIM - 1
-   'Bring a non-zero element first by changes lines if necessary
-   If Operations_Matrix(k, k) = 0 Then
-      For N = k To System_DIM - 1
-        If Operations_Matrix(N, k) <> 0 Then line_1 = N: Exit For 'Finds line_1 with non-zero element
-      Next N
-      'Change line k with line_1
-      For M = k To System_DIM * 2 - 1
-         temporary_1 = Operations_Matrix(k, M)
-         Operations_Matrix(k, M) = Operations_Matrix(line_1, M)
-         Operations_Matrix(line_1, M) = temporary_1
-      Next M
-   End If
-   
-    elem1 = Operations_Matrix(k, k)
-   For N = k To 2 * System_DIM - 1
-    Operations_Matrix(k, N) = Operations_Matrix(k, N) / elem1
-   Next N
-   
-   'For other lines, make a zero element by using:
-   'Ai1=Aij-A11*(Aij/A11)
-   'and change all the line using the same formula for other elements
-   For N = 0 To System_DIM - 1
-        If N = k And N = MAX_DIM Then Exit For 'Finished
-        If N = k And N < MAX_DIM Then N = N + 1 'Do not change that element (already equals to 1), go for next one
-      If Operations_Matrix(N, k) <> 0 Then 'if it is zero, stays as it is
-         multiplier_1 = Operations_Matrix(N, k) / Operations_Matrix(k, k)
-         For M = k To 2 * System_DIM - 1
-            Operations_Matrix(N, M) = Operations_Matrix(N, M) - Operations_Matrix(k, M) * multiplier_1
-         Next M
-      End If
-   Next N
-Next k
-
-'Assign the right part to the Inverse_Matrix
-For N = 0 To System_DIM - 1
+    
+    'Build the Singular matrix [I] at the left
     For k = 0 To System_DIM - 1
-        Inverse_Matrix(N, k) = Operations_Matrix(N, System_DIM + k)
+       'Bring a non-zero element first by changes lines if necessary
+       If Operations_Matrix(k, k) = 0 Then
+          For N = k To System_DIM - 1
+            If Operations_Matrix(N, k) <> 0 Then line_1 = N: Exit For 'Finds line_1 with non-zero element
+          Next N
+          'Change line k with line_1
+          For M = k To System_DIM * 2 - 1
+             temporary_1 = Operations_Matrix(k, M)
+             Operations_Matrix(k, M) = Operations_Matrix(line_1, M)
+             Operations_Matrix(line_1, M) = temporary_1
+          Next M
+       End If
+       
+        elem1 = Operations_Matrix(k, k)
+       For N = k To 2 * System_DIM - 1
+        Operations_Matrix(k, N) = Operations_Matrix(k, N) / elem1
+       Next N
+       
+       'For other lines, make a zero element by using:
+       'Ai1=Aij-A11*(Aij/A11)
+       'and change all the line using the same formula for other elements
+       For N = 0 To System_DIM - 1
+            If N = k And N = MAX_DIM Then Exit For 'Finished
+            If N = k And N < MAX_DIM Then N = N + 1 'Do not change that element (already equals to 1), go for next one
+          If Operations_Matrix(N, k) <> 0 Then 'if it is zero, stays as it is
+             multiplier_1 = Operations_Matrix(N, k) / Operations_Matrix(k, k)
+             For M = k To 2 * System_DIM - 1
+                Operations_Matrix(N, M) = Operations_Matrix(N, M) - Operations_Matrix(k, M) * multiplier_1
+             Next M
+          End If
+       Next N
     Next k
-Next N
-
-Exit Sub
-
+    
+    'Assign the right part to the Inverse_Matrix
+    For N = 0 To System_DIM - 1
+        For k = 0 To System_DIM - 1
+            Inverse_Matrix(N, k) = Operations_Matrix(N, System_DIM + k)
+        Next k
+    Next N
+    
+    Exit Sub
+    
 errhandler:
-message = "An error occured during the calculation process. Determinant of Matrix [A] is probably equal to zero."
-response = MsgBox(message, vbCritical)
-Solution_Problem = True
+    message = "An error occured during the calculation process. Determinant of Matrix [A] is probably equal to zero."
+    response = MsgBox(message, vbCritical)
+    Solution_Problem = True
 
 End Sub
 

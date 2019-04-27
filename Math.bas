@@ -164,12 +164,14 @@ Public Function GeoToDez(Coord As GeoCoord) As Double
     End If
 End Function
 
+
 Public Function GradToTime(deg As Double) As MyTime
     Dim H As Double
     
     H = deg * 24 / 360
     GradToTime = TimeDezToHMS(H)
 End Function
+
 
 Public Function RadToTime(Rad As Double) As MyTime
     Dim H As Double
@@ -191,7 +193,6 @@ Public Function TimeToRad(HMS As MyTime) As Double
     TimeToRad = tmp2 / (180 / Pi)
 
 End Function
-
 
 
 Public Function StingsToDate(sTag As String, sMonat As String, sJahr As String, sStunden As String, sMinuten As String, sSekunden As String) As Date
@@ -218,6 +219,7 @@ Public Function StingsToDate(sTag As String, sMonat As String, sJahr As String, 
     StingsToDate = iTag & "." & iMonat & "." & iJahr & " " & iStunden & ":" & iMinuten & ":" & iSekunden
 
 End Function
+
 
 ' Calculates Hours [0h..24h] in radian [0..6,28]
 ' Example: 12h = 3,14
@@ -328,7 +330,6 @@ Public Sub RA_DEC_to_AZ_ALT_radian(RA_Star_Rad As Double, DEC_Star_Rad As Double
 End Sub
 
 
-
 Public Sub CalibrateTelescope(InitTimerad As Double, RA1Rad As Double, DEC1Rad As Double, TelHorizAngle1 As Double, TelElevAngle1 As Double, ObservTime1Rad As Double, RA2Rad As Double, DEC2Rad As Double, TelHorizAngle2 As Double, TelElevAngle2 As Double, ObservTime2Rad As Double, TransformationMatrix() As Double)
     Dim lmn_Tel_1 As Vector     ' Telescope coordinates
     Dim lmn_Tel_2 As Vector
@@ -409,8 +410,8 @@ Public Sub CalibrateTelescope(InitTimerad As Double, RA1Rad As Double, DEC1Rad A
                 INISetValue IniFileName, "TransformationMatrix", "21", TransformationMatrix(2, 1)
                 INISetValue IniFileName, "TransformationMatrix", "22", TransformationMatrix(2, 2)
 
-
 End Sub
+
 
 Public Sub CalculateTelescopeCoordinates(InitTimerad As Double, RA_CurrStarRad As Double, DEC_CurrStarRad As Double, AimTimeRad As Double, TransformationMatrix() As Double, AzAlt_CurrStar As AzAlt)
     'LMN_Equ_Result: Vector points to Deneb in equatorial coordinats
@@ -473,12 +474,14 @@ Public Function MatrixSystem_to_MotorIncrSystem(phi As Double) As Double
     MatrixSystem_to_MotorIncrSystem = tmp
 End Function
 
+
 Public Function MotorIncrSystem_to_MatrixSystem(Incr As Double) As Double
     Dim tmp As Double
 '    tmp = CutRad(-phi) * EncoderResolution / (2 * Pi)
     tmp = CutIncr(-Incr) * (2 * Pi) / EncoderResolution
     MotorIncrSystem_to_MatrixSystem = tmp
 End Function
+
 
 Public Function AzAltSystem_to_MatrixSystem(Az As Double) As Double
    AzAltSystem_to_MatrixSystem = CutRad(-Az + GlobalAzOffset)
@@ -488,7 +491,6 @@ End Function
 Public Function GetCardinalDrection(Angle As Double) As String
 
     Angle = CutRad(Angle)
-    
     If Angle < (16 * (2 * Pi / 16)) Then GetCardinalDrection = "N"
     If Angle < (15 * (2 * Pi / 16)) Then GetCardinalDrection = "NE"
     If Angle < (13 * (2 * Pi / 16)) Then GetCardinalDrection = "E"

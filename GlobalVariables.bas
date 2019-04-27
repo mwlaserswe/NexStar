@@ -79,13 +79,20 @@ Public ObserverAz As Double
 Public ObserverAlt As Double
 
 
-Public GlobalAzOffset As Double        ' Offset AzAlt-System to Main Horizontal System [radian]
-Public GlobalAltOffset As Double        ' Offset AzAlt-System to Main Horizontal System [radian]
+'Public GlobalAzOffset As Double        ' Offset AzAlt-System to Main Horizontal System [radian]
+'Public GlobalAltOffset As Double        ' Offset AzAlt-System to Main Horizontal System [radian]
+            'New funktion using TYPE AzAlt
+            Public GlobalOffset As AzAlt
 
-Public MatrixSystemAzSoll As Double          'SetPoint Main Horizontal System  [radian]
-Public MatrixSystemAzIst As Double          'SetPoint Main Horizontal System  [radian]
-Public MatrixSystemAltSoll As Double          'SetPoint Main Horizontal System  [radian]
-Public MatrixSystemAltIst As Double          'SetPoint Main Horizontal System  [radian]
+'Public MatrixSystemAzSoll As Double          'SetPoint Main Horizontal System  [radian]
+'Public MatrixSystemAzIst As Double          'SetPoint Main Horizontal System  [radian]
+'Public MatrixSystemAltSoll As Double          'SetPoint Main Horizontal System  [radian]
+'Public MatrixSystemAltIst As Double          'SetPoint Main Horizontal System  [radian]
+            'New funktion using TYPE AzAlt
+            Public MatrixSystemSoll As AzAlt
+            Public MatrixSystemIst As AzAlt
+
+
 
 'Public MatrixSystem As Double          ' Main Horizontal System für die Matrixmetode in [radian]
                                     ' mathematischer Sinn gegen den Uhtzeigersinn (CCW)
@@ -114,8 +121,10 @@ Public Cal_TelElevAngle_2 As Double
 Public Cal_Time_2 As Double
 
 Public TrackingisON As Boolean
-Public DiffMotorIncrAz As Double
-Public DiffMotorIncrAlt As Double
+'Public DiffMotorIncrAz As Double
+'Public DiffMotorIncrAlt As Double
+         'New funktion using TYPE AzAlt
+        Public DiffMotorIncr As AzAlt
                 
 
 

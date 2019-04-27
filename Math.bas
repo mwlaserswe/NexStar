@@ -483,9 +483,47 @@ Public Function MotorIncrSystem_to_MatrixSystem(Incr As Double) As Double
 End Function
 
 
+            'New funktion using TYPE AzAlt
+            Public Function Matrix_To_MotorIncrSystem(phi As AzAlt) As AzAlt
+                Dim tmp As Double
+                
+                'Az
+                tmp = CutRad(-phi.Az) * EncoderResolution / (2 * Pi)
+                Matrix_To_MotorIncrSystem.Az = tmp
+                
+                'Alt
+                Matrix_To_MotorIncrSystem.Alt = phi.Alt * EncoderResolution / (2 * Pi)
+            End Function
+
+
+            Public Function MotorIncr_To_MatrixSystem(Incr As AzAlt) As AzAlt
+                Dim tmp As Double
+
+                'Az
+                tmp = CutIncr(-Incr.Az) * (2 * Pi) / EncoderResolution
+                MotorIncr_To_MatrixSystem.Az = tmp
+                
+                'Alt
+                MotorIncr_To_MatrixSystem.Alt = Incr.Alt * (2 * Pi) / EncoderResolution
+            End Function
+
+
+
+
+
 Public Function AzAltSystem_to_MatrixSystem(Az As Double) As Double
-   AzAltSystem_to_MatrixSystem = CutRad(-Az + GlobalAzOffset)
+   AzAltSystem_to_MatrixSystem = CutRad(-Az + GlobalOffset.Az)
 End Function
+
+
+            'New funktion using TYPE AzAlt
+            Public Function AzAlt_to_MatrixSystem(phi As AzAlt) As AzAlt
+               AzAlt_to_MatrixSystem.Az = CutRad(-phi.Az + GlobalOffset.Az)
+               AzAlt_to_MatrixSystem.Alt = phi.Alt + GlobalOffset.Alt
+            End Function
+
+
+
 
 
 Public Function GetCardinalDrection(Angle As Double) As String

@@ -9,6 +9,22 @@ Begin VB.Form Test
    ScaleHeight     =   7320
    ScaleWidth      =   8655
    StartUpPosition =   3  'Windows Default
+   Begin VB.TextBox Text1 
+      Height          =   285
+      Left            =   6360
+      TabIndex        =   23
+      Text            =   "90"
+      Top             =   5040
+      Width           =   1215
+   End
+   Begin VB.CommandButton Command6 
+      Caption         =   "Command6"
+      Height          =   495
+      Left            =   5040
+      TabIndex        =   21
+      Top             =   5040
+      Width           =   1215
+   End
    Begin VB.CommandButton Command5 
       Caption         =   "Command5"
       Height          =   495
@@ -94,6 +110,16 @@ Begin VB.Form Test
       Left            =   240
       TabIndex        =   0
       Top             =   240
+      Width           =   1215
+   End
+   Begin VB.Label Label2 
+      Alignment       =   1  'Right Justify
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   255
+      Left            =   6360
+      TabIndex        =   22
+      Top             =   5400
       Width           =   1215
    End
    Begin VB.Label Label1 
@@ -960,6 +986,13 @@ Private Sub Command5_Click()
    
 End Sub
 
+Private Sub Command6_Click()
+    Dim AngeRad As Double
+    
+    AngeRad = DegToRad(Zahl(Text1))
+    Label2 = GetCardinalDrection(AngeRad)
+End Sub
+
 Private Sub Command7_Click()
     Dim i As Long
     
@@ -974,3 +1007,4 @@ Private Sub Command7_Click()
         Next i
     Label1 = "3"
 End Sub
+

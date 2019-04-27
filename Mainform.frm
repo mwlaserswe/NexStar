@@ -15,7 +15,7 @@ Begin VB.Form Mainform
       Height          =   495
       Left            =   10800
       Style           =   1  'Graphical
-      TabIndex        =   101
+      TabIndex        =   98
       Top             =   9240
       Width           =   1215
    End
@@ -23,7 +23,7 @@ Begin VB.Form Mainform
       Caption         =   "Single Star Alignment"
       Height          =   495
       Left            =   480
-      TabIndex        =   99
+      TabIndex        =   96
       Top             =   6600
       Width           =   1455
    End
@@ -31,7 +31,7 @@ Begin VB.Form Mainform
       Caption         =   "GotoStar calibrated"
       Height          =   255
       Left            =   8640
-      TabIndex        =   97
+      TabIndex        =   94
       Top             =   10800
       Width           =   2175
    End
@@ -39,7 +39,7 @@ Begin VB.Form Mainform
       Caption         =   "Calibrate now"
       Height          =   495
       Left            =   3000
-      TabIndex        =   96
+      TabIndex        =   93
       Top             =   7560
       Width           =   2295
    End
@@ -47,7 +47,7 @@ Begin VB.Form Mainform
       Caption         =   "Set Calibration Star 2"
       Height          =   495
       Left            =   3000
-      TabIndex        =   95
+      TabIndex        =   92
       Top             =   6960
       Width           =   2295
    End
@@ -55,7 +55,7 @@ Begin VB.Form Mainform
       Caption         =   "Set Calibration Star 1"
       Height          =   495
       Left            =   3000
-      TabIndex        =   94
+      TabIndex        =   91
       Top             =   6360
       Width           =   2295
    End
@@ -63,7 +63,7 @@ Begin VB.Form Mainform
       Caption         =   "GotoStar w/o calibration"
       Height          =   255
       Left            =   5880
-      TabIndex        =   93
+      TabIndex        =   90
       Top             =   10800
       Width           =   2175
    End
@@ -71,7 +71,7 @@ Begin VB.Form Mainform
       Caption         =   "Set North"
       Height          =   495
       Left            =   3000
-      TabIndex        =   92
+      TabIndex        =   89
       Top             =   5760
       Width           =   2295
    End
@@ -79,14 +79,14 @@ Begin VB.Form Mainform
       Caption         =   "Altitude"
       Height          =   2415
       Left            =   8160
-      TabIndex        =   81
+      TabIndex        =   78
       Top             =   6360
       Width           =   3855
       Begin VB.Label Label46 
          Caption         =   "Mot. Incr."
          Height          =   255
          Left            =   240
-         TabIndex        =   91
+         TabIndex        =   88
          Top             =   1800
          Width           =   855
       End
@@ -94,7 +94,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   90
+         TabIndex        =   87
          Top             =   1800
          Width           =   2415
       End
@@ -102,7 +102,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   89
+         TabIndex        =   86
          Top             =   1560
          Width           =   2415
       End
@@ -110,7 +110,7 @@ Begin VB.Form Mainform
          Caption         =   "Matr Sy Ist:"
          Height          =   255
          Left            =   240
-         TabIndex        =   88
+         TabIndex        =   85
          Top             =   1560
          Width           =   855
       End
@@ -118,7 +118,7 @@ Begin VB.Form Mainform
          Caption         =   "AzAlt Sys:"
          Height          =   255
          Left            =   240
-         TabIndex        =   87
+         TabIndex        =   84
          Top             =   1320
          Width           =   855
       End
@@ -126,7 +126,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   86
+         TabIndex        =   83
          Top             =   1320
          Width           =   1455
       End
@@ -134,7 +134,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   85
+         TabIndex        =   82
          Top             =   1080
          Width           =   1455
       End
@@ -142,7 +142,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   84
+         TabIndex        =   81
          Top             =   360
          Width           =   1455
       End
@@ -150,7 +150,7 @@ Begin VB.Form Mainform
          Caption         =   "Matr Soll"
          Height          =   255
          Left            =   240
-         TabIndex        =   83
+         TabIndex        =   80
          Top             =   1080
          Width           =   855
       End
@@ -158,7 +158,7 @@ Begin VB.Form Mainform
          Caption         =   "Glob. Offs."
          Height          =   255
          Left            =   240
-         TabIndex        =   82
+         TabIndex        =   79
          Top             =   360
          Width           =   855
       End
@@ -167,14 +167,14 @@ Begin VB.Form Mainform
       Caption         =   "Azimut"
       Height          =   2415
       Left            =   8160
-      TabIndex        =   70
+      TabIndex        =   67
       Top             =   3720
       Width           =   3855
       Begin VB.Label Label31 
          Caption         =   "Glob. Offs."
          Height          =   255
          Left            =   240
-         TabIndex        =   80
+         TabIndex        =   77
          Top             =   360
          Width           =   975
       End
@@ -182,7 +182,7 @@ Begin VB.Form Mainform
          Caption         =   "Matr Soll"
          Height          =   255
          Left            =   240
-         TabIndex        =   79
+         TabIndex        =   76
          Top             =   1080
          Width           =   855
       End
@@ -190,7 +190,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   78
+         TabIndex        =   75
          Top             =   360
          Width           =   1455
       End
@@ -198,7 +198,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   77
+         TabIndex        =   74
          Top             =   1080
          Width           =   1455
       End
@@ -206,7 +206,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   76
+         TabIndex        =   73
          Top             =   1320
          Width           =   1455
       End
@@ -214,7 +214,7 @@ Begin VB.Form Mainform
          Caption         =   "AzAlt Sys:"
          Height          =   255
          Left            =   240
-         TabIndex        =   75
+         TabIndex        =   72
          Top             =   1320
          Width           =   855
       End
@@ -222,7 +222,7 @@ Begin VB.Form Mainform
          Caption         =   "Matr Sy Ist:"
          Height          =   255
          Left            =   240
-         TabIndex        =   74
+         TabIndex        =   71
          Top             =   1560
          Width           =   855
       End
@@ -230,7 +230,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   73
+         TabIndex        =   70
          Top             =   1560
          Width           =   2415
       End
@@ -238,7 +238,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   72
+         TabIndex        =   69
          Top             =   1800
          Width           =   2415
       End
@@ -246,7 +246,7 @@ Begin VB.Form Mainform
          Caption         =   "Mot. Incr."
          Height          =   255
          Left            =   240
-         TabIndex        =   71
+         TabIndex        =   68
          Top             =   1800
          Width           =   855
       End
@@ -254,23 +254,31 @@ Begin VB.Form Mainform
    Begin VB.Frame F_StarInfo 
       Caption         =   "--"
       Height          =   2415
-      Left            =   8160
-      TabIndex        =   55
+      Left            =   8040
+      TabIndex        =   52
       Top             =   360
-      Width           =   3855
+      Width           =   3975
       Begin VB.CheckBox Ch_South 
          Caption         =   "South (VSky)"
          Height          =   255
-         Left            =   2280
-         TabIndex        =   98
-         Top             =   840
+         Left            =   2400
+         TabIndex        =   95
+         Top             =   360
          Width           =   1335
+      End
+      Begin VB.Label L_CardinalOrientation 
+         Caption         =   "--"
+         Height          =   255
+         Left            =   2160
+         TabIndex        =   102
+         Top             =   840
+         Width           =   495
       End
       Begin VB.Label Label25 
          Caption         =   "Horiz. xyz:"
          Height          =   255
          Left            =   240
-         TabIndex        =   69
+         TabIndex        =   66
          Top             =   2040
          Width           =   855
       End
@@ -278,7 +286,7 @@ Begin VB.Form Mainform
          Caption         =   "Alt:"
          Height          =   255
          Left            =   1200
-         TabIndex        =   68
+         TabIndex        =   65
          Top             =   2040
          Width           =   2415
       End
@@ -286,7 +294,7 @@ Begin VB.Form Mainform
          Caption         =   "Alt:"
          Height          =   255
          Left            =   1200
-         TabIndex        =   67
+         TabIndex        =   64
          Top             =   1800
          Width           =   2415
       End
@@ -294,7 +302,7 @@ Begin VB.Form Mainform
          Caption         =   "Equ. xyz:"
          Height          =   255
          Left            =   240
-         TabIndex        =   66
+         TabIndex        =   63
          Top             =   1800
          Width           =   855
       End
@@ -302,7 +310,7 @@ Begin VB.Form Mainform
          Caption         =   "Hour Angle:"
          Height          =   255
          Left            =   240
-         TabIndex        =   65
+         TabIndex        =   62
          Top             =   1440
          Width           =   855
       End
@@ -310,7 +318,7 @@ Begin VB.Form Mainform
          Caption         =   "Alt:"
          Height          =   255
          Left            =   1200
-         TabIndex        =   64
+         TabIndex        =   61
          Top             =   1440
          Width           =   1455
       End
@@ -318,7 +326,7 @@ Begin VB.Form Mainform
          Caption         =   "Alt:"
          Height          =   255
          Left            =   1200
-         TabIndex        =   63
+         TabIndex        =   60
          Top             =   1080
          Width           =   1455
       End
@@ -326,15 +334,15 @@ Begin VB.Form Mainform
          Caption         =   "Az:"
          Height          =   255
          Left            =   1200
-         TabIndex        =   62
+         TabIndex        =   59
          Top             =   840
-         Width           =   1455
+         Width           =   735
       End
       Begin VB.Label L_I_DEC 
          Caption         =   "DEC:"
          Height          =   255
          Left            =   1200
-         TabIndex        =   61
+         TabIndex        =   58
          Top             =   480
          Width           =   1455
       End
@@ -342,7 +350,7 @@ Begin VB.Form Mainform
          Caption         =   "RA:"
          Height          =   255
          Left            =   1200
-         TabIndex        =   60
+         TabIndex        =   57
          Top             =   240
          Width           =   1455
       End
@@ -350,7 +358,7 @@ Begin VB.Form Mainform
          Caption         =   "Alt:"
          Height          =   255
          Left            =   240
-         TabIndex        =   59
+         TabIndex        =   56
          Top             =   1080
          Width           =   375
       End
@@ -358,7 +366,7 @@ Begin VB.Form Mainform
          Caption         =   "Az:"
          Height          =   255
          Left            =   240
-         TabIndex        =   58
+         TabIndex        =   55
          Top             =   840
          Width           =   375
       End
@@ -366,7 +374,7 @@ Begin VB.Form Mainform
          Caption         =   "DEC:"
          Height          =   255
          Left            =   240
-         TabIndex        =   57
+         TabIndex        =   54
          Top             =   480
          Width           =   375
       End
@@ -374,7 +382,7 @@ Begin VB.Form Mainform
          Caption         =   "RA:"
          Height          =   255
          Left            =   240
-         TabIndex        =   56
+         TabIndex        =   53
          Top             =   240
          Width           =   375
       End
@@ -390,7 +398,7 @@ Begin VB.Form Mainform
    Begin VB.TextBox T_Backlash 
       Height          =   285
       Left            =   480
-      TabIndex        =   48
+      TabIndex        =   45
       Text            =   "40"
       Top             =   1200
       Width           =   615
@@ -399,7 +407,7 @@ Begin VB.Form Mainform
       Caption         =   "Set Backl. Alt"
       Height          =   255
       Left            =   240
-      TabIndex        =   47
+      TabIndex        =   44
       Top             =   840
       Width           =   1215
    End
@@ -407,33 +415,9 @@ Begin VB.Form Mainform
       Caption         =   "Set Backl. Az"
       Height          =   255
       Left            =   240
-      TabIndex        =   46
+      TabIndex        =   43
       Top             =   480
       Width           =   1215
-   End
-   Begin VB.Frame Frame1 
-      Caption         =   "Frame1"
-      Height          =   975
-      Left            =   480
-      TabIndex        =   41
-      Top             =   5400
-      Width           =   1455
-      Begin VB.OptionButton O_OrientationNorth 
-         Caption         =   "North"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   43
-         Top             =   240
-         Width           =   1215
-      End
-      Begin VB.OptionButton O_OrientationSouth 
-         Caption         =   "South"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   42
-         Top             =   600
-         Width           =   1215
-      End
    End
    Begin VB.TextBox T_Long_Sign 
       Height          =   285
@@ -556,12 +540,12 @@ Begin VB.Form Mainform
       Width           =   495
    End
    Begin VB.Timer Tim_Tracking 
-      Interval        =   1000
+      Interval        =   500
       Left            =   7320
       Top             =   3720
    End
    Begin VB.Timer Tim_Simulation 
-      Interval        =   100
+      Interval        =   500
       Left            =   6720
       Top             =   3720
    End
@@ -675,14 +659,14 @@ Begin VB.Form Mainform
       Caption         =   "Time"
       Height          =   1695
       Left            =   240
-      TabIndex        =   49
+      TabIndex        =   46
       Top             =   1920
       Width           =   3375
       Begin VB.OptionButton O_TimeSelectSim 
          Caption         =   "Simulierte Zeit"
          Height          =   195
          Left            =   1680
-         TabIndex        =   54
+         TabIndex        =   51
          Top             =   1320
          Width           =   1335
       End
@@ -690,7 +674,7 @@ Begin VB.Form Mainform
          Caption         =   "Lokalzeit"
          Height          =   195
          Left            =   240
-         TabIndex        =   53
+         TabIndex        =   50
          Top             =   1320
          Width           =   975
       End
@@ -698,7 +682,7 @@ Begin VB.Form Mainform
          Caption         =   "UT"
          Height          =   255
          Left            =   120
-         TabIndex        =   52
+         TabIndex        =   49
          Top             =   600
          Width           =   2895
       End
@@ -706,7 +690,7 @@ Begin VB.Form Mainform
          Caption         =   "Siderial Time"
          Height          =   255
          Left            =   120
-         TabIndex        =   51
+         TabIndex        =   48
          Top             =   840
          Width           =   2895
       End
@@ -714,7 +698,7 @@ Begin VB.Form Mainform
          Caption         =   "Local Time"
          Height          =   255
          Left            =   120
-         TabIndex        =   50
+         TabIndex        =   47
          Top             =   360
          Width           =   2895
       End
@@ -724,7 +708,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8760
-      TabIndex        =   104
+      TabIndex        =   101
       Top             =   10440
       Width           =   2415
    End
@@ -733,7 +717,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8760
-      TabIndex        =   103
+      TabIndex        =   100
       Top             =   10080
       Width           =   2415
    End
@@ -742,7 +726,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8280
-      TabIndex        =   102
+      TabIndex        =   99
       Top             =   9600
       Width           =   2415
    End
@@ -751,7 +735,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8280
-      TabIndex        =   100
+      TabIndex        =   97
       Top             =   9240
       Width           =   2415
    End
@@ -759,7 +743,7 @@ Begin VB.Form Mainform
       Caption         =   "Skewing Speed"
       Height          =   255
       Left            =   2880
-      TabIndex        =   45
+      TabIndex        =   42
       Top             =   4920
       Width           =   1335
    End
@@ -769,7 +753,7 @@ Begin VB.Form Mainform
       Caption         =   "--"
       Height          =   255
       Left            =   2880
-      TabIndex        =   44
+      TabIndex        =   41
       Top             =   5280
       Width           =   1215
    End
@@ -1064,16 +1048,10 @@ Private Sub C_GotoStarCalibrated_Click()
                                   AzAlt_BetaCet
 
  
-    'Set Az     'Muß hier scheinbar invertiert werden  -->beobachten
-'    MatrixSystemAzSoll = CutRad(-AzAlt_BetaCet.Az)      'plus
-'    MatrixSystemAzSoll = CutRad(Pi - AzAlt_BetaCet.Az)  'minus
-
+    'Set Az
      MatrixSystemAzSoll = CutRad(AzAlt_BetaCet.Az)
-     
-     
-    'Set Alt
+     'Set Alt
     MatrixSystemAltSoll = AzAlt_BetaCet.Alt
-
 
     Dim MotorIncrAz As Long
     Dim MotorIncrAlt As Long
@@ -1081,11 +1059,8 @@ Private Sub C_GotoStarCalibrated_Click()
     MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
     MotorIncrAlt = MatrixSystemAltSoll * EncoderResolution / (2 * Pi)
     
-                LastMotorIncrAz = MotorIncrAz
-                LastMotorIncrAlt = MotorIncrAlt
-    MatrixSystemAzLast = MatrixSystemAzSoll
-    MatrixSystemAltLast = MatrixSystemAltSoll
-
+'                LastMotorIncrAz = MotorIncrAz
+'                LastMotorIncrAlt = MotorIncrAlt
     SimGotoAzAltActive = True
     
     If SimOffline Then
@@ -1329,7 +1304,6 @@ Private Sub Form_Load()
     SimOffline = True
     CommTest = False
     
-    O_OrientationNorth.Value = 1
     O_TimeSelectLocal.Value = 1
     IniFileName = App.Path & "\NexStar.ini"
     InitNexStarComm
@@ -1695,6 +1669,7 @@ Private Sub Tim_Tracking_Timer()
     End If
     
     DisplayCoordinate L_I_Az, DisplObserverAz, DegDec
+    L_CardinalOrientation = GetCardinalDrection(AzAltSystem_to_MatrixSystem(ObserverAz))
     DisplayCoordinate L_I_Alt, ObserverAlt, DegDec
     DisplayCoordinate L_I_HourAngle, HourAngle, HMS
     T_AzTel = RadToDeg(ObserverAz)
@@ -1772,70 +1747,36 @@ Private Sub Tim_Tracking_Timer()
     
                 'Set Az
                 MatrixSystemAzSoll = CutRad(AzAlt_BetaCet.Az)
-                 
                 'Set Alt
                 MatrixSystemAltSoll = AzAlt_BetaCet.Alt
             
-''                Dim MotorIncrAz As Long
-''                Dim MotorIncrAlt As Long
-''                Dim DiffMotorIncrAz As Long
-''                Dim DiffMotorIncrAlt As Long
-''
-''                MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
-''                MotorIncrAlt = MatrixSystemAltSoll * EncoderResolution / (2 * Pi)
-'''                DiffMotorIncrAz = MotorIncrAz - LastMotorIncrAz
-'''                DiffMotorIncrAlt = MotorIncrAlt - LastMotorIncrAlt
-''                DiffMotorIncrAz = MotorIncrAz - TelIncrAz
-''                DiffMotorIncrAlt = MotorIncrAlt - TelIncrAlt
-''                LastMotorIncrAz = MotorIncrAz
-''                LastMotorIncrAlt = MotorIncrAlt
-            
-            
-            
-            
-                'Alternativ: mit dem Matrixsystem
                 Dim MatrixSystemAzDiff As Double
                 Dim MatrixSystemAltDiff As Double
                 
-                MatrixSystemAzDiff = MatrixSystemAzSoll - MatrixSystemAzLast
-                MatrixSystemAltDiff = MatrixSystemAltSoll - MatrixSystemAltLast
-                MatrixSystemAzLast = MatrixSystemAzSoll
-                MatrixSystemAltLast = MatrixSystemAltSoll
-            
-            
-            
-            
-            
-                Static LifeCounter As Long
-                Dim i As Long
-                Dim s As String
+                MatrixSystemAzDiff = MatrixSystemAzSoll - MatrixSystemAzIst
+                MatrixSystemAltDiff = MatrixSystemAltSoll - MatrixSystemAltIst
+                    
+                        '==== Life counter ====
+                        Static LifeCounter As Long
+                        Dim i As Long
+                        Dim s As String
+                        If LifeCounter >= 10 Then
+                            LifeCounter = 0
+                            s = ""
+                        Else
+                            LifeCounter = LifeCounter + 1
+                            For i = 0 To LifeCounter
+                                s = s & "."
+                            Next i
+                        End If
                 
-                
-                
-                If LifeCounter >= 10 Then
-                    LifeCounter = 0
-                    s = ""
-                Else
-                    LifeCounter = LifeCounter + 1
-                    For i = 0 To LifeCounter
-                        s = s & "."
-                    Next i
-                End If
-                
-'                Label6 = DiffMotorIncrAz & s
-'                Label27 = DiffMotorIncrAlt & s
-                Label6 = Format(RadToDeg(MatrixSystemAzDiff), "0.0000") & "° pro " & TrackInterval & " sec"
-                Label27 = Format(RadToDeg(MatrixSystemAltDiff), "0.0000") & "° pro " & TrackInterval & " sec"
 
-                Dim DiffMotorIncrAz As Double
-                Dim DiffMotorIncrAlt As Double
-                
+
                 DiffMotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzDiff)
                 DiffMotorIncrAlt = MatrixSystemAltDiff * EncoderResolution / (2 * Pi)
                 
-                Label28 = DiffMotorIncrAz
-                Label29 = DiffMotorIncrAlt
-
+                Label6 = Format(RadToDeg(MatrixSystemAzDiff), "0.0000") & "° = " & Format(DiffMotorIncrAz, "0.0") & " Incr pro " & TrackInterval & " sec"
+                Label27 = Format(RadToDeg(MatrixSystemAltDiff), "0.0000") & "° = " & Format(DiffMotorIncrAlt, "0.0") & " Incr pro " & TrackInterval & " sec"
                     
                 If Not SimOffline Then
 '                    NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(MotorIncrAz) & Chr$(&H16) & SetNexStarPosition(MotorIncrAlt)
@@ -1844,8 +1785,17 @@ Private Sub Tim_Tracking_Timer()
                 
             If SimOffline Then
                 SimTrackingActive = True
-                SimTrackingAzStep = (DiffMotorIncrAz * 10) / (5 * 10)
-                SimTrackingAltStep = (DiffMotorIncrAlt * 10) / (5 * 10)
+
+                SimTrackingAzStep = (DiffMotorIncrAz / 5) * (500# / 1000#)
+                SimTrackingAltStep = (DiffMotorIncrAlt / 5) * (500# / 1000#)
+
+                Dim dummy As Boolean
+                If SimTrackingAzStep > 0 Then
+                    dummy = False
+                End If
+
+                Label28 = SimTrackingAzStep
+                Label29 = SimTrackingAltStep
             End If
 
     

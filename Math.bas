@@ -485,3 +485,17 @@ Public Function AzAltSystem_to_MatrixSystem(Az As Double) As Double
 End Function
 
 
+Public Function GetCardinalDrection(Angle As Double) As String
+
+    Angle = CutRad(Angle)
+    
+    If Angle < (16 * (2 * Pi / 16)) Then GetCardinalDrection = "N"
+    If Angle < (15 * (2 * Pi / 16)) Then GetCardinalDrection = "NE"
+    If Angle < (13 * (2 * Pi / 16)) Then GetCardinalDrection = "E"
+    If Angle < (11 * (2 * Pi / 16)) Then GetCardinalDrection = "SE"
+    If Angle < (9 * (2 * Pi / 16)) Then GetCardinalDrection = "S"
+    If Angle < (7 * (2 * Pi / 16)) Then GetCardinalDrection = "SW"
+    If Angle < (5 * (2 * Pi / 16)) Then GetCardinalDrection = "W"
+    If Angle < (3 * (2 * Pi / 16)) Then GetCardinalDrection = "NW"
+    If Angle < (1 * (2 * Pi / 16)) Then GetCardinalDrection = "N"
+End Function

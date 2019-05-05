@@ -2,17 +2,27 @@ Attribute VB_Name = "Matrix"
 Option Explicit
 
 
-Public Sub MatrixAddition(matrix1() As Double, ByVal row1 As Integer, ByVal col1 As Integer, matrix2() As Double, ByVal row2 As Integer, ByVal col2 As Integer, matrix3() As Double)
-    Dim i As Integer
-    Dim j As Integer
-    
-    
-    For i = 0 To row1 - 1
-      For j = 0 To col2 - 1
-        matrix3(i, j) = matrix1(i, j) + matrix2(i, j)
-      Next
-    Next
-End Sub
+'Public Function MatrixAddition(matrix1() As Double, matrix2() As Double, ByVal row As Integer, ByVal col As Integer) As Double
+'    Dim i As Integer
+'    Dim j As Integer
+'
+'
+'    For i = 0 To row - 1
+'      For j = 0 To col - 1
+'        MatrixAddition(i, j) = matrix1(i, j) + matrix2(i, j)
+'      Next
+'    Next
+'End Function
+
+Public Function AddAzAlt(v1 As AzAlt, v2 As AzAlt) As AzAlt
+    AddAzAlt.Az = v1.Az + v2.Az
+    AddAzAlt.Alt = v1.Alt + v2.Alt
+End Function
+
+Public Function SubAzAlt(v1 As AzAlt, v2 As AzAlt) As AzAlt
+    SubAzAlt.Az = v1.Az - v2.Az
+    SubAzAlt.Alt = v1.Alt - v2.Alt
+End Function
 
 
 'Public Sub PolarKarthesisch(AZ As Double, ELEV As Double, V As Vector)
@@ -35,12 +45,12 @@ Public Function PolarKarthesisch(HourAngle As Double, Declination As Double) As 
 End Function
 
 
-Public Function CrossProduct(V1 As Vector, V2 As Vector) As Vector
+Public Function CrossProduct(v1 As Vector, v2 As Vector) As Vector
   'http://james-ramsden.com/calculate-the-cross-product-c-code/
   
-  CrossProduct.x = V1.Y * V2.z - V2.Y * V1.z
-  CrossProduct.Y = (V1.x * V2.z - V2.x * V1.z) * -1
-  CrossProduct.z = V1.x * V2.Y - V2.x * V1.Y
+  CrossProduct.x = v1.Y * v2.z - v2.Y * v1.z
+  CrossProduct.Y = (v1.x * v2.z - v2.x * v1.z) * -1
+  CrossProduct.z = v1.x * v2.Y - v2.x * v1.Y
 End Function
 
 

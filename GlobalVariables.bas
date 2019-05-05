@@ -121,10 +121,11 @@ Public Cal_TelElevAngle_2 As Double
 Public Cal_Time_2 As Double
 
 Public TrackingisON As Boolean
-'Public DiffMotorIncrAz As Double
-'Public DiffMotorIncrAlt As Double
-         'New funktion using TYPE AzAlt
-        Public DiffMotorIncr As AzAlt
+Public DiffMotorIncr As AzAlt
+Public LastCalculated As AzAlt
+Public DiffCalculated As AzAlt
+Public LastVal As AzAlt
+Public JetztTime As Double
                 
 
 

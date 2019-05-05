@@ -5,18 +5,18 @@ Begin VB.Form Mainform
    ClientHeight    =   11235
    ClientLeft      =   225
    ClientTop       =   870
-   ClientWidth     =   12690
+   ClientWidth     =   12390
    LinkTopic       =   "Form1"
    ScaleHeight     =   11235
-   ScaleWidth      =   12690
+   ScaleWidth      =   12390
    StartUpPosition =   3  'Windows Default
    Begin VB.CommandButton C_Tracking 
       Caption         =   "Tracking"
       Height          =   495
-      Left            =   10800
+      Left            =   10560
       Style           =   1  'Graphical
       TabIndex        =   98
-      Top             =   9240
+      Top             =   6480
       Width           =   1215
    End
    Begin VB.CommandButton C_SingleStarAlignment 
@@ -77,17 +77,25 @@ Begin VB.Form Mainform
    End
    Begin VB.Frame Frame4 
       Caption         =   "Altitude"
-      Height          =   2415
-      Left            =   8160
+      Height          =   1695
+      Left            =   8040
       TabIndex        =   78
-      Top             =   6360
+      Top             =   4560
       Width           =   3855
+      Begin VB.Label L_MatrixSystemAltDiff 
+         Caption         =   "--"
+         Height          =   255
+         Left            =   2520
+         TabIndex        =   104
+         Top             =   600
+         Width           =   1095
+      End
       Begin VB.Label Label46 
          Caption         =   "Mot. Incr."
          Height          =   255
          Left            =   240
          TabIndex        =   88
-         Top             =   1800
+         Top             =   1320
          Width           =   855
       End
       Begin VB.Label L_AltMotorIncr 
@@ -95,7 +103,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   1200
          TabIndex        =   87
-         Top             =   1800
+         Top             =   1320
          Width           =   2415
       End
       Begin VB.Label L_MatrixSystemAltIst 
@@ -103,7 +111,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   1200
          TabIndex        =   86
-         Top             =   1560
+         Top             =   1080
          Width           =   2415
       End
       Begin VB.Label Label43 
@@ -111,7 +119,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   240
          TabIndex        =   85
-         Top             =   1560
+         Top             =   1080
          Width           =   855
       End
       Begin VB.Label Label42 
@@ -119,7 +127,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   240
          TabIndex        =   84
-         Top             =   1320
+         Top             =   840
          Width           =   855
       End
       Begin VB.Label Label41 
@@ -127,7 +135,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   1200
          TabIndex        =   83
-         Top             =   1320
+         Top             =   840
          Width           =   1455
       End
       Begin VB.Label L_MatrixSystemAltSoll 
@@ -135,8 +143,8 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   1200
          TabIndex        =   82
-         Top             =   1080
-         Width           =   1455
+         Top             =   600
+         Width           =   975
       End
       Begin VB.Label L_GlobalAltOffset 
          Caption         =   "--"
@@ -151,7 +159,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   240
          TabIndex        =   80
-         Top             =   1080
+         Top             =   600
          Width           =   855
       End
       Begin VB.Label Label5 
@@ -165,11 +173,19 @@ Begin VB.Form Mainform
    End
    Begin VB.Frame Frame2 
       Caption         =   "Azimut"
-      Height          =   2415
-      Left            =   8160
+      Height          =   1695
+      Left            =   8040
       TabIndex        =   67
-      Top             =   3720
+      Top             =   2880
       Width           =   3855
+      Begin VB.Label L_MatrixSystemAzDiff 
+         Caption         =   "--"
+         Height          =   255
+         Left            =   2520
+         TabIndex        =   103
+         Top             =   600
+         Width           =   1095
+      End
       Begin VB.Label Label31 
          Caption         =   "Glob. Offs."
          Height          =   255
@@ -183,7 +199,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   240
          TabIndex        =   76
-         Top             =   1080
+         Top             =   600
          Width           =   855
       End
       Begin VB.Label L_GlobalAzOffset 
@@ -199,15 +215,15 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   1200
          TabIndex        =   74
-         Top             =   1080
-         Width           =   1455
+         Top             =   600
+         Width           =   1095
       End
       Begin VB.Label L_AzAltSystem 
          Caption         =   "--"
          Height          =   255
          Left            =   1200
          TabIndex        =   73
-         Top             =   1320
+         Top             =   840
          Width           =   1455
       End
       Begin VB.Label Label26 
@@ -215,7 +231,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   240
          TabIndex        =   72
-         Top             =   1320
+         Top             =   840
          Width           =   855
       End
       Begin VB.Label Label24 
@@ -223,7 +239,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   240
          TabIndex        =   71
-         Top             =   1560
+         Top             =   1080
          Width           =   855
       End
       Begin VB.Label L_MatrixSystemAzIst 
@@ -231,7 +247,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   1200
          TabIndex        =   70
-         Top             =   1560
+         Top             =   1080
          Width           =   2415
       End
       Begin VB.Label L_AzMotorIncr 
@@ -239,7 +255,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   1200
          TabIndex        =   69
-         Top             =   1800
+         Top             =   1320
          Width           =   2415
       End
       Begin VB.Label Label4 
@@ -247,7 +263,7 @@ Begin VB.Form Mainform
          Height          =   255
          Left            =   240
          TabIndex        =   68
-         Top             =   1800
+         Top             =   1320
          Width           =   855
       End
    End
@@ -725,18 +741,18 @@ Begin VB.Form Mainform
       BorderStyle     =   1  'Fixed Single
       Caption         =   "Label6"
       Height          =   255
-      Left            =   8280
+      Left            =   8040
       TabIndex        =   99
-      Top             =   9600
+      Top             =   6840
       Width           =   2415
    End
    Begin VB.Label Label6 
       BorderStyle     =   1  'Fixed Single
       Caption         =   "Label6"
       Height          =   255
-      Left            =   8280
+      Left            =   8040
       TabIndex        =   97
-      Top             =   9240
+      Top             =   6480
       Width           =   2415
    End
    Begin VB.Label Label13 
@@ -904,12 +920,12 @@ Dim InputBufferAz As String
 Dim InputbufferAlt As String
 Dim NexStarAz As String
 Dim NexStarAlt As String
-Dim TelIncrAz As Long
-Dim TelIncrAlt As Long
+'Dim TelIncrAz As Long
+'Dim TelIncrAlt As Long
         'New funktion using TYPE AzAlt
         Dim TelIncr As AzAlt
 
-Dim ManualSlewingSpeed As Long
+Dim ManualSlewingSpeed As Double
 
 'Simulation
 'Dim SimIncrAz As Long
@@ -923,13 +939,14 @@ Dim SimBntLe As Boolean
 Dim SimBntRi As Boolean
 Dim SimGotoAzAltActive As Boolean
 Dim SimTrackingActive As Boolean
-Dim SimGotoAz As Long
-Dim SimGotoAlt As Long
+'Dim SimGotoAz As Long
+'Dim SimGotoAlt As Long
             'New funktion using TYPE AzAlt
             Dim SimGoto As AzAlt
             
-Dim SimTrackingAzStep As Long
-Dim SimTrackingAltStep As Long
+'Dim SimTrackingAzStep As Long
+'Dim SimTrackingAltStep As Long
+    Dim SimTrackingStep As AzAlt
 
 
 
@@ -978,19 +995,13 @@ Private Sub C_GetAz_Click()
        
     
     If SimOffline Then
-'        TelIncrAz = SimIncrAz
-                    TelIncr = SimIncr
+        TelIncr = SimIncr
     Else
         NexStarComm.Output = Chr$(&H1)
         NexStarAz = ""
         Command = 1
     End If
     
-    L_AzMotorIncr = TelIncr.Az
-    L_AltMotorIncr = TelIncr.Alt
-    MatrixSystemIst = MotorIncr_To_MatrixSystem(TelIncr)
-    L_MatrixSystemAzIst = Format(RadToDeg(MatrixSystemIst.Az), "0.0000") & "°"
-    L_MatrixSystemAltIst = Format(RadToDeg(MatrixSystemIst.Alt), "0.0000") & "°"
 End Sub
 
 
@@ -998,60 +1009,43 @@ Private Sub C_GetAlt_Click()
     Dim tmp As Double
     
     If SimOffline Then
-'        TelIncrAlt = SimIncrAlt
-                    TelIncr = SimIncr
+        TelIncr = SimIncr
     Else
         NexStarComm.Output = Chr$(&H15)
         NexStarAlt = ""
         Command = 21
     End If
     
-    L_AzMotorIncr = TelIncr.Az
-    L_AltMotorIncr = TelIncr.Alt
-    MatrixSystemIst = MotorIncr_To_MatrixSystem(TelIncr)
-    L_MatrixSystemAzIst = Format(RadToDeg(MatrixSystemIst.Az), "0.0000") & "°"
-    L_MatrixSystemAltIst = Format(RadToDeg(MatrixSystemIst.Alt), "0.0000") & "°"
 End Sub
 
 
 Private Sub C_GotoStar_Click()
-'    'Set Az
-'    MatrixSystemAzSoll = AzAltSystem_to_MatrixSystem(ObserverAz)
-'    'Set Alt
-'    MatrixSystemAltSoll = ObserverAlt + GlobalAltOffset
-    
-            'New funktion using TYPE AzAlt
-            Dim tmp As AzAlt
-            tmp.Az = ObserverAz
-            tmp.Alt = ObserverAlt
-            MatrixSystemSoll = AzAlt_to_MatrixSystem(tmp)
+
+    Dim tmp As AzAlt
+    tmp.Az = ObserverAz
+    tmp.Alt = ObserverAlt
+    MatrixSystemSoll = AzAlt_to_MatrixSystem(tmp)
 
 
-    Dim MotorIncrAz As Long
-    Dim MotorIncrAlt As Long
-            'New funktion using TYPE AzAlt
-            Dim MotorIncr As AzAlt
+'    Dim MotorIncrAz As Long
+'    Dim MotorIncrAlt As Long
+            
+    Dim MotorIncr As AzAlt
     
-'    MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
-'    MotorIncrAlt = MatrixSystemAltSoll * EncoderResolution / (2 * Pi)
-    
-            'New funktion using TYPE AzAlt
-            MotorIncr = Matrix_To_MotorIncrSystem(MatrixSystemSoll)
-            Dim t1 As Double
-            Dim t2 As Double
-            t1 = MotorIncr.Az
-            t2 = MotorIncr.Alt
+
+    MotorIncr = Matrix_To_MotorIncrSystem(MatrixSystemSoll)
+    Dim t1 As Double
+    Dim t2 As Double
+    t1 = MotorIncr.Az
+    t2 = MotorIncr.Alt
     
     
     SimGotoAzAltActive = True
     
     If SimOffline Then
-        SimGotoAz = MotorIncrAz
-        SimGotoAlt = MotorIncrAlt
-                    'New funktion using TYPE AzAlt
-                    SimGoto = MotorIncr
+        SimGoto = MotorIncr
     Else
-        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(MotorIncrAz) & Chr$(&H16) & SetNexStarPosition(MotorIncrAlt)
+        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
     End If
 
 
@@ -1074,14 +1068,12 @@ Private Sub C_GotoStarCalibrated_Click()
     MatrixSystemSoll.Az = CutRad(AzAlt_BetaCet.Az)
     'Set Alt
     MatrixSystemSoll.Alt = AzAlt_BetaCet.Alt
-
-'    Dim MotorIncrAz As Long
-'    Dim MotorIncrAlt As Long
-            Dim MotorIncr As AzAlt
     
-'    MotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzSoll)
-'    MotorIncrAlt = MatrixSystemAltSoll * EncoderResolution / (2 * Pi)
-            MotorIncr = Matrix_To_MotorIncrSystem(MatrixSystemSoll)
+    LastCalculated = MatrixSystemSoll
+
+
+    Dim MotorIncr As AzAlt
+    MotorIncr = Matrix_To_MotorIncrSystem(MatrixSystemSoll)
 
     SimGotoAzAltActive = True
     
@@ -1181,10 +1173,6 @@ Private Sub C_SetNorth_Click()
     
     'Set Initial for calibration
     Cal_InitTime = TimeToRad(ObserverTimeUT)
-    
-    
-'    d1 = RadToDeg(MatrixSystem)
-'    d2 = RadToDeg(tmp)
 End Sub
 
 
@@ -1207,7 +1195,7 @@ Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     If SimOffline Then
         SimBntUp = True
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(ManualSlewingSpeed)
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(CDbl(ManualSlewingSpeed))
     End If
 End Sub
 
@@ -1223,7 +1211,7 @@ Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     If SimOffline Then
         SimBntDn = True
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1B) & SetNexStarPosition(ManualSlewingSpeed)
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1B) & SetNexStarPosition(CDbl(ManualSlewingSpeed))
     End If
 End Sub
 
@@ -1239,7 +1227,7 @@ Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     If SimOffline Then
         SimBntLe = True
     Else
-        NexStarComm.Output = Chr$(&H7) & SetNexStarPosition(ManualSlewingSpeed) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarComm.Output = Chr$(&H7) & SetNexStarPosition(CDbl(ManualSlewingSpeed)) & Chr$(&H1A) & SetNexStarPosition(0)
     End If
 End Sub
 
@@ -1255,7 +1243,7 @@ Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     If SimOffline Then
         SimBntRi = True
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(ManualSlewingSpeed) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(CDbl(ManualSlewingSpeed)) & Chr$(&H1A) & SetNexStarPosition(0)
     End If
 End Sub
 
@@ -1383,6 +1371,8 @@ End Sub
 
 
 
+
+
 Private Sub M_Communication_Click()
     Communication.Show
 End Sub
@@ -1405,6 +1395,20 @@ End Sub
 ' Slewing rate      [1/10 Motor Incr/sec]  i.e.  Slewing rate 10000: 10000 Incr in 10sec
 
 ' Slewing rate 9: "CE BB 02" = "CE BB 02" = 13548290 = 1354829,0 [Incr pro sec]
+
+
+
+' Tracking a star:
+' 01 15             Answer: az az az al al al        Get Az Alt Incr
+' 18 0A F0 46  ????
+' 01 15             Answer: az az az al al al        Get Az Alt Incr
+' 06 00 00 5E 1B 00 00 05                            Slew Az=94 Alt=5
+
+
+
+
+
+
 
 
 
@@ -1505,13 +1509,22 @@ Private Sub Tim_DisplayUpdate_Timer()
     L_GlobalAzOffset = Format(RadToDeg(GlobalOffset.Az), "0.0000") & "°"
     L_GlobalAltOffset = Format(RadToDeg(GlobalOffset.Alt), "0.0000") & "°"
     L_MatrixSystemAzSoll = Format(RadToDeg(MatrixSystemSoll.Az), "0.0000") & "°"
+    L_MatrixSystemAzDiff = Format(RadToDeg(DiffCalculated.Az), "0.0000") & "°/s"
     L_MatrixSystemAltSoll = Format(RadToDeg(MatrixSystemSoll.Alt), "0.0000") & "°"
+    L_MatrixSystemAltDiff = Format(RadToDeg(DiffCalculated.Alt), "0.0000") & "°/s"
+    MatrixSystemIst = MotorIncr_To_MatrixSystem(TelIncr)
+    L_MatrixSystemAzIst = Format(RadToDeg(MatrixSystemIst.Az), "0.0000") & "°"
+    L_MatrixSystemAltIst = Format(RadToDeg(MatrixSystemIst.Alt), "0.0000") & "°"
+   
+    L_AzMotorIncr = Format(TelIncr.Az, "0.0")
+    L_AltMotorIncr = Format(TelIncr.Alt, "0.0")
+
  
 End Sub
 
 Private Sub Tim_Simulation_Timer()
-    Dim SimScaling As Long
-    Dim SimGotoStep As Long
+    Dim SimScaling As Double
+    Dim SimGotoStep As Double
 
     SimScaling = 100
     SimGotoStep = 10000
@@ -1531,24 +1544,11 @@ Private Sub Tim_Simulation_Timer()
     If SimBntRi Then
         SimIncr.Az = SimIncr.Az + (ManualSlewingSpeed / SimScaling)
     End If
-       
-'' sieht unsinnig aus
-''
-''    If SimIncrAz > EncoderResolution Then
-''        SimIncrAz = 0
-''    ElseIf SimIncrAz < 0 Then
-''        SimIncrAz = EncoderResolution
-''    End If
-''
-''    If SimIncrAlt > EncoderResolution Then
-''        SimIncrAlt = 0
-''    ElseIf SimIncrAlt < 0 Then
-''        SimIncrAlt = EncoderResolution
-''    End If
+    
     
     ' movement active
     If SimGotoAzAltActive Then
-        If (Abs(SimGotoAz) - Abs(SimIncr.Az)) < SimGotoStep * 2 Then
+        If Abs(Abs(SimGoto.Az) - Abs(SimIncr.Az)) < SimGotoStep * 2 Then
             SimIncr.Az = SimGoto.Az
         ElseIf SimGoto.Az > SimIncr.Az Then
             SimIncr.Az = SimIncr.Az + SimGotoStep
@@ -1556,7 +1556,7 @@ Private Sub Tim_Simulation_Timer()
             SimIncr.Az = SimIncr.Az - SimGotoStep
         End If
     
-        If (Abs(SimGoto.Alt) - Abs(SimIncr.Alt)) < SimGotoStep * 2 Then
+        If Abs(Abs(SimGoto.Alt) - Abs(SimIncr.Alt)) < SimGotoStep * 2 Then
             SimIncr.Alt = SimGoto.Alt
         ElseIf SimGoto.Alt > SimIncr.Alt Then
             SimIncr.Alt = SimIncr.Alt + SimGotoStep
@@ -1565,7 +1565,7 @@ Private Sub Tim_Simulation_Timer()
         End If
         
         ' movement finished
-        If (SimIncr.Az = SimGotoAz) And (SimIncr.Alt = SimGotoAlt) Then
+        If (SimIncr.Az = SimGoto.Az) And (SimIncr.Alt = SimGoto.Alt) Then
             SimGotoAzAltActive = False
         End If
 
@@ -1574,11 +1574,14 @@ Private Sub Tim_Simulation_Timer()
     
     ' tracking active
     If SimTrackingActive Then
-        SimIncr.Az = SimIncr.Az + SimTrackingAzStep
-        SimIncr.Alt = SimIncr.Alt + SimTrackingAltStep
-        SimTrackingAzStep = 0
-        SimTrackingAltStep = 0
+        SimIncr.Az = SimIncr.Az + SimTrackingStep.Az
+        SimIncr.Alt = SimIncr.Alt + SimTrackingStep.Alt
+        SimTrackingStep.Az = 0
+        SimTrackingStep.Alt = 0
        SimTrackingActive = False
+'==== test only ===
+ Test.List1.AddItem "           MotPos:" & Format(SimIncr.Az, "0.0")
+'==== test only ===
     End If
     
 End Sub
@@ -1700,7 +1703,7 @@ Private Sub Tim_Tracking_Timer()
     
     Static TrackCount As Long
     Static TrackingMem As Boolean
-    Const TrackInterval = 10        'calculate new star positition ever ... sec
+    Const TrackInterval = 30        'calculate new star positition ever ... sec
     Dim N As Long
     
     N = (TrackInterval * 1000) / Tim_Tracking.Interval
@@ -1729,6 +1732,7 @@ Private Sub Tim_Tracking_Timer()
                 TimeDiff.s = TrackInterval
                 
                 AimTimeRad = TimeToRad(ObserverTimeUT) + TimeToRad(TimeDiff)
+                JetztTime = TimeToRad(ObserverTimeUT)
             
                 CalculateTelescopeCoordinates Cal_InitTime, _
                                               ObserverRA, ObserverDEC, AimTimeRad, TransformationMatrix, _
@@ -1739,13 +1743,16 @@ Private Sub Tim_Tracking_Timer()
                 'Set Alt
                 MatrixSystemSoll.Alt = AzAlt_BetaCet.Alt
             
-'                Dim MatrixSystemAzDiff As Double
-'                Dim MatrixSystemAltDiff As Double
-                        Dim MatrixSystemDiff As AzAlt
+
+                Dim MatrixSystemDiff As AzAlt
+                MatrixSystemDiff = SubAzAlt(MatrixSystemSoll, MatrixSystemIst)
                 
-                MatrixSystemDiff.Az = MatrixSystemSoll.Az - MatrixSystemIst.Az
-                MatrixSystemDiff.Alt = MatrixSystemSoll.Alt - MatrixSystemIst.Alt
-                    
+                DiffCalculated = SubAzAlt(MatrixSystemSoll, LastCalculated)
+                DiffCalculated.Az = DiffCalculated.Az / TrackInterval
+                DiffCalculated.Alt = DiffCalculated.Alt / TrackInterval
+                LastCalculated = MatrixSystemSoll
+                
+                
                         '==== Life counter ====
                         Static LifeCounter As Long
                         Dim i As Long
@@ -1762,46 +1769,59 @@ Private Sub Tim_Tracking_Timer()
                 
 
 
-'                DiffMotorIncrAz = MatrixSystem_to_MotorIncrSystem(MatrixSystemAzDiff)
-'                DiffMotorIncrAlt = MatrixSystemAltDiff * EncoderResolution / (2 * Pi)
-                                    DiffMotorIncr = Matrix_To_MotorIncrSystem(MatrixSystemDiff)
 
-                
+                DiffMotorIncr = Matrix_To_MotorIncrSystem(MatrixSystemDiff)
+
                 Label6 = Format(RadToDeg(MatrixSystemDiff.Az), "0.0000") & "° = " & Format(DiffMotorIncr.Az, "0.0") & " Incr pro " & TrackInterval & " sec"
                 Label27 = Format(RadToDeg(MatrixSystemDiff.Alt), "0.0000") & "° = " & Format(DiffMotorIncr.Alt, "0.0") & " Incr pro " & TrackInterval & " sec"
-                
-                
-                
-'                Dim SlewingSpeedAz As Long
-'                Dim SlewingSpeedAlt As Long
-                        Dim SlewingSpeed As AzAlt
+  
+                Dim SlewingSpeed As AzAlt
                 
                 SlewingSpeed.Az = (DiffMotorIncr.Az * 10) / TrackInterval
                 SlewingSpeed.Alt = (DiffMotorIncr.Alt * 10) / TrackInterval
                   
+    '==== test only ===
+    Test.List1.AddItem " "
+    Test.List1.AddItem Now & " AzDiff:" & Format(RadToDeg(MatrixSystemSoll.Az), "0.0000")
+    Test.List1.AddItem Now & " AzDiff:" & Format(RadToDeg(MatrixSystemDiff.Az), "0.0000")
+    Test.List1.AddItem Now & " CalcDiff:" & Format(RadToDeg(MatrixSystemSoll.Az - LastVal.Az), "0.0000")
+    LastVal = MatrixSystemSoll
+    
+    Test.List1.AddItem Now & " MotorPos:" & Format(SimIncr.Az, "0.0")
+    Test.List1.AddItem Now & " DiffMotorPos:" & Format(RadToDeg(DiffMotorIncr.Az), "0.0")
+   
+    
+    
+    Test.List1.AddItem Now & " JetztTime:" & Format(JetztTime, "0.000000")
+    Test.List1.AddItem Now & " AimTime:" & Format(AimTimeRad, "0.000000")
+    '==== test only ===
+                  
+                  
+                Dim AzString As String
+                Dim AltString As String
+                
+                Label28 = SlewingSpeed.Az
+                Label29 = SlewingSpeed.Alt
+                
+                
+                If DiffMotorIncr.Az < 0 Then
+                    'CCW
+                    AzString = Chr$(&H7) & SetNexStarPosition(-CLng(SlewingSpeed.Az))
+                Else
+                    'CW (normal direction)
+                    AzString = Chr$(&H6) & SetNexStarPosition(CLng(SlewingSpeed.Az))
+                End If
+                
+                If DiffMotorIncr.Alt < 0 Then
+                    'descending
+                    AltString = Chr$(&H1B) & SetNexStarPosition(-CLng(SlewingSpeed.Alt))
+                Else
+                    'ascending
+                    AltString = Chr$(&H1A) & SetNexStarPosition(CLng(SlewingSpeed.Alt))
+                End If
+                    
+                    
                 If Not SimOffline Then
-                    Dim AzString As String
-                    Dim AltString As String
-                    
-                    Label28 = SlewingSpeed.Az
-                    Label29 = SlewingSpeed.Az
-                    
-                    
-                    If DiffMotorIncr.Az < 0 Then
-                        'CCW
-                        AzString = Chr$(&H7) & SetNexStarPosition(-CLng(SlewingSpeed.Az))
-                    Else
-                        'CW (normal direction)
-                        AzString = Chr$(&H6) & SetNexStarPosition(CLng(SlewingSpeed.Az))
-                    End If
-                    
-                    If DiffMotorIncr.Alt < 0 Then
-                        'descending
-                        AltString = Chr$(&H1B) & SetNexStarPosition(-CLng(SlewingSpeed.Alt))
-                    Else
-                        'ascending
-                        AltString = Chr$(&H1A) & SetNexStarPosition(CLng(SlewingSpeed.Alt))
-                    End If
                     
                     NexStarComm.Output = AzString & AltString
                     
@@ -1811,27 +1831,31 @@ Private Sub Tim_Tracking_Timer()
             If SimOffline Then
                 SimTrackingActive = True
 
-                SimTrackingAzStep = (DiffMotorIncr.Az / TrackInterval) * (Tim_Tracking.Interval / 1000#)
-                SimTrackingAltStep = (DiffMotorIncr.Alt / TrackInterval) * (Tim_Tracking.Interval / 1000#)
+                SimTrackingStep.Az = (DiffMotorIncr.Az / TrackInterval) * (Tim_Tracking.Interval / 1000#)
+                SimTrackingStep.Alt = (DiffMotorIncr.Alt / TrackInterval) * (Tim_Tracking.Interval / 1000#)
 
-                Dim dummy As Boolean
-                If SimTrackingAzStep > 0 Then
+    '==== test only ===
+     Test.List1.AddItem "           Step:" & Format(SimTrackingStep.Az, "0.0")
+    '==== test only ===
+               Dim dummy As Boolean
+                If SimTrackingStep.Az > 0 Then
                     dummy = False
                 End If
 
-                Label28 = SimTrackingAzStep
-                Label29 = SimTrackingAltStep
+'                Label28 = SimTrackingStep.Az
+'                Label29 = SimTrackingStep.Alt
             End If
 
     
     Else
+            'Tracking is OFF
             C_Tracking.BackColor = &H8000000F
     End If
 
 End Sub
 
 Private Sub VS_ManualSlewingSpeed_Change()
-    Dim tmp As Long
+    Dim tmp As Double
     
     tmp = VS_ManualSlewingSpeed.Value
     ManualSlewingSpeed = 1000 * tmp

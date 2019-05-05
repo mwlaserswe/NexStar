@@ -9,36 +9,44 @@ Begin VB.Form Test
    ScaleHeight     =   7320
    ScaleWidth      =   8655
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton Command8 
+      Caption         =   "Command8"
+      Height          =   255
+      Left            =   240
+      TabIndex        =   24
+      Top             =   5880
+      Width           =   1215
+   End
    Begin VB.TextBox Text1 
       Height          =   285
-      Left            =   6360
+      Left            =   1680
       TabIndex        =   23
       Text            =   "90"
-      Top             =   5040
+      Top             =   6480
       Width           =   1215
    End
    Begin VB.CommandButton Command6 
       Caption         =   "Command6"
       Height          =   495
-      Left            =   5040
+      Left            =   240
       TabIndex        =   21
-      Top             =   5040
+      Top             =   6600
       Width           =   1215
    End
    Begin VB.CommandButton Command5 
       Caption         =   "Command5"
       Height          =   495
-      Left            =   2760
+      Left            =   2040
       TabIndex        =   20
-      Top             =   6000
+      Top             =   5640
       Width           =   1215
    End
    Begin VB.CommandButton Command2 
       Caption         =   "Command2"
       Height          =   495
-      Left            =   2880
+      Left            =   2040
       TabIndex        =   19
-      Top             =   5280
+      Top             =   4920
       Width           =   1215
    End
    Begin VB.CommandButton C_TestKalibrierung_3 
@@ -66,11 +74,11 @@ Begin VB.Form Test
       Width           =   1215
    End
    Begin VB.ListBox List1 
-      Height          =   2985
-      Left            =   4920
+      Height          =   5910
+      Left            =   3600
       TabIndex        =   14
       Top             =   1080
-      Width           =   3135
+      Width           =   4935
    End
    Begin VB.CommandButton Command4 
       Caption         =   "Demo Stern"
@@ -91,17 +99,17 @@ Begin VB.Form Test
    Begin VB.CommandButton Command3 
       Caption         =   "Command3"
       Height          =   255
-      Left            =   360
+      Left            =   120
       TabIndex        =   5
-      Top             =   6240
+      Top             =   5400
       Width           =   1215
    End
    Begin VB.CommandButton Command1 
       Caption         =   "Command1"
       Height          =   255
-      Left            =   240
+      Left            =   0
       TabIndex        =   4
-      Top             =   5520
+      Top             =   4920
       Width           =   1215
    End
    Begin VB.CommandButton C_TestSiderialTime 
@@ -117,9 +125,9 @@ Begin VB.Form Test
       BorderStyle     =   1  'Fixed Single
       Caption         =   "--"
       Height          =   255
-      Left            =   6360
+      Left            =   1680
       TabIndex        =   22
-      Top             =   5400
+      Top             =   6960
       Width           =   1215
    End
    Begin VB.Label Label1 
@@ -1007,4 +1015,5 @@ Private Sub Command7_Click()
         Next i
     Label1 = "3"
 End Sub
+
 

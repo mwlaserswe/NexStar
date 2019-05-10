@@ -122,8 +122,15 @@ Public Cal_Time_2 As Double
 
 Public TrackingisON As Boolean
 Public DiffMotorIncr As AzAlt
-Public LastCalculated As AzAlt
-Public DiffCalculated As AzAlt
+Public MatrixLastCalc As AzAlt
+Public MatrixDiffCalc As AzAlt
+Public MotorLastCalc As AzAlt
+Public MotorDiffCalc As AzAlt
+
+Public MatrixSystemDiffPerSec As AzAlt
+Public TrackingSpeed As AzAlt
+
+'=== Test Only ===
 Public LastVal As AzAlt
 Public JetztTime As Double
                 

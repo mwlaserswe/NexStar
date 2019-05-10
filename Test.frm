@@ -1001,19 +1001,5 @@ Private Sub Command6_Click()
     Label2 = GetCardinalDrection(AngeRad)
 End Sub
 
-Private Sub Command7_Click()
-    Dim i As Long
-    
-    Dim dummy As Double
-    Label1 = "1"
-        For i = 1 To 10000000
-            dummy = dummy * Pi
-        Next i
-    Label1 = "2"
-        For i = 1 To 10000000
-            dummy = dummy * Pi
-        Next i
-    Label1 = "3"
-End Sub
 
 

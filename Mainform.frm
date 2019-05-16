@@ -11,6 +11,14 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   14250
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton C_GotoNorth 
+      Caption         =   "Goto Noth"
+      Height          =   495
+      Left            =   4080
+      TabIndex        =   111
+      Top             =   360
+      Width           =   1335
+   End
    Begin VB.Timer Tim_TestStatus 
       Interval        =   500
       Left            =   6240
@@ -1084,6 +1092,24 @@ Private Sub C_GetAlt_Click()
     
 End Sub
 
+
+Private Sub C_GotoNorth_Click()
+    TestStatus = True
+    StatusMoving = 0
+    
+    Dim MotorIncr As AzAlt
+    
+    MotorIncr = Matrix_To_MotorIncrSystem(GlobalOffset)
+    
+    SimGotoAzAltActive = True
+    
+    If SimOffline Then
+        SimGoto = MotorIncr
+    Else
+        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
+    End If
+
+End Sub
 
 Private Sub C_GotoStar_Click()
 

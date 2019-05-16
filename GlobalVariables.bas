@@ -7,6 +7,11 @@ Public Const Pi = 3.14159265359
 Public Const EncoderResolution = 726559
 Public Const SidConst = 1.00273790935
 
+Public Enum ProtokollMode
+    Send = 0
+    Receive = 1
+End Enum
+
 Public Type MyDate
     YY As Double
     MM As Double
@@ -64,9 +69,14 @@ End Type
 
 
 Public SimOffline As Boolean
+Public ErrorCount As Long
 Public CommTest As Boolean
 Public IniFileName As String
+Public CommFileName As String
 Public AlignmentStarArray() As StarDescription
+
+Public TestStatus As Boolean
+Public StatusMoving As Integer
 
 
 Public ObserverDateTimeUT As Date
@@ -77,25 +87,13 @@ Public ObserverRA As Double
 Public ObserverDEC As Double
 Public ObserverAz As Double
 Public ObserverAlt As Double
+Public GlobalOffset As AzAlt
 
+' Main Horizontal System für die Matrixmetode in [radian]
+' mathematischer Sinn gegen den Uhtzeigersinn (CCW)
+Public MatrixSystemSoll As AzAlt
+Public MatrixSystemIst As AzAlt
 
-'Public GlobalAzOffset As Double        ' Offset AzAlt-System to Main Horizontal System [radian]
-'Public GlobalAltOffset As Double        ' Offset AzAlt-System to Main Horizontal System [radian]
-            'New funktion using TYPE AzAlt
-            Public GlobalOffset As AzAlt
-
-'Public MatrixSystemAzSoll As Double          'SetPoint Main Horizontal System  [radian]
-'Public MatrixSystemAzIst As Double          'SetPoint Main Horizontal System  [radian]
-'Public MatrixSystemAltSoll As Double          'SetPoint Main Horizontal System  [radian]
-'Public MatrixSystemAltIst As Double          'SetPoint Main Horizontal System  [radian]
-            'New funktion using TYPE AzAlt
-            Public MatrixSystemSoll As AzAlt
-            Public MatrixSystemIst As AzAlt
-
-
-
-'Public MatrixSystem As Double          ' Main Horizontal System für die Matrixmetode in [radian]
-                                    ' mathematischer Sinn gegen den Uhtzeigersinn (CCW)
 Public MotorIncrSystem As Double       ' Horizontalsystem in [Increments] 0..726559 [CW]
 Public AzAltSystem As Double           ' Horzontsystem in [radian] aus RA DEC berechnet
 

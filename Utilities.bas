@@ -1,9 +1,9 @@
 Attribute VB_Name = "Utilities"
 Option Explicit
 
-  Private Declare Function FindFirstFile Lib "kernel32" Alias "FindFirstFileA" (ByVal lpFileName As String, lpFindFileData As WIN32_FIND_DATA) As Long
-  Private Declare Function FindNextFile Lib "kernel32" Alias "FindNextFileA" (ByVal hFindFile As Long, lpFindFileData As WIN32_FIND_DATA) As Long
-  Private Declare Function FindClose Lib "kernel32" (ByVal hFindFile As Long) As Long
+  Private Declare Function FindFirstFile Lib "Kernel32" Alias "FindFirstFileA" (ByVal lpFileName As String, lpFindFileData As WIN32_FIND_DATA) As Long
+  Private Declare Function FindNextFile Lib "Kernel32" Alias "FindNextFileA" (ByVal hFindFile As Long, lpFindFileData As WIN32_FIND_DATA) As Long
+  Private Declare Function FindClose Lib "Kernel32" (ByVal hFindFile As Long) As Long
   Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
   
 
@@ -43,7 +43,7 @@ Option Explicit
   Public Const maxlist = 100
 
 
-Declare Function GetShortPathName Lib "kernel32" Alias "GetShortPathNameA" (ByVal lpszLongPath As String, ByVal lpszShortPath As String, ByVal cchBuffer As Long) As Long
+Declare Function GetShortPathName Lib "Kernel32" Alias "GetShortPathNameA" (ByVal lpszLongPath As String, ByVal lpszShortPath As String, ByVal cchBuffer As Long) As Long
 Public bitMaske(0 To 7) As Byte
 
 '=============================================
@@ -991,8 +991,30 @@ Dim ByteLocal(3) As Byte
 End Function
 
 
+Public Sub WriteComm(Txt As String, Mode As ProtokollMode)
+    Dim CommFile As Integer
+    Dim i As Integer
+    Dim Prexit As String
+    
+    CommFile = FreeFile                'Nächste freie DateiNr.
+    On Error GoTo OpenError
+    Open CommFileName For Append As CommFile
+    
+    Select Case Mode
+      Case Send
+        Print #CommFile, "--> Send:   " & Txt
+       
+      Case Receive
+        Print #CommFile, "--> Recive:   " & Txt
+    
+    End Select
+    
+    Close CommFile
+    
+    
+    Exit Sub
 
+OpenError:
+  MsgBox CommFileName, , "Write error"
 
-
-
-
+End Sub

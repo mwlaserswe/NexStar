@@ -511,9 +511,9 @@ End Function
 
 
 
-Public Function AzAltSystem_to_MatrixSystem(Az As Double) As Double
-   AzAltSystem_to_MatrixSystem = CutRad(-Az + GlobalOffset.Az)
-End Function
+'Public Function AzAltSystem_to_MatrixSystem(Az As Double) As Double
+'   AzAltSystem_to_MatrixSystem = CutRad(-Az + GlobalOffset.Az)
+'End Function
 
 
             'New funktion using TYPE AzAlt

@@ -11,6 +11,34 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   14250
    StartUpPosition =   3  'Windows Default
+   Begin VB.Timer Tim_TestStatus 
+      Interval        =   500
+      Left            =   6240
+      Top             =   4440
+   End
+   Begin VB.CommandButton Command1 
+      Caption         =   "Command1"
+      Height          =   495
+      Left            =   12360
+      TabIndex        =   109
+      Top             =   7560
+      Width           =   1215
+   End
+   Begin VB.ListBox List1 
+      Height          =   5910
+      Left            =   12240
+      TabIndex        =   108
+      Top             =   240
+      Width           =   1575
+   End
+   Begin VB.CommandButton C_SetEncoder_Alt 
+      Caption         =   "Set Enc. Alt"
+      Height          =   255
+      Left            =   240
+      TabIndex        =   106
+      Top             =   480
+      Width           =   1215
+   End
    Begin MSComctlLib.Slider Slider1 
       Height          =   315
       Left            =   7920
@@ -20,8 +48,8 @@ Begin VB.Form Mainform
       _ExtentX        =   9340
       _ExtentY        =   556
       _Version        =   393216
-      Min             =   -200
-      Max             =   200
+      Min             =   -1000
+      Max             =   1000
       SelectRange     =   -1  'True
    End
    Begin VB.CommandButton C_Tracking 
@@ -443,10 +471,10 @@ Begin VB.Form Mainform
    End
    Begin VB.TextBox T_Backlash 
       Height          =   285
-      Left            =   480
+      Left            =   360
       TabIndex        =   42
       Text            =   "40"
-      Top             =   1200
+      Top             =   1560
       Width           =   615
    End
    Begin VB.CommandButton C_SetBacklAlt 
@@ -454,7 +482,7 @@ Begin VB.Form Mainform
       Height          =   255
       Left            =   240
       TabIndex        =   41
-      Top             =   840
+      Top             =   1200
       Width           =   1215
    End
    Begin VB.CommandButton C_SetBacklAz 
@@ -462,7 +490,7 @@ Begin VB.Form Mainform
       Height          =   255
       Left            =   240
       TabIndex        =   40
-      Top             =   480
+      Top             =   840
       Width           =   1215
    End
    Begin VB.TextBox T_Long_Sign 
@@ -651,8 +679,8 @@ Begin VB.Form Mainform
       Top             =   360
       Width           =   1815
    End
-   Begin VB.CommandButton C_SetEncoder 
-      Caption         =   "Set Encoder"
+   Begin VB.CommandButton C_SetEncoder_Az 
+      Caption         =   "Set Enc. Az"
       Height          =   255
       Left            =   240
       TabIndex        =   2
@@ -722,6 +750,25 @@ Begin VB.Form Mainform
          Top             =   360
          Width           =   2895
       End
+   End
+   Begin VB.Label L_StatusMoving 
+      Alignment       =   2  'Center
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   375
+      Left            =   9240
+      TabIndex        =   110
+      Top             =   9840
+      Width           =   2415
+   End
+   Begin VB.Label L_ErrorCount 
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "ErrorCount:"
+      Height          =   255
+      Left            =   12360
+      TabIndex        =   107
+      Top             =   6840
+      Width           =   1215
    End
    Begin VB.Line Line1 
       X1              =   10560
@@ -1040,6 +1087,11 @@ End Sub
 
 Private Sub C_GotoStar_Click()
 
+
+    TestStatus = True
+    StatusMoving = 0
+
+
     Dim tmp As AzAlt
     tmp.Az = ObserverAz
     tmp.Alt = ObserverAlt
@@ -1071,6 +1123,10 @@ Private Sub C_GotoStar_Click()
 End Sub
 
 Private Sub C_GotoStarCalibrated_Click()
+
+    TestStatus = True
+    StatusMoving = 0
+    
 
     Dim AimTimeRad As Double
     Dim AzAlt_BetaCet As AzAlt
@@ -1183,6 +1239,22 @@ Private Sub C_SetCalibrationStar_2_Click()
 
 End Sub
 
+Private Sub C_SetEncoder_Alt_Click()
+    If SimOffline Then
+    Else
+        NexStarComm.Output = Chr$(&H1F) & SetNexStarPosition(EncoderResolution)
+    End If
+End Sub
+
+Private Sub C_SetEncoder_Az_Click()
+    If SimOffline Then
+    Else
+    
+        WriteComm " Encoder Rsolution Az:   0x0C " & EncoderResolution, Send
+        NexStarComm.Output = Chr$(&HC) & SetNexStarPosition(EncoderResolution)
+    End If
+End Sub
+
 Private Sub C_SetNorth_Click()
     Dim MatrixSystem As AzAlt
     Dim tmp As Double
@@ -1207,6 +1279,11 @@ End Sub
 Private Sub C_Tracking_Click()
     If TrackingisON Then
         TrackingisON = False
+        
+        If SimOffline Then
+        Else
+            NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        End If
     Else
         TrackingisON = True
     End If
@@ -1297,18 +1374,17 @@ Private Sub C_SetAzAlt_Click()
 End Sub
 
 
-Private Sub C_SetEncoder_Click()
-    If SimOffline Then
-    Else
-        NexStarComm.Output = Chr$(&HC) & SetNexStarPosition(EncoderResolution) & SetNexStarPosition(EncoderResolution)
-    End If
+
+
+
+
+Private Sub Command1_Click()
+    Command = 13
+    NexStarComm.Output = Chr$(&HD)
 End Sub
 
-
-
-
 Private Sub Form_Load()
-    SimOffline = True
+    SimOffline = False
     CommTest = False
     
     O_TimeSelectLocal.Value = 1
@@ -1358,6 +1434,24 @@ Private Sub Form_Load()
     TransformationMatrix(2, 0) = Zahl(INIGetValue(IniFileName, "TransformationMatrix", "20"))
     TransformationMatrix(2, 1) = Zahl(INIGetValue(IniFileName, "TransformationMatrix", "21"))
     TransformationMatrix(2, 2) = Zahl(INIGetValue(IniFileName, "TransformationMatrix", "22"))
+    
+
+    
+    Dim nw As String
+    Dim CommFile As Integer
+    nw = Now
+     
+'    CommFileName = App.Path & "\Commu_" & Year(nw) & Month(nw) & Day(nw) & Hour(nw) & Minute(nw) & Second(nw) & ".txt"
+    CommFileName = App.Path & "\Commu_.txt"
+    CommFile = FreeFile
+    On Error GoTo openErr:
+    Open CommFileName For Output As CommFile
+    Close CommFile
+    
+    Exit Sub
+  
+openErr:
+    MsgBox CommFileName & vbCr & Err.Description, , "NexStar"
     
 End Sub
 
@@ -1410,11 +1504,15 @@ End Sub
 ' Move DOWN         0x06 0 (3 Byte) 0x1B & Speed  (3 Bype)
 ' Move LEFT         0x07 Speed (3 Byte) 0x1A 0 (3 Bype)
 ' Move RIGHT        0x06 Speed (3 Byte) 0x1A 0 (3 Bype)
-' Set EncRes        0x0C EncResAz (3 Byte) EncResAlt (3 Bype)
+' Set Az EncRes     0x0C EncResAz (3 Byte)
+' Set Alt EncRes    0x1F EncResAlt (3 Bype)
 ' Set Az Backlash   0x0A BacklashAz (3 Byte)
 ' Set Alt Backlash  0x1E BacklashAlt (3 Byte)
 ' Get Az Incr       0x01                            Antwort Az (3 Byte)
 ' Get Alt Incr      0x15                            Antwort Az (3 Byte)
+' ????              0x18 ??? (3 Byte)
+
+' Get Status        0x0D    Antwort Status (1 Byte) 0x00: Busy  0xFF: Idle
 
 ' Slewing rate      [1/10 Motor Incr/sec]  i.e.  Slewing rate 10000: 10000 Incr in 10sec
 
@@ -1477,7 +1575,14 @@ Private Sub NexStarComm_OnComm()
                      key = (bbuf(0))
                 Loop While NexStarComm.InBufferCount > 0
                 l = Len(NexStarAz)
-                TelIncr.Az = GetNexStarPosition(NexStarAz)
+                
+                If l = 3 Then
+                    TelIncr.Az = GetNexStarPosition(NexStarAz)
+                    WriteComm "Az: " & TelIncr.Az, Receive
+                Else
+                    ErrorCount = ErrorCount + 1
+                End If
+
             ElseIf Command = 21 Then
                 Do
                     vbuf = NexStarComm.Input
@@ -1486,7 +1591,30 @@ Private Sub NexStarComm_OnComm()
                      key = (bbuf(0))
                 Loop While NexStarComm.InBufferCount > 0
                 l = Len(NexStarAlt)
-                TelIncr.Alt = GetNexStarPosition(NexStarAlt)
+                
+                If l = 3 Then
+                    TelIncr.Alt = GetNexStarPosition(NexStarAlt)
+                    WriteComm "Alt: " & TelIncr.Alt, Receive
+                Else
+                    ErrorCount = ErrorCount + 1
+                End If
+            ElseIf Command = 13 Then
+                 NexStarChar1 = ""
+                Do
+                    vbuf = NexStarComm.Input
+                    bbuf = vbuf
+                    NexStarChar1 = NexStarChar1 & Chr$(bbuf(0))
+                     key = (bbuf(0))
+                    List1.AddItem key
+                    
+                    If key = 0 Then
+                        StatusMoving = 1      'Busy
+                    ElseIf key = 255 Then
+                        StatusMoving = 2      'Idle
+                    End If
+                    
+                Loop While NexStarComm.InBufferCount > 0
+                l = Len(NexStarChar1)
             ElseIf TestCommMotorToHandheld Then
                 NexStarChar1 = ""
                 Do
@@ -1497,6 +1625,7 @@ Private Sub NexStarComm_OnComm()
                 Loop While NexStarComm.InBufferCount > 0
                 l = Len(NexStarChar1)
                 Communication.DisplayAzAltTracking NexStarChar1
+           
             End If
         
     Case comEvSend  ' Im Sendepuffer befinden sich SThreshold Zeichen
@@ -1519,13 +1648,25 @@ Private Sub Tim_DisplayUpdate_Timer()
     Static Toggle As Boolean
     
     If Not CommTest Then
-    
-        If Toggle Then
-            Toggle = False
-            C_GetAz_Click
-        Else
-            Toggle = True
-            C_GetAlt_Click
+        
+        Static GetAzAltCount As Long
+        Const GetAzAltInterval = 1        'calculate new star positition ever ... sec
+        Dim N As Long
+        
+        N = (GetAzAltInterval * 1000) / Tim_DisplayUpdate.Interval
+        
+        GetAzAltCount = GetAzAltCount + 1
+            
+         ' this code only every "GetAzAltInterval" sec
+        If GetAzAltCount >= N Then
+            GetAzAltCount = 0
+            If Toggle Then
+                Toggle = False
+                C_GetAz_Click
+            Else
+                Toggle = True
+                C_GetAlt_Click
+            End If
         End If
 
     End If
@@ -1553,8 +1694,29 @@ Private Sub Tim_DisplayUpdate_Timer()
     L_MotorSystemAzDiffReal = "Real (RS232):      " & Format(TrackingSpeed.Az / 10, "0.000") & " Incr/s"
     L_MotorSystemAzDiffSim = "Real (Simulation): " & Format(SimTrackingStep.Az, "0.000") & " Incr/s"
    
-    Slider1.Value = SimIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
+    If SimOffline Then
+        Slider1.Value = SimIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
+    Else
+        Slider1.Value = TelIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
+    End If
     
+    L_ErrorCount = "Error cout: " & ErrorCount
+    
+    
+    
+    Select Case StatusMoving
+        Case 0
+            L_StatusMoving = "--"
+            L_StatusMoving.BackColor = vbWhite
+        Case 1
+            L_StatusMoving = "Busy"
+            L_StatusMoving.BackColor = vbYellow
+        Case 2
+            L_StatusMoving = "Idle"
+            L_StatusMoving.BackColor = vbGreen
+    End Select
+        
+        
     
 End Sub
 
@@ -1622,6 +1784,21 @@ Private Sub Tim_Simulation_Timer()
 End Sub
 
 
+
+Private Sub Tim_TestStatus_Timer()
+    If TestStatus Then
+        Command = 13
+        NexStarComm.Output = Chr$(&HD)
+    End If
+    
+    
+    If StatusMoving = 2 Then
+            TestStatus = False
+    End If
+
+    
+    
+End Sub
 
 Private Sub Tim_Tracking_Timer()
 '    Dim tTime As MyTime
@@ -1696,7 +1873,11 @@ Private Sub Tim_Tracking_Timer()
     End If
     
     DisplayCoordinate L_I_Az, DisplObserverAz, DegDec
-    L_CardinalOrientation = GetCardinalDrection(AzAltSystem_to_MatrixSystem(ObserverAz))
+    
+    Dim tmp As AzAlt
+    tmp.Az = ObserverAz
+    tmp.Alt = ObserverAlt
+    L_CardinalOrientation = GetCardinalDrection(AzAlt_to_MatrixSystem(tmp).Az)
     DisplayCoordinate L_I_Alt, ObserverAlt, DegDec
     DisplayCoordinate L_I_HourAngle, HourAngle, HMS
 
@@ -1735,7 +1916,6 @@ Private Sub Tim_Tracking_Timer()
     
     
     Static TrackCount As Long
-    Static TrackingMem As Boolean
     Const TrackInterval = 30        'calculate new star positition ever ... sec
     Dim N As Long
     
@@ -1839,6 +2019,7 @@ Private Sub Tim_Tracking_Timer()
     '==== test only ===
                   
                   
+                Dim LogString As String
                 Dim AzString As String
                 Dim AltString As String
                 
@@ -1862,7 +2043,8 @@ Private Sub Tim_Tracking_Timer()
                     
                     
                 If Not SimOffline Then
-                    
+                    LogString = "Tracking: " & TrackingSpeed.Az & " " & TrackingSpeed.Alt
+                    WriteComm LogString, Send
                     NexStarComm.Output = AzString & AltString
                     
                 End If
@@ -1883,6 +2065,8 @@ Private Sub Tim_Tracking_Timer()
             'Tracking is OFF
             C_Tracking.BackColor = &H8000000F
     End If
+
+
 
 End Sub
 

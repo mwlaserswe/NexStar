@@ -523,6 +523,47 @@ End Function
             End Function
 
 
+Public Function CheckDeltaRad(a1 As Double, a2 As Double, Delta As Double) As Boolean
+    
+    If Abs(a1 - a2) < Delta Then
+        CheckDeltaRad = True
+    ElseIf Abs(a1 + 2 * Pi - a2) < Delta Then
+        CheckDeltaRad = True
+    ElseIf Abs(a1 - a2 - 2 * Pi) < Delta Then
+        CheckDeltaRad = True
+    Else
+        CheckDeltaRad = False
+    End If
+
+End Function
+
+Public Function CheckDeltaIncr(a1 As Double, a2 As Double, Delta As Double) As Boolean
+    
+    If Abs(a1 - a2) < Delta Then
+        CheckDeltaIncr = True
+    ElseIf Abs(a1 + EncoderResolution - a2) < Delta Then
+        CheckDeltaIncr = True
+    ElseIf Abs(a1 - a2 - EncoderResolution) < Delta Then
+        CheckDeltaIncr = True
+    Else
+        CheckDeltaIncr = False
+    End If
+
+End Function
+
+Public Function GetShortestWay(Dest As Double, From As Double) As Double
+    If (Dest >= From) And ((Dest - From) <= EncoderResolution / 2) Then
+        GetShortestWay = 1
+    ElseIf (From >= Dest) And ((From - Dest) <= EncoderResolution / 2) Then
+         GetShortestWay = -1
+    ElseIf (From >= Dest) And ((From - Dest) >= EncoderResolution / 2) Then
+         GetShortestWay = 1
+    Else
+         GetShortestWay = -1
+    End If
+
+End Function
+    
 
 
 

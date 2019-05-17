@@ -9,6 +9,30 @@ Begin VB.Form Test
    ScaleHeight     =   7320
    ScaleWidth      =   8655
    StartUpPosition =   3  'Windows Default
+   Begin VB.TextBox T_a2 
+      Height          =   285
+      Left            =   2040
+      TabIndex        =   27
+      Text            =   "0"
+      Top             =   1920
+      Width           =   1215
+   End
+   Begin VB.TextBox T_a1 
+      Height          =   285
+      Left            =   2040
+      TabIndex        =   26
+      Text            =   "0"
+      Top             =   1440
+      Width           =   1215
+   End
+   Begin VB.CommandButton Command9 
+      Caption         =   "Command9"
+      Height          =   495
+      Left            =   2040
+      TabIndex        =   25
+      Top             =   840
+      Width           =   1215
+   End
    Begin VB.CommandButton Command8 
       Caption         =   "Command8"
       Height          =   255
@@ -872,7 +896,7 @@ Private Sub Command4_Click()
 
     RA_DEC_to_AZ_ALT_radian RA_Saturn_Rad, DEC_Saturn_Rad, Longitude, Latitude, SaturnDateTime, Az, Alt, LocalHourAngleRad
 
-    If Mainform.O_OrientationNorth.Value Then Az = Az + Pi
+'    If Mainform.O_OrientationNorth.Value Then Az = Az + Pi
     L_AzStar = CutAngle(RadToDeg(Az))
     L_AltStar = RadToDeg(Alt)
 
@@ -988,10 +1012,6 @@ Private Sub Command5_Click()
     
     s2 = Hex(Asc(s1))
     
-  
-    
-   
-   
 End Sub
 
 Private Sub Command6_Click()
@@ -1002,4 +1022,33 @@ Private Sub Command6_Click()
 End Sub
 
 
+
+Private Sub Command9_Click()
+
+    Dim a1 As Double
+    Dim a2 As Double
+    Dim Delta As Double
+    Dim erg As String
+    
+    a1 = Zahl(T_a1)
+    a2 = Zahl(T_a2)
+    Delta = 10000
+    
+'    If (a1 > a2) And (CheckDeltaIncr(a1, a2, EncoderResolution / 2)) Then
+    If (a1 >= a2) And ((a1 - a2) <= EncoderResolution / 2) Then
+        erg = "im Uhrzeiger 1"
+    ElseIf (a2 >= a1) And ((a2 - a1) <= EncoderResolution / 2) Then
+        erg = "gegen Uhrzeiger 1"
+    ElseIf (a2 >= a1) And ((a2 - a1) >= EncoderResolution / 2) Then
+        erg = "im Uhrzeiger 2"
+    Else
+        erg = "gegen Uhrzeiger 2"
+    End If
+    
+    
+    Command9.Caption = erg
+    
+
+
+End Sub
 

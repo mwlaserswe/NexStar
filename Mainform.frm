@@ -994,18 +994,12 @@ Dim InputBufferAz As String
 Dim InputbufferAlt As String
 Dim NexStarAz As String
 Dim NexStarAlt As String
-'Dim TelIncrAz As Long
-'Dim TelIncrAlt As Long
-        'New funktion using TYPE AzAlt
-        Dim TelIncr As AzAlt
+Dim TelIncr As AzAlt
 
 Dim ManualSlewingSpeed As Double
 
 'Simulation
-'Dim SimIncrAz As Long
-'Dim SimIncrAlt As Long
-        'New funktion using TYPE AzAlt
-        Dim SimIncr As AzAlt
+Dim SimIncr As AzAlt
                 
 Dim SimBntUp As Boolean
 Dim SimBntDn As Boolean
@@ -1013,16 +1007,8 @@ Dim SimBntLe As Boolean
 Dim SimBntRi As Boolean
 Dim SimGotoAzAltActive As Boolean
 Dim SimTrackingActive As Boolean
-'Dim SimGotoAz As Long
-'Dim SimGotoAlt As Long
-            'New funktion using TYPE AzAlt
-            Dim SimGoto As AzAlt
-            
-'Dim SimTrackingAzStep As Long
-'Dim SimTrackingAltStep As Long
-    Dim SimTrackingStep As AzAlt
-
-
+Dim SimGoto As AzAlt
+Dim SimTrackingStep As AzAlt
 
 
 Private Enum NxMode
@@ -1101,9 +1087,9 @@ Private Sub C_GotoNorth_Click()
     
     MotorIncr = Matrix_To_MotorIncrSystem(GlobalOffset)
     
-    SimGotoAzAltActive = True
     
     If SimOffline Then
+        SimGotoAzAltActive = True
         SimGoto = MotorIncr
     Else
         NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
@@ -1123,23 +1109,13 @@ Private Sub C_GotoStar_Click()
     tmp.Alt = ObserverAlt
     MatrixSystemSoll = AzAlt_to_MatrixSystem(tmp)
 
-
-'    Dim MotorIncrAz As Long
-'    Dim MotorIncrAlt As Long
-            
     Dim MotorIncr As AzAlt
     
 
     MotorIncr = Matrix_To_MotorIncrSystem(MatrixSystemSoll)
-    Dim t1 As Double
-    Dim t2 As Double
-    t1 = MotorIncr.Az
-    t2 = MotorIncr.Alt
-    
-    
-    SimGotoAzAltActive = True
     
     If SimOffline Then
+        SimGotoAzAltActive = True
         SimGoto = MotorIncr
     Else
         NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
@@ -1179,11 +1155,10 @@ Private Sub C_GotoStarCalibrated_Click()
 
 
 
-    SimGotoAzAltActive = True
     
     If SimOffline Then
-        SimGoto.Az = MotorIncr.Az
-        SimGoto.Alt = MotorIncr.Alt
+        SimGotoAzAltActive = True
+        SimGoto = MotorIncr
     Else
         NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
     End If
@@ -1381,36 +1356,13 @@ Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As 
 End Sub
 
 
-Private Sub C_SetAzAlt_Click()
-    Dim SetAz As Long
-    Dim SetAlt As Long
-    
-    SetAz = CLng(Zahl(T_AzTel) * EncoderResolution / 360)
-    SetAlt = CLng(Zahl(T_AltTel) * EncoderResolution / 360)
-
-    SimGotoAzAltActive = True
-    
-    If SimOffline Then
-        SimGotoAz = SetAz
-        SimGotoAlt = SetAlt
-    Else
-        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(SetAz) & Chr$(&H16) & SetNexStarPosition(SetAlt)
-    End If
-    
-End Sub
-
-
-
-
-
-
 Private Sub Command1_Click()
     Command = 13
     NexStarComm.Output = Chr$(&HD)
 End Sub
 
 Private Sub Form_Load()
-    SimOffline = False
+    SimOffline = True
     CommTest = False
     
     O_TimeSelectLocal.Value = 1
@@ -1772,15 +1724,15 @@ Private Sub Tim_Simulation_Timer()
     
     ' movement active
     If SimGotoAzAltActive Then
-        If Abs(Abs(SimGoto.Az) - Abs(SimIncr.Az)) < SimGotoStep * 2 Then
+        'If Abs(Abs(SimGoto.Az) - Abs(SimIncr.Az)) < SimGotoStep * 2 Then
+        If CheckDeltaIncr(SimGoto.Az, SimIncr.Az, SimGotoStep * 2) Then
             SimIncr.Az = SimGoto.Az
-        ElseIf SimGoto.Az > SimIncr.Az Then
-            SimIncr.Az = SimIncr.Az + SimGotoStep
         Else
-            SimIncr.Az = SimIncr.Az - SimGotoStep
+            SimIncr.Az = SimIncr.Az + GetShortestWay(SimGoto.Az, SimIncr.Az) * SimGotoStep
         End If
     
-        If Abs(Abs(SimGoto.Alt) - Abs(SimIncr.Alt)) < SimGotoStep * 2 Then
+        'If Abs(Abs(SimGoto.Alt) - Abs(SimIncr.Alt)) < SimGotoStep * 2 Then
+        If CheckDeltaIncr(SimGoto.Alt, SimIncr.Alt, SimGotoStep * 2) Then
             SimIncr.Alt = SimGoto.Alt
         ElseIf SimGoto.Alt > SimIncr.Alt Then
             SimIncr.Alt = SimIncr.Alt + SimGotoStep
@@ -1814,12 +1766,15 @@ End Sub
 Private Sub Tim_TestStatus_Timer()
     If TestStatus Then
         Command = 13
-        NexStarComm.Output = Chr$(&HD)
+        If SimOffline Then
+        Else
+            NexStarComm.Output = Chr$(&HD)
+        End If
     End If
     
     
     If StatusMoving = 2 Then
-            TestStatus = False
+        TestStatus = False
     End If
 
     
@@ -2015,12 +1970,6 @@ Private Sub Tim_Tracking_Timer()
                 MotorLastCalc = Matrix_To_MotorIncrSystem(MatrixSystemSoll)
   
                 
-                
-              
-
-
-
-
                 Label6 = Format(RadToDeg(MatrixSystemDiff.Az), "0.0000") & "° = " & Format(DiffMotorIncr.Az, "0.0") & " Incr pro " & TrackInterval & " sec"
                 Label27 = Format(RadToDeg(MatrixSystemDiff.Alt), "0.0000") & "° = " & Format(DiffMotorIncr.Alt, "0.0") & " Incr pro " & TrackInterval & " sec"
   
@@ -2028,28 +1977,10 @@ Private Sub Tim_Tracking_Timer()
                 TrackingSpeed.Az = (DiffMotorIncr.Az * 10) / TrackInterval
                 TrackingSpeed.Alt = (DiffMotorIncr.Alt * 10) / TrackInterval
                   
-    '==== test only ===
-    Test.List1.AddItem " "
-    Test.List1.AddItem Now & " AzDiff:" & Format(RadToDeg(MatrixSystemSoll.Az), "0.0000")
-    Test.List1.AddItem Now & " AzDiff:" & Format(RadToDeg(MatrixSystemDiff.Az), "0.0000")
-    Test.List1.AddItem Now & " CalcDiff:" & Format(RadToDeg(MatrixSystemSoll.Az - LastVal.Az), "0.0000")
-    LastVal = MatrixSystemSoll
-    
-    Test.List1.AddItem Now & " MotorPos:" & Format(SimIncr.Az, "0.0")
-    Test.List1.AddItem Now & " DiffMotorPos:" & Format(RadToDeg(DiffMotorIncr.Az), "0.0")
-   
-    
-    
-    Test.List1.AddItem Now & " JetztTime:" & Format(JetztTime, "0.000000")
-    Test.List1.AddItem Now & " AimTime:" & Format(AimTimeRad, "0.000000")
-    '==== test only ===
-                  
-                  
+             
                 Dim LogString As String
                 Dim AzString As String
                 Dim AltString As String
-                
-                
                 
                 If DiffMotorIncr.Az < 0 Then
                     'CCW

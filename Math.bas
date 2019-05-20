@@ -468,19 +468,19 @@ Public Function VectorToAzAlt(V As Vector) As AzAlt
 End Function
 
 
-Public Function MatrixSystem_to_MotorIncrSystem(phi As Double) As Double
-    Dim tmp As Double
-    tmp = CutRad(-phi) * EncoderResolution / (2 * Pi)
-    MatrixSystem_to_MotorIncrSystem = tmp
-End Function
-
-
-Public Function MotorIncrSystem_to_MatrixSystem(Incr As Double) As Double
-    Dim tmp As Double
-'    tmp = CutRad(-phi) * EncoderResolution / (2 * Pi)
-    tmp = CutIncr(-Incr) * (2 * Pi) / EncoderResolution
-    MotorIncrSystem_to_MatrixSystem = tmp
-End Function
+'''Public Function MatrixSystem_to_MotorIncrSystem(phi As Double) As Double
+'''    Dim tmp As Double
+'''    tmp = CutRad(-phi) * EncoderResolution / (2 * Pi)
+'''    MatrixSystem_to_MotorIncrSystem = tmp
+'''End Function
+'''
+'''
+'''Public Function MotorIncrSystem_to_MatrixSystem(Incr As Double) As Double
+'''    Dim tmp As Double
+''''    tmp = CutRad(-phi) * EncoderResolution / (2 * Pi)
+'''    tmp = CutIncr(-Incr) * (2 * Pi) / EncoderResolution
+'''    MotorIncrSystem_to_MatrixSystem = tmp
+'''End Function
 
 
             'New funktion using TYPE AzAlt

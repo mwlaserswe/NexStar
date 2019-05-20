@@ -11,6 +11,11 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   14250
    StartUpPosition =   3  'Windows Default
+   Begin VB.Timer Tim_Startup 
+      Interval        =   500
+      Left            =   6480
+      Top             =   5400
+   End
    Begin VB.CommandButton C_GotoNorth 
       Caption         =   "Goto Noth"
       Height          =   495
@@ -43,6 +48,7 @@ Begin VB.Form Mainform
       Caption         =   "Set Enc. Alt"
       Height          =   255
       Left            =   240
+      Style           =   1  'Graphical
       TabIndex        =   106
       Top             =   480
       Width           =   1215
@@ -72,10 +78,11 @@ Begin VB.Form Mainform
    Begin VB.CommandButton C_SingleStarAlignment 
       Caption         =   "Single Star Alignment"
       Height          =   495
-      Left            =   480
+      Left            =   3000
+      Style           =   1  'Graphical
       TabIndex        =   93
-      Top             =   6600
-      Width           =   1455
+      Top             =   5760
+      Width           =   2295
    End
    Begin VB.CommandButton C_GotoStarCalibrated 
       Caption         =   "GotoStar calibrated"
@@ -89,6 +96,7 @@ Begin VB.Form Mainform
       Caption         =   "Calibrate now"
       Height          =   495
       Left            =   3000
+      Style           =   1  'Graphical
       TabIndex        =   90
       Top             =   7560
       Width           =   2295
@@ -97,6 +105,7 @@ Begin VB.Form Mainform
       Caption         =   "Set Calibration Star 2"
       Height          =   495
       Left            =   3000
+      Style           =   1  'Graphical
       TabIndex        =   89
       Top             =   6960
       Width           =   2295
@@ -105,6 +114,7 @@ Begin VB.Form Mainform
       Caption         =   "Set Calibration Star 1"
       Height          =   495
       Left            =   3000
+      Style           =   1  'Graphical
       TabIndex        =   88
       Top             =   6360
       Width           =   2295
@@ -120,7 +130,7 @@ Begin VB.Form Mainform
    Begin VB.CommandButton C_SetNorth 
       Caption         =   "Set North"
       Height          =   495
-      Left            =   3000
+      Left            =   120
       TabIndex        =   86
       Top             =   5760
       Width           =   2295
@@ -489,6 +499,7 @@ Begin VB.Form Mainform
       Caption         =   "Set Backl. Alt"
       Height          =   255
       Left            =   240
+      Style           =   1  'Graphical
       TabIndex        =   41
       Top             =   1200
       Width           =   1215
@@ -497,6 +508,7 @@ Begin VB.Form Mainform
       Caption         =   "Set Backl. Az"
       Height          =   255
       Left            =   240
+      Style           =   1  'Graphical
       TabIndex        =   40
       Top             =   840
       Width           =   1215
@@ -691,6 +703,7 @@ Begin VB.Form Mainform
       Caption         =   "Set Enc. Az"
       Height          =   255
       Left            =   240
+      Style           =   1  'Graphical
       TabIndex        =   2
       Top             =   120
       Width           =   1215
@@ -1006,7 +1019,7 @@ Dim SimBntDn As Boolean
 Dim SimBntLe As Boolean
 Dim SimBntRi As Boolean
 Dim SimGotoAzAltActive As Boolean
-Dim SimTrackingActive As Boolean
+'''Dim SimTrackingActive As Boolean
 Dim SimGoto As AzAlt
 Dim SimTrackingStep As AzAlt
 
@@ -1041,14 +1054,6 @@ Private Sub AlignmentStarList_Click()
   
 End Sub
 
-Private Sub C_CalibrateNow_Click()
-Label6 = "--"
-    CalibrateTelescope Cal_InitTime, _
-                       Cal_RaStar_1, Cal_DecStar_1, Cal_TelHorizAngle_1, Cal_TelElevAngle_1, Cal_Time_1, _
-                       Cal_RaStar_2, Cal_DecStar_2, Cal_TelHorizAngle_2, Cal_TelElevAngle_2, Cal_Time_2, _
-                       TransformationMatrix
-
-End Sub
 
 
 Private Sub C_GetAz_Click()
@@ -1227,6 +1232,7 @@ Private Sub C_SetCalibrationStar_1_Click()
     'Set time reference star 1 for calibration
     Cal_Time_1 = TimeToRad(ObserverTimeUT)
 
+    C_SetCalibrationStar_1.BackColor = vbGreen
 End Sub
 
 Private Sub C_SetCalibrationStar_2_Click()
@@ -1238,6 +1244,17 @@ Private Sub C_SetCalibrationStar_2_Click()
     'Set time reference star 2 for calibration
     Cal_Time_2 = TimeToRad(ObserverTimeUT)
 
+    C_SetCalibrationStar_2.BackColor = vbGreen
+End Sub
+
+Private Sub C_CalibrateNow_Click()
+Label6 = "--"
+    CalibrateTelescope Cal_InitTime, _
+                       Cal_RaStar_1, Cal_DecStar_1, Cal_TelHorizAngle_1, Cal_TelElevAngle_1, Cal_Time_1, _
+                       Cal_RaStar_2, Cal_DecStar_2, Cal_TelHorizAngle_2, Cal_TelElevAngle_2, Cal_Time_2, _
+                       TransformationMatrix
+
+    C_CalibrateNow.BackColor = vbGreen
 End Sub
 
 Private Sub C_SetEncoder_Alt_Click()
@@ -1256,25 +1273,36 @@ Private Sub C_SetEncoder_Az_Click()
     End If
 End Sub
 
-Private Sub C_SetNorth_Click()
-    Dim MatrixSystem As AzAlt
-    Dim tmp As Double
-    Dim d1 As Double
-    Dim d2 As Double
+Private Sub C_SingleStarAlignment_Click()
+''''    Dim MatrixSystem As AzAlt
+''''    Dim tmp As Double
+''''    Dim d1 As Double
+''''    Dim d2 As Double
+''''
+''''    MatrixSystem = MotorIncr_To_MatrixSystem(TelIncr)
+''''    GlobalOffset.Az = CutRad(MatrixSystem.Az)
+''''    GlobalOffset.Alt = CutRad(MatrixSystem.Alt)
     
-    MatrixSystem = MotorIncr_To_MatrixSystem(TelIncr)
-    GlobalOffset.Az = CutRad(MatrixSystem.Az)
-    GlobalOffset.Alt = CutRad(MatrixSystem.Alt)
     
+    
+'    GlobalOffset.Az = GlobalOffset.Az + (MatrixSystemIst.Az - MatrixSystemSoll.Az)
+'    GlobalOffset.Alt = GlobalOffset.Alt + (MatrixSystemIst.Alt - MatrixSystemSoll.Alt)
+
+    GlobalOffset = AddAzAlt(GlobalOffset, SubAzAlt(MatrixSystemIst, MatrixSystemSoll))
+
+  
     'Set Initial for calibration
     Cal_InitTime = TimeToRad(ObserverTimeUT)
+    
+    C_SingleStarAlignment.BackColor = vbGreen
+    
 End Sub
 
 
-Private Sub C_SingleStarAlignment_Click()
-    GlobalOffset.Az = GlobalOffset.Az + (MatrixSystemIst.Az - MatrixSystemSoll.Az)
-    GlobalOffset.Alt = GlobalOffset.Alt + (MatrixSystemIst.Alt - MatrixSystemSoll.Alt)
-End Sub
+'''Private Sub C_SingleStarAlignment_Click()
+'''    GlobalOffset.Az = GlobalOffset.Az + (MatrixSystemIst.Az - MatrixSystemSoll.Az)
+'''    GlobalOffset.Alt = GlobalOffset.Alt + (MatrixSystemIst.Alt - MatrixSystemSoll.Alt)
+'''End Sub
 
 
 Private Sub C_Tracking_Click()
@@ -1362,7 +1390,7 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub Form_Load()
-    SimOffline = True
+    SimOffline = False
     CommTest = False
     
     O_TimeSelectLocal.Value = 1
@@ -1724,14 +1752,12 @@ Private Sub Tim_Simulation_Timer()
     
     ' movement active
     If SimGotoAzAltActive Then
-        'If Abs(Abs(SimGoto.Az) - Abs(SimIncr.Az)) < SimGotoStep * 2 Then
         If CheckDeltaIncr(SimGoto.Az, SimIncr.Az, SimGotoStep * 2) Then
             SimIncr.Az = SimGoto.Az
         Else
             SimIncr.Az = SimIncr.Az + GetShortestWay(SimGoto.Az, SimIncr.Az) * SimGotoStep
         End If
     
-        'If Abs(Abs(SimGoto.Alt) - Abs(SimIncr.Alt)) < SimGotoStep * 2 Then
         If CheckDeltaIncr(SimGoto.Alt, SimIncr.Alt, SimGotoStep * 2) Then
             SimIncr.Alt = SimGoto.Alt
         ElseIf SimGoto.Alt > SimIncr.Alt Then
@@ -1749,19 +1775,74 @@ Private Sub Tim_Simulation_Timer()
     
     
     ' tracking active
-    If SimTrackingActive Then
-        SimIncr.Az = SimIncr.Az + SimTrackingStep.Az
-        SimIncr.Alt = SimIncr.Alt + SimTrackingStep.Alt
-
-       SimTrackingActive = False
-'==== test only ===
- Test.List1.AddItem "           MotPos:" & Format(SimIncr.Az, "0.0")
-'==== test only ===
+    If TrackingisON Then
+        SimIncr = AddAzAlt(SimIncr, SimTrackingStep)
+'''        SimTrackingActive = False
+       
     End If
     
 End Sub
 
 
+
+Private Sub Tim_Startup_Timer()
+    Static StartupStep As Long
+    
+    Select Case StartupStep
+    Case 0
+        'check communication
+        If SimOffline Then
+            StartupStep = 10
+        Else
+            Command = 13
+            NexStarComm.Output = Chr$(&HD)
+            StatusMoving = 0
+            StartupStep = 10
+        End If
+        
+    
+    Case 10
+        If SimOffline Then
+            StartupStep = 20
+        Else
+            If StatusMoving = 1 Or StatusMoving = 2 Then
+                StartupStep = 20    'Communication OK
+            Else
+                StartupStep = 0     'Communication not OK. Retry
+            End If
+        End If
+        
+    Case 20
+        C_SetEncoder_Az_Click
+        C_SetEncoder_Az.BackColor = vbGreen
+        StartupStep = 30
+        
+    Case 30
+        C_SetEncoder_Alt_Click
+        C_SetEncoder_Alt.BackColor = vbGreen
+        StartupStep = 40
+        
+    Case 40
+        C_SetBacklAz_Click
+        C_SetBacklAz.BackColor = vbGreen
+        StartupStep = 50
+
+    Case 50
+        C_SetBacklAlt_Click
+        C_SetBacklAlt.BackColor = vbGreen
+        StartupStep = 60
+        
+    Case 60
+        If SimOffline Then
+            StartupStep = 70
+        Else
+        End If
+
+
+    End Select
+    
+
+End Sub
 
 Private Sub Tim_TestStatus_Timer()
     If TestStatus Then
@@ -2011,7 +2092,7 @@ Private Sub Tim_Tracking_Timer()
                 
             ' every TimTracking.Interval
             If SimOffline Then
-                SimTrackingActive = True
+'''                SimTrackingActive = True
 
                 SimTrackingStep.Az = (DiffMotorIncr.Az / TrackInterval) * (Tim_Tracking.Interval / 1000#)
                 SimTrackingStep.Alt = (DiffMotorIncr.Alt / TrackInterval) * (Tim_Tracking.Interval / 1000#)

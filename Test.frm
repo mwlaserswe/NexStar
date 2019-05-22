@@ -1,5 +1,6 @@
 VERSION 5.00
 Begin VB.Form Test 
+   BackColor       =   &H0000C0C0&
    Caption         =   "Test"
    ClientHeight    =   7320
    ClientLeft      =   120
@@ -9,6 +10,30 @@ Begin VB.Form Test
    ScaleHeight     =   7320
    ScaleWidth      =   8655
    StartUpPosition =   3  'Windows Default
+   Begin VB.TextBox T_G 
+      Height          =   285
+      Left            =   6840
+      TabIndex        =   30
+      Text            =   "100"
+      Top             =   600
+      Width           =   615
+   End
+   Begin VB.TextBox T_B 
+      Height          =   285
+      Left            =   7680
+      TabIndex        =   29
+      Text            =   "100"
+      Top             =   600
+      Width           =   615
+   End
+   Begin VB.TextBox T_R 
+      Height          =   285
+      Left            =   6000
+      TabIndex        =   28
+      Text            =   "100"
+      Top             =   600
+      Width           =   615
+   End
    Begin VB.TextBox T_a2 
       Height          =   285
       Left            =   2040
@@ -67,10 +92,10 @@ Begin VB.Form Test
    End
    Begin VB.CommandButton Command2 
       Caption         =   "Command2"
-      Height          =   495
-      Left            =   2040
+      Height          =   255
+      Left            =   4440
       TabIndex        =   19
-      Top             =   4920
+      Top             =   600
       Width           =   1215
    End
    Begin VB.CommandButton C_TestKalibrierung_3 
@@ -318,22 +343,22 @@ Private Sub C_TestKalibrierung_1_Click()
     k = 1.00273790935
 
     'Equation (5.4-5)
-    lmn_Tel_1.x = Cos(TelElevAngle1) * Cos(TelHorizAngle1)
+    lmn_Tel_1.X = Cos(TelElevAngle1) * Cos(TelHorizAngle1)
     lmn_Tel_1.Y = Cos(TelElevAngle1) * Sin(TelHorizAngle1)
     lmn_Tel_1.z = Sin(TelElevAngle1)
 
     'Equation (5.4-6)
-    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))
+    LMN_Equ_1.X = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))
     LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - k * (ObservTime1Rad - InitTimerad))
     LMN_Equ_1.z = Sin(DEC1Rad)
 
     'Equation (5.4-7)
-    lmn_Tel_2.x = Cos(TelElevAngle2) * Cos(TelHorizAngle2)
+    lmn_Tel_2.X = Cos(TelElevAngle2) * Cos(TelHorizAngle2)
     lmn_Tel_2.Y = Cos(TelElevAngle2) * Sin(TelHorizAngle2)
     lmn_Tel_2.z = Sin(TelElevAngle2)
 
     'Equation (5.4-8)
-    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))
+    LMN_Equ_2.X = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))
     LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - k * (ObservTime2Rad - InitTimerad))
     LMN_Equ_2.z = Sin(DEC2Rad)
 
@@ -357,7 +382,7 @@ Private Sub C_TestKalibrierung_1_Click()
     Dim lmn_Tel_Matrix(10, 10) As Double
     Dim TransformationMatrix(10, 10) As Double
 
-    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x: LMN_Equ_Matrix(0, 1) = LMN_Equ_2.x: LMN_Equ_Matrix(0, 2) = LMN_Equ_3.x
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.X: LMN_Equ_Matrix(0, 1) = LMN_Equ_2.X: LMN_Equ_Matrix(0, 2) = LMN_Equ_3.X
     LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y: LMN_Equ_Matrix(1, 1) = LMN_Equ_2.Y: LMN_Equ_Matrix(1, 2) = LMN_Equ_3.Y
     LMN_Equ_Matrix(2, 0) = LMN_Equ_1.z: LMN_Equ_Matrix(2, 1) = LMN_Equ_2.z: LMN_Equ_Matrix(2, 2) = LMN_Equ_3.z
 
@@ -367,7 +392,7 @@ Private Sub C_TestKalibrierung_1_Click()
                 dmy = LMN_Equ_MatrixInvers(1, 0): dmy = LMN_Equ_MatrixInvers(1, 1): dmy = LMN_Equ_MatrixInvers(1, 2)
                 dmy = LMN_Equ_MatrixInvers(2, 0): dmy = LMN_Equ_MatrixInvers(2, 1): dmy = LMN_Equ_MatrixInvers(2, 2)
 
-    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.x: lmn_Tel_Matrix(0, 1) = lmn_Tel_2.x: lmn_Tel_Matrix(0, 2) = lmn_Tel_3.x
+    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.X: lmn_Tel_Matrix(0, 1) = lmn_Tel_2.X: lmn_Tel_Matrix(0, 2) = lmn_Tel_3.X
     lmn_Tel_Matrix(1, 0) = lmn_Tel_1.Y: lmn_Tel_Matrix(1, 1) = lmn_Tel_2.Y: lmn_Tel_Matrix(1, 2) = lmn_Tel_3.Y
     lmn_Tel_Matrix(2, 0) = lmn_Tel_1.z: lmn_Tel_Matrix(2, 1) = lmn_Tel_2.z: lmn_Tel_Matrix(2, 2) = lmn_Tel_3.z
 
@@ -412,14 +437,14 @@ Private Sub C_TestKalibrierung_1_Click()
  
     'LMN_Equ_Result: Vector points to Deneb in equatorial coordinats
     Dim LMN_Equ_Result  As Vector
-    LMN_Equ_Result.x = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.X = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_Result.Y = Cos(DEC_BetaCetRad) * Sin(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_Result.z = Sin(DEC_BetaCetRad)
 
 
     Dim LMN_Equ_ResultMatrix(10, 10) As Double
     Dim lmn_Tel_ResultMatrix(10, 10) As Double
-    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.x
+    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.X
     LMN_Equ_ResultMatrix(1, 0) = LMN_Equ_Result.Y
     LMN_Equ_ResultMatrix(2, 0) = LMN_Equ_Result.z
 
@@ -428,7 +453,7 @@ Private Sub C_TestKalibrierung_1_Click()
     'lmn_Tel__Matrix: Vector points to Beta Cet in equatorial coordinats
 
     Dim lmn_Tel_Result  As Vector
-    lmn_Tel_Result.x = lmn_Tel_ResultMatrix(0, 0)
+    lmn_Tel_Result.X = lmn_Tel_ResultMatrix(0, 0)
     lmn_Tel_Result.Y = lmn_Tel_ResultMatrix(1, 0)
     lmn_Tel_Result.z = lmn_Tel_ResultMatrix(2, 0)
 
@@ -529,26 +554,26 @@ Private Sub C_TestKalibrierung_2_Click()
 
     'Equation (5.4-5)
     'Telescope coordinates star 1
-    lmn_Tel_1.x = Cos(TelElevAngle1) * Cos(TelHorizAngle1)  '0.099
+    lmn_Tel_1.X = Cos(TelElevAngle1) * Cos(TelHorizAngle1)  '0.099
     lmn_Tel_1.Y = Cos(TelElevAngle1) * Sin(TelHorizAngle1)  '0.8207
     lmn_Tel_1.z = Sin(TelElevAngle1)                        '0.5628
 
 
     'Equation (5.4-6)
     'RA DEC star 1
-    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))   '0.8738
+    LMN_Equ_1.X = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))   '0.8738
     LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - k * (ObservTime1Rad - InitTimerad))   '0.0301
     LMN_Equ_1.z = Sin(DEC1Rad)                                                      '0.4854
 
     'Equation (5.4-7)
     'Telescope coordinates star 2
-    lmn_Tel_2.x = Cos(TelElevAngle2) * Cos(TelHorizAngle2)  '0.6699
+    lmn_Tel_2.X = Cos(TelElevAngle2) * Cos(TelHorizAngle2)  '0.6699
     lmn_Tel_2.Y = Cos(TelElevAngle2) * Sin(TelHorizAngle2)  '0.0124
     lmn_Tel_2.z = Sin(TelElevAngle2)                        '0.7423
 
     'Equation (5.4-8)
     'RA DEC star 2
-    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))   '0.0111
+    LMN_Equ_2.X = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))   '0.0111
     LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - k * (ObservTime2Rad - InitTimerad))   '0.0079
     LMN_Equ_2.z = Sin(DEC2Rad)                                                      '0.9999
 
@@ -572,9 +597,9 @@ Private Sub C_TestKalibrierung_2_Click()
     Dim lmn_Tel_Matrix(10, 10) As Double
     Dim TransformationMatrix(10, 10) As Double
 
-    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x
-    LMN_Equ_Matrix(0, 1) = LMN_Equ_2.x
-    LMN_Equ_Matrix(0, 2) = LMN_Equ_3.x
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.X
+    LMN_Equ_Matrix(0, 1) = LMN_Equ_2.X
+    LMN_Equ_Matrix(0, 2) = LMN_Equ_3.X
     LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y
     LMN_Equ_Matrix(1, 1) = LMN_Equ_2.Y
     LMN_Equ_Matrix(1, 2) = LMN_Equ_3.Y
@@ -584,9 +609,9 @@ Private Sub C_TestKalibrierung_2_Click()
 
     Calculate_Inverse 3, LMN_Equ_Matrix, LMN_Equ_MatrixInvers
 
-    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.x
-    lmn_Tel_Matrix(0, 1) = lmn_Tel_2.x
-    lmn_Tel_Matrix(0, 2) = lmn_Tel_3.x
+    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.X
+    lmn_Tel_Matrix(0, 1) = lmn_Tel_2.X
+    lmn_Tel_Matrix(0, 2) = lmn_Tel_3.X
     lmn_Tel_Matrix(1, 0) = lmn_Tel_1.Y
     lmn_Tel_Matrix(1, 1) = lmn_Tel_2.Y
     lmn_Tel_Matrix(1, 2) = lmn_Tel_3.Y
@@ -625,14 +650,14 @@ Private Sub C_TestKalibrierung_2_Click()
 
     'LMN_Equ_Result: Vector points to Deneb in equatorial coordinats
     Dim LMN_Equ_Result  As Vector
-    LMN_Equ_Result.x = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.X = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_Result.Y = Cos(DEC_BetaCetRad) * Sin(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_Result.z = Sin(DEC_BetaCetRad)
 
 
     Dim LMN_Equ_ResultMatrix(10, 10) As Double
     Dim lmn_Tel_ResultMatrix(10, 10) As Double
-    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.x
+    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.X
     LMN_Equ_ResultMatrix(1, 0) = LMN_Equ_Result.Y
     LMN_Equ_ResultMatrix(2, 0) = LMN_Equ_Result.z
 
@@ -644,7 +669,7 @@ Private Sub C_TestKalibrierung_2_Click()
     'lmn_Tel__Matrix: Vector points to Beta Cet in equatorial coordinats
 
     Dim lmn_Tel_Result  As Vector
-    lmn_Tel_Result.x = lmn_Tel_ResultMatrix(0, 0)
+    lmn_Tel_Result.X = lmn_Tel_ResultMatrix(0, 0)
     lmn_Tel_Result.Y = lmn_Tel_ResultMatrix(1, 0)
     lmn_Tel_Result.z = lmn_Tel_ResultMatrix(2, 0)
 
@@ -832,8 +857,14 @@ Private Sub Command1_Click()
 
 End Sub
 
+
+
 Private Sub Command2_Click()
-    TestJulianischesDatum.Show
+    Test.BackColor = RGB(CInt(T_R), CInt(T_G), CInt(T_B))
+    INISetValue IniFileName, "Color", "red", T_R
+    INISetValue IniFileName, "Color", "green", T_G
+    INISetValue IniFileName, "Color", "blue", T_B
+
 End Sub
 
 Private Sub Command3_Click()
@@ -1032,18 +1063,8 @@ Private Sub Command9_Click()
     
     a1 = Zahl(T_a1)
     a2 = Zahl(T_a2)
-    Delta = 10000
     
-'    If (a1 > a2) And (CheckDeltaIncr(a1, a2, EncoderResolution / 2)) Then
-    If (a1 >= a2) And ((a1 - a2) <= EncoderResolution / 2) Then
-        erg = "im Uhrzeiger 1"
-    ElseIf (a2 >= a1) And ((a2 - a1) <= EncoderResolution / 2) Then
-        erg = "gegen Uhrzeiger 1"
-    ElseIf (a2 >= a1) And ((a2 - a1) >= EncoderResolution / 2) Then
-        erg = "im Uhrzeiger 2"
-    Else
-        erg = "gegen Uhrzeiger 2"
-    End If
+    erg = GetShortestRad(a2, a1)
     
     
     Command9.Caption = erg
@@ -1052,3 +1073,9 @@ Private Sub Command9_Click()
 
 End Sub
 
+Private Sub Form_Load()
+    T_R = INIGetValue(IniFileName, "color", "red")
+    T_G = INIGetValue(IniFileName, "color", "green")
+    T_B = INIGetValue(IniFileName, "color", "blue")
+    Test.BackColor = RGB(CInt(T_R), CInt(T_G), CInt(T_B))
+End Sub

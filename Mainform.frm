@@ -11,6 +11,30 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   14250
    StartUpPosition =   3  'Windows Default
+   Begin Project1.zzSlider zzSlider1 
+      Height          =   255
+      Left            =   8040
+      TabIndex        =   112
+      Top             =   9360
+      Width           =   5055
+      _ExtentX        =   8916
+      _ExtentY        =   450
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      SliderColor     =   12632319
+      MaxValue        =   1000
+      MinValue        =   -1000
+      Value           =   300
+      SmallChange     =   0
+      LargeChange     =   0
+   End
    Begin VB.Timer Tim_Startup 
       Interval        =   500
       Left            =   6480
@@ -1319,7 +1343,7 @@ Private Sub C_Tracking_Click()
 End Sub
 
 
-Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntUp = True
     Else
@@ -1327,7 +1351,7 @@ Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntUp = False
     Else
@@ -1335,7 +1359,7 @@ Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntDn = True
     Else
@@ -1343,7 +1367,7 @@ Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntDn = False
     Else
@@ -1351,7 +1375,7 @@ Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntLe = True
     Else
@@ -1359,7 +1383,7 @@ Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntLe = False
     Else
@@ -1367,7 +1391,7 @@ Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntRi = True
     Else
@@ -1375,7 +1399,7 @@ Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, Y A
     End If
 End Sub
 
-Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If SimOffline Then
         SimBntRi = False
     Else
@@ -1389,8 +1413,9 @@ Private Sub Command1_Click()
     NexStarComm.Output = Chr$(&HD)
 End Sub
 
+
 Private Sub Form_Load()
-    SimOffline = False
+    SimOffline = True
     CommTest = False
     
     O_TimeSelectLocal.Value = 1
@@ -1702,8 +1727,10 @@ Private Sub Tim_DisplayUpdate_Timer()
    
     If SimOffline Then
         Slider1.Value = SimIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
+        zzSlider1.Value = SimIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
     Else
         Slider1.Value = TelIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
+        zzSlider1.Value = TelIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
     End If
     
     L_ErrorCount = "Error cout: " & ErrorCount
@@ -1780,6 +1807,10 @@ Private Sub Tim_Simulation_Timer()
 '''        SimTrackingActive = False
        
     End If
+    
+    
+    SimIncr.Az = CutIncr(SimIncr.Az)
+    SimIncr.Alt = CutIncr(SimIncr.Alt)
     
 End Sub
 
@@ -1944,7 +1975,7 @@ Private Sub Tim_Tracking_Timer()
     DisplayCoordinate L_I_HourAngle, HourAngle, HMS
 
             'Just for testing: get matrix vectors
-            Dim x As Double
+            Dim X As Double
             Dim Y As Double
             Dim z As Double
             Dim HorizAngle As Double
@@ -1952,17 +1983,17 @@ Private Sub Tim_Tracking_Timer()
             
             HorizAngle = ObserverRA
             ElevAngle = ObserverDEC
-            x = Cos(ElevAngle) * Cos(HorizAngle)
+            X = Cos(ElevAngle) * Cos(HorizAngle)
             Y = Cos(ElevAngle) * Sin(HorizAngle)
             z = Sin(ElevAngle)
-            L_I_EquXYZ = Format(x, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
+            L_I_EquXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
         
             HorizAngle = ObserverAz
             ElevAngle = ObserverAlt
-            x = Cos(ElevAngle) * Cos(HorizAngle)
+            X = Cos(ElevAngle) * Cos(HorizAngle)
             Y = Cos(ElevAngle) * Sin(HorizAngle)
             z = Sin(ElevAngle)
-            L_I_HorXYZ = Format(x, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
+            L_I_HorXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
 
 
     If ObserverAlt < 0 Then
@@ -2034,17 +2065,38 @@ Private Sub Tim_Tracking_Timer()
 
                 Dim MatrixSystemDiff As AzAlt
                 'real values
+                
+                'das funktioniert nicht wenn mal gegen den Sternenenlauf positioniert werden soll...
+                 '... oder beim Durchgang durch 0°
                 MatrixSystemDiff = SubAzAlt(MatrixSystemSoll, MatrixSystemIst)
+                 'Ersatz...
+                MatrixDiffCalc.Az = GetShortestRad(MatrixSystemSoll.Az, MatrixSystemIst.Az)
+                MatrixDiffCalc.Alt = GetShortestRad(MatrixSystemSoll.Alt, MatrixSystemIst.Alt)
+               
+               
+               
                 MatrixSystemDiffPerSec.Az = MatrixSystemDiff.Az / TrackInterval
                 MatrixSystemDiffPerSec.Alt = MatrixSystemDiff.Alt / TrackInterval
-                DiffMotorIncr = Matrix_To_MotorIncrSystem(MatrixSystemDiff)
                 
+                
+                
+                'Hier geht das Vorzeichen verloren
+'                DiffMotorIncr = Matrix_To_MotorIncrSystem(MatrixSystemDiff)
+                'Ersatz
+                DiffMotorIncr.Az = -MatrixSystemDiff.Az * EncoderResolution / (2 * Pi)
+                DiffMotorIncr.Alt = MatrixSystemDiff.Alt * EncoderResolution / (2 * Pi)
                 
                 'check motor movement with calculated values
-                MatrixDiffCalc = SubAzAlt(MatrixSystemSoll, MatrixLastCalc)
+                
+                'das funktioniert nicht wenn mal gegen den Sternenenlauf positioniert werden soll...
+                '... oder beim Durchgang durch 0°
+                'MatrixDiffCalc = SubAzAlt(MatrixSystemSoll, MatrixLastCalc)
+                
+                
                 MatrixDiffCalc.Az = MatrixDiffCalc.Az / TrackInterval
                 MatrixDiffCalc.Alt = MatrixDiffCalc.Alt / TrackInterval
                 MatrixLastCalc = MatrixSystemSoll
+                
                 MotorDiffCalc = SubAzAlt(Matrix_To_MotorIncrSystem(MatrixSystemSoll), MotorLastCalc)
                 MotorDiffCalc.Az = MotorDiffCalc.Az / TrackInterval
                 MotorDiffCalc.Alt = MotorDiffCalc.Alt / TrackInterval
@@ -2063,7 +2115,8 @@ Private Sub Tim_Tracking_Timer()
                 Dim AzString As String
                 Dim AltString As String
                 
-                If DiffMotorIncr.Az < 0 Then
+                'If DiffMotorIncr.Az < 0 Then
+                If MatrixSystemDiff.Az > 0 Then
                     'CCW
                     AzString = Chr$(&H7) & SetNexStarPosition(-CLng(TrackingSpeed.Az))
                 Else

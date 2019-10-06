@@ -1,0 +1,5 @@
+
+010.	Set Enc. Az
+020.	Set Enc. Alt
+030.	Set Backl. Az
+040.	Set Backl. Alt

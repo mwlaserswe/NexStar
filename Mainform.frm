@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
 Begin VB.Form Mainform 
    Caption         =   "Form1"
    ClientHeight    =   11235
@@ -11,6 +11,15 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   14250
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton C_Simulation 
+      Caption         =   "Simulation"
+      Height          =   495
+      Left            =   4080
+      Style           =   1  'Graphical
+      TabIndex        =   113
+      Top             =   1200
+      Width           =   1215
+   End
    Begin Project1.zzSlider zzSlider1 
       Height          =   255
       Left            =   8040
@@ -1011,6 +1020,12 @@ Begin VB.Form Mainform
    End
    Begin VB.Menu M_Test 
       Caption         =   "Test"
+      Begin VB.Menu M_Test1 
+         Caption         =   "Test1"
+      End
+      Begin VB.Menu M_Test2 
+         Caption         =   "Test2"
+      End
    End
    Begin VB.Menu M_Communication 
       Caption         =   "Communication"
@@ -1297,6 +1312,10 @@ Private Sub C_SetEncoder_Az_Click()
     End If
 End Sub
 
+Private Sub C_Simulation_Click()
+    SimOffline = Not SimOffline
+End Sub
+
 Private Sub C_SingleStarAlignment_Click()
 ''''    Dim MatrixSystem As AzAlt
 ''''    Dim tmp As Double
@@ -1526,8 +1545,14 @@ Private Sub M_Communication_Click()
     Communication.Show
 End Sub
 
-Private Sub M_Test_Click()
+
+
+Private Sub M_Test1_Click()
     Test.Show
+End Sub
+
+Private Sub M_Test2_Click()
+    Test2.Show
 End Sub
 
 ' Goto AzAlt        0xO2 Az (3 Byte) 0x16 Alt (3 Bype)
@@ -1677,6 +1702,12 @@ End Sub
 
 Private Sub Tim_DisplayUpdate_Timer()
     Static Toggle As Boolean
+    
+    If SimOffline Then
+        C_Simulation.BackColor = RGB(255, 255, 0)
+    Else
+        C_Simulation.BackColor = RGB(255, 255, 255)
+    End If
     
     If Not CommTest Then
         

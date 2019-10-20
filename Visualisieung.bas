@@ -70,6 +70,9 @@ Public Sub DispTelescopePos(Polar As AzAlt)
     ' Rotate -90°: North is below
     Polar.Az = Polar.Az - Pi / 2
     
+    ' convert 0..Pi/2 to 0..1
+    Polar.Alt = Polar.Alt * (1 / (Pi / 2))
+    
     Center.Az = (Cos(Polar.Az) * (1 - Polar.Alt) + GlbCx) * GlbScale
     Center.Alt = (Sin(Polar.Az) * (1 - Polar.Alt) + GlbCY) * -GlbScale
     Vis.Pic.Circle (Center.Az, Center.Alt), 20, vbBlue
@@ -87,11 +90,13 @@ Public Sub DispAlignmentStar(Polar As AzAlt)
     ' Overwrite last circle with white
     Vis.Pic.Circle (LastCenter.Az, LastCenter.Alt), 50, vbWhite
      
+    ' Rotate -90°: North is below
     Polar.Az = Polar.Az - Pi / 2
     
-    ' Rotate -90°: North is below
+     ' convert 0..Pi/2 to 0..1
     Polar.Alt = Polar.Alt * (1 / (Pi / 2))
     
+   
     Center.Az = (Cos(Polar.Az) * (1 - Polar.Alt) + GlbCx) * GlbScale
     Center.Alt = (Sin(Polar.Az) * (1 - Polar.Alt) + GlbCY) * -GlbScale
     Vis.Pic.Circle (Center.Az, Center.Alt), 50, vbCyan

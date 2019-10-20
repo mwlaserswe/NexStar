@@ -1862,8 +1862,9 @@ Private Sub Tim_Simulation_Timer()
     SimIncr.Alt = CutIncr(SimIncr.Alt)
     
     Dim DispSimInc As AzAlt
+    ' convert SimIncr to radian
     DispSimInc.Az = (SimIncr.Az / EncoderResolution) * 2 * Pi
-    DispSimInc.Alt = (SimIncr.Alt * 4) / EncoderResolution
+    DispSimInc.Alt = (SimIncr.Alt / EncoderResolution) * 2 * Pi
     
     DispTelescopePos DispSimInc
     

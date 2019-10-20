@@ -32,8 +32,13 @@ Public Type GeoCoord
     Sign As String
 End Type
 
+Public Type GeoPosition
+    Latitude As Double
+    Longitude As Double
+End Type
+
 Public Type Vector
-  x As Double
+  X As Double
   Y As Double
   z As Double
 End Type
@@ -89,6 +94,9 @@ Public ObserverAz As Double
 Public ObserverAlt As Double
 Public GlobalOffset As AzAlt
 
+Public GlbSiderialTime As Double
+Public GlbOberverPos As GeoPosition
+
 ' Main Horizontal System für die Matrixmetode in [radian]
 ' mathematischer Sinn gegen den Uhtzeigersinn (CCW)
 Public MatrixSystemSoll As AzAlt
@@ -99,6 +107,9 @@ Public AzAltSystem As Double           ' Horzontsystem in [radian] aus RA DEC be
 
 
 '==== Calibration ====
+Public GlbCalibStatus As Integer        ' 0: not calibrated
+                                        ' 1: 1 point calibration
+                                        ' 2: 2 point calibration
 
 '==== Init Time ====
 Public Cal_InitTime As Double
@@ -142,7 +153,9 @@ Public NexStarChar1 As String
 Public NexStarChar2 As String
 Public NexStarChar3 As String
 
-
-
+'=== Visualisieung ===
+Public GlbScale As Double
+Public GlbCx As Double
+Public GlbCY As Double
 
 

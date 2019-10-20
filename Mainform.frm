@@ -1026,6 +1026,9 @@ Begin VB.Form Mainform
       Begin VB.Menu M_Test2 
          Caption         =   "Test2"
       End
+      Begin VB.Menu M_Vis 
+         Caption         =   "Visualisierung"
+      End
    End
    Begin VB.Menu M_Communication 
       Caption         =   "Communication"
@@ -1090,6 +1093,12 @@ Private Sub AlignmentStarList_Click()
     ObserverDEC = DegToRad(AlignmentStarArray(idx).Dec)
       
     RA_DEC_to_AZ_ALT_radian ObserverRA, ObserverDEC, ObserverLong, ObserverLatt, ObserverDateTimeUT, Az, Alt, HourAngle
+    
+    Dim StarPos As AzAlt
+    StarPos.Az = Az
+    StarPos.Alt = Alt
+'    StarPos = AzAlt_to_MatrixSystem(StarPos)
+    DispAlignmentStar StarPos
   
 End Sub
 
@@ -1333,6 +1342,8 @@ Private Sub C_SingleStarAlignment_Click()
 
     GlobalOffset = AddAzAlt(GlobalOffset, SubAzAlt(MatrixSystemIst, MatrixSystemSoll))
 
+    ' Set status 1 point calibration done
+    GlbCalibStatus = 1
   
     'Set Initial for calibration
     Cal_InitTime = TimeToRad(ObserverTimeUT)
@@ -1498,6 +1509,9 @@ Private Sub Form_Load()
     Open CommFileName For Output As CommFile
     Close CommFile
     
+    Vis.Show
+    
+    
     Exit Sub
   
 openErr:
@@ -1553,6 +1567,10 @@ End Sub
 
 Private Sub M_Test2_Click()
     Test2.Show
+End Sub
+
+Private Sub M_Vis_Click()
+    Vis.Show
 End Sub
 
 ' Goto AzAlt        0xO2 Az (3 Byte) 0x16 Alt (3 Bype)
@@ -1843,6 +1861,12 @@ Private Sub Tim_Simulation_Timer()
     SimIncr.Az = CutIncr(SimIncr.Az)
     SimIncr.Alt = CutIncr(SimIncr.Alt)
     
+    Dim DispSimInc As AzAlt
+    DispSimInc.Az = (SimIncr.Az / EncoderResolution) * 2 * Pi
+    DispSimInc.Alt = (SimIncr.Alt * 4) / EncoderResolution
+    
+    DispTelescopePos DispSimInc
+    
 End Sub
 
 
@@ -1931,6 +1955,8 @@ Private Sub Tim_Tracking_Timer()
     Dim tTsRad As Double
     Dim LongitudeDeg As Double
     Dim LongitudeRad As Double
+    Dim LatitudeDeg As Double
+    Dim LatitudeRad As Double
   
     
 
@@ -1951,11 +1977,17 @@ Private Sub Tim_Tracking_Timer()
     tDate.MM = Month(ObserverDateTimeUT)
     tDate.DD = Day(ObserverDateTimeUT)
     
+    LatitudeDeg = GeoToDez(ObserverLatt)
+    LatitudeRad = DegToRad(LatitudeDeg)
     LongitudeDeg = GeoToDez(ObserverLong)
     LongitudeRad = DegToRad(LongitudeDeg)
+
+    GlbOberverPos.Latitude = LatitudeRad
+    GlbOberverPos.Longitude = LongitudeRad
     
     'double check siderial time: https://tycho.usno.navy.mil/sidereal.html
     tTsRad = TimeToRad(GMST(tDate, ObserverTimeUT)) - LongitudeRad
+    GlbSiderialTime = TimeToRad(GMST(tDate, ObserverTimeUT))
     tTs = RadToTime(tTsRad)
     L_SiderialTime = "Siderial time: " & tTs.H & ":" & Format(tTs.M, "00") & ":" & Format(tTs.s, "00")
 
@@ -2073,25 +2105,40 @@ Private Sub Tim_Tracking_Timer()
                 
                 C_Tracking.BackColor = RGB(0, 255, 0)
             
-            
-                Dim AimTimeRad As Double
-                Dim AzAlt_BetaCet As AzAlt
-                Dim TimeDiff As MyTime
+                If GlbCalibStatus = 0 Then
+                ElseIf GlbCalibStatus = 1 Then
                 
-                
-                TimeDiff.s = TrackInterval
-                
-                AimTimeRad = TimeToRad(ObserverTimeUT) + TimeToRad(TimeDiff)
-                JetztTime = TimeToRad(ObserverTimeUT)
-            
-                CalculateTelescopeCoordinates Cal_InitTime, _
-                                              ObserverRA, ObserverDEC, AimTimeRad, TransformationMatrix, _
-                                              AzAlt_BetaCet
+                                
+                            Dim tmp1 As AzAlt
+                            tmp1.Az = CutRad(ObserverAz)
+                            tmp1.Alt = ObserverAlt
+                            MatrixSystemSoll = AzAlt_to_MatrixSystem(tmp1)
+                            
+'                             'Set Az
+'                            MatrixSystemSoll.Az = CutRad(ObserverAz)
+'                            'Set Alt
+'                            MatrixSystemSoll.Alt = ObserverAlt
+  
+                ElseIf GlbCalibStatus = 2 Then
+                            Dim AimTimeRad As Double
+                            Dim AzAlt_BetaCet As AzAlt
+                            Dim TimeDiff As MyTime
+                            
+                            
+                            TimeDiff.s = TrackInterval
+                            
+                            AimTimeRad = TimeToRad(ObserverTimeUT) + TimeToRad(TimeDiff)
+                            JetztTime = TimeToRad(ObserverTimeUT)
+                        
+                            CalculateTelescopeCoordinates Cal_InitTime, _
+                                                          ObserverRA, ObserverDEC, AimTimeRad, TransformationMatrix, _
+                                                          AzAlt_BetaCet
+                            'Set Az
+                            MatrixSystemSoll.Az = CutRad(AzAlt_BetaCet.Az)
+                            'Set Alt
+                            MatrixSystemSoll.Alt = AzAlt_BetaCet.Alt
+                End If
     
-                'Set Az
-                MatrixSystemSoll.Az = CutRad(AzAlt_BetaCet.Az)
-                'Set Alt
-                MatrixSystemSoll.Alt = AzAlt_BetaCet.Alt
             
 
                 Dim MatrixSystemDiff As AzAlt

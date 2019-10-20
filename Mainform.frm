@@ -1222,6 +1222,7 @@ End Sub
 Private Sub C_Set_ObserverLocation_Click()
     
     
+    ObserverLatt.deg = Zahl(T_Latt_Grad)
     ObserverLatt.Min = Zahl(T_Latt_Min)
     ObserverLatt.Sec = Zahl(T_Latt_Sek)
     ObserverLatt.Sign = T_Latt_Sign

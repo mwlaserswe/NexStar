@@ -895,7 +895,7 @@ Private Sub Command4_Click()
     RA_Saturn.M = 57              '57
     RA_Saturn.s = 35.681
 
-    Dim DEC_Saturn As GeoCoord
+    Dim DEC_Saturn As GeoDegMinSec
     DEC_Saturn.deg = 8
     DEC_Saturn.Min = 25
     DEC_Saturn.Sec = 58.1
@@ -903,13 +903,13 @@ Private Sub Command4_Click()
 
     Lont = TimeDezToHMS(4.35808335) '  -4.358°              ' Observer’s longitude
 
-    Dim Longitude As GeoCoord
+    Dim Longitude As GeoDegMinSec
     Longitude.deg = Lont.H
     Longitude.Min = Lont.M
     Longitude.Sec = Lont.s
     Longitude.Sign = "E"
 
-    Dim Latitude As GeoCoord    '  50°47'55''                 ' Observer’s latitude
+    Dim Latitude As GeoDegMinSec    '  50°47'55''                 ' Observer’s latitude
     Latitude.deg = 50
     Latitude.Min = 47
     Latitude.Sec = 55
@@ -944,19 +944,19 @@ Private Sub Command4_Click()
 '''    RA_Capella.M = 18
 '''    RA_Capella.s = 6
 '''
-'''    Dim DEC_Capella As GeoCoord
+'''    Dim DEC_Capella As GeoDegMinSec
 '''    DEC_Capella.Deg = 46
 '''    DEC_Capella.Min = 1
 '''    DEC_Capella.Sec = 0
 '''    DEC_Capella.Sign = "+"
 '''
-'''    Dim Longitude As GeoCoord                     ' Observer’s longitude
+'''    Dim Longitude As GeoDegMinSec                     ' Observer’s longitude
 '''    Longitude.Deg = 9
 '''    Longitude.Min = 18
 '''    Longitude.Sec = 3
 '''    Longitude.Sign = "E"
 '''
-'''    Dim Latitude As GeoCoord                     ' Observer’s latitude
+'''    Dim Latitude As GeoDegMinSec                     ' Observer’s latitude
 '''    Latitude.Deg = 51
 '''    Latitude.Min = 11
 '''    Latitude.Sec = 27
@@ -990,19 +990,19 @@ Private Sub Command4_Click()
 '''    RA_Deneb.M = 42
 '''    RA_Deneb.s = 4
 '''
-'''    Dim DEC_Deneb As GeoCoord
+'''    Dim DEC_Deneb As GeoDegMinSec
 '''    DEC_Deneb.Deg = 45
 '''    DEC_Deneb.Min = 21
 '''    DEC_Deneb.Sec = 0
 '''    DEC_Deneb.Sign = "+"
 '''
-'''    Dim Longitude As GeoCoord                     ' Observer’s longitude
+'''    Dim Longitude As GeoDegMinSec                     ' Observer’s longitude
 '''    Longitude.Deg = 11
 '''    Longitude.Min = 34
 '''    Longitude.Sec = 0
 '''    Longitude.Sign = "E"
 '''
-'''    Dim Latitude As GeoCoord                     ' Observer’s latitude
+'''    Dim Latitude As GeoDegMinSec                     ' Observer’s latitude
 '''    Latitude.Deg = 48
 '''    Latitude.Min = 8
 '''    Latitude.Sec = 0

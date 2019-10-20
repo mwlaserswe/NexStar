@@ -152,7 +152,7 @@ Public Function TimeHMStoDez(TimeIn As MyTime) As MyTime
     
 End Function
 
-Public Function GeoToDez(Coord As GeoCoord) As Double
+Public Function GeoToDez(Coord As GeoDegMinSec) As Double
     Dim s As String
     
     s = Mid(Coord.Sign, 1, 1)
@@ -238,13 +238,13 @@ Public Function RadToDeg(Rad As Double) As Double
 End Function
 
 
-Public Function arcsin(x As Double) As Double
+Public Function arcsin(X As Double) As Double
     'hier gibt es noch ein Problrm, wenn der Stern genau im Zenit steht
-    arcsin = Atn(x / Sqr(-x * x + 1))
+    arcsin = Atn(X / Sqr(-X * X + 1))
 End Function
 
 
-Public Sub RA_DEC_to_AZ_ALT_radian(RA_Star_Rad As Double, DEC_Star_Rad As Double, Longitude As GeoCoord, Latitude As GeoCoord, LocalDateTime As Date, Az As Double, Alt As Double, LocalHourAngleRad As Double)
+Public Sub RA_DEC_to_AZ_ALT_radian(RA_Star_Rad As Double, DEC_Star_Rad As Double, Longitude As GeoDegMinSec, Latitude As GeoDegMinSec, LocalDateTime As Date, Az As Double, Alt As Double, LocalHourAngleRad As Double)
     ' matrix_method_rev_d.pdf Seite 15
     Dim SiderialTime As MyTime
     Dim SiderialTimeRad As Double
@@ -277,8 +277,8 @@ Public Sub RA_DEC_to_AZ_ALT_radian(RA_Star_Rad As Double, DEC_Star_Rad As Double
 
     LMN_Equatorial = PolarKarthesisch(LocalHourAngleRad, DEC_Star_Rad)
    
-    LMN_EquaMatrix(0, 0) = LMN_Equatorial.x
-    LMN_EquaMatrix(1, 0) = LMN_Equatorial.y
+    LMN_EquaMatrix(0, 0) = LMN_Equatorial.X
+    LMN_EquaMatrix(1, 0) = LMN_Equatorial.Y
     LMN_EquaMatrix(2, 0) = LMN_Equatorial.z
    
     'Calculate star position in rectangular horizontal coordinate system
@@ -324,7 +324,7 @@ Public Sub RA_DEC_to_AZ_ALT_radian(RA_Star_Rad As Double, DEC_Star_Rad As Double
 
 End Sub
 
-Public Function AZ_ALT_to_RA_DEC(StarAzAlt As AzAlt, GeoPos As GeoPosition, SiderialTime As Double) As RaDec
+Public Function AZ_ALT_to_RA_DEC(StarAzAlt As AzAlt, GeoPos As GeoCoordinates, SiderialTime As Double) As RaDec
     ' matrix_method_rev_d.pdf  Seite 15,16
     ' Rückwärts rechnen. Siehe "Matrix Method.doc"
     ' Input: Object Alt and Az, ObserverLatt,
@@ -334,8 +334,8 @@ Public Function AZ_ALT_to_RA_DEC(StarAzAlt As AzAlt, GeoPos As GeoPosition, Side
     Dim LMN_HorizMatrix(10, 10) As Double
     Dim ObsLocMatrix(10, 10) As Double  ' Observer location Matrix
     
-    LMN_Horizontal.x = Cos(StarAzAlt.Alt) * Cos(-StarAzAlt.Az)
-    LMN_Horizontal.y = Cos(StarAzAlt.Alt) * Sin(-StarAzAlt.Az)
+    LMN_Horizontal.X = Cos(StarAzAlt.Alt) * Cos(-StarAzAlt.Az)
+    LMN_Horizontal.Y = Cos(StarAzAlt.Alt) * Sin(-StarAzAlt.Az)
     LMN_Horizontal.z = Sin(StarAzAlt.Alt)
     
     ObsLocMatrix(0, 0) = Cos(GeoPos.Latitude - Pi / 2):     ObsLocMatrix(0, 1) = 0:     ObsLocMatrix(0, 2) = Sin(GeoPos.Latitude - Pi / 2)
@@ -345,8 +345,8 @@ Public Function AZ_ALT_to_RA_DEC(StarAzAlt As AzAlt, GeoPos As GeoPosition, Side
     Dim InverseMatrix(10, 10) As Double             'Zeile, Spalte
     Calculate_Inverse 3, ObsLocMatrix, InverseMatrix
     
-    LMN_HorizMatrix(0, 0) = LMN_Horizontal.x
-    LMN_HorizMatrix(1, 0) = LMN_Horizontal.y
+    LMN_HorizMatrix(0, 0) = LMN_Horizontal.X
+    LMN_HorizMatrix(1, 0) = LMN_Horizontal.Y
     LMN_HorizMatrix(2, 0) = LMN_Horizontal.z
     
     Dim LMN_EquaMatrix(10, 10) As Double
@@ -378,23 +378,23 @@ Public Sub CalibrateTelescope(InitTimerad As Double, RA1Rad As Double, DEC1Rad A
     Dim LMN_Equ_3 As Vector
 
     'Equation (5.4-5)
-    lmn_Tel_1.x = Cos(TelElevAngle1) * Cos(TelHorizAngle1)
-    lmn_Tel_1.y = Cos(TelElevAngle1) * Sin(TelHorizAngle1)
+    lmn_Tel_1.X = Cos(TelElevAngle1) * Cos(TelHorizAngle1)
+    lmn_Tel_1.Y = Cos(TelElevAngle1) * Sin(TelHorizAngle1)
     lmn_Tel_1.z = Sin(TelElevAngle1)
 
     'Equation (5.4-6)
-    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - SidConst * (ObservTime1Rad - InitTimerad))
-    LMN_Equ_1.y = Cos(DEC1Rad) * Sin(RA1Rad - SidConst * (ObservTime1Rad - InitTimerad))
+    LMN_Equ_1.X = Cos(DEC1Rad) * Cos(RA1Rad - SidConst * (ObservTime1Rad - InitTimerad))
+    LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - SidConst * (ObservTime1Rad - InitTimerad))
     LMN_Equ_1.z = Sin(DEC1Rad)
 
     'Equation (5.4-7)
-    lmn_Tel_2.x = Cos(TelElevAngle2) * Cos(TelHorizAngle2)
-    lmn_Tel_2.y = Cos(TelElevAngle2) * Sin(TelHorizAngle2)
+    lmn_Tel_2.X = Cos(TelElevAngle2) * Cos(TelHorizAngle2)
+    lmn_Tel_2.Y = Cos(TelElevAngle2) * Sin(TelHorizAngle2)
     lmn_Tel_2.z = Sin(TelElevAngle2)
 
     'Equation (5.4-8)
-    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - SidConst * (ObservTime2Rad - InitTimerad))
-    LMN_Equ_2.y = Cos(DEC2Rad) * Sin(RA2Rad - SidConst * (ObservTime2Rad - InitTimerad))
+    LMN_Equ_2.X = Cos(DEC2Rad) * Cos(RA2Rad - SidConst * (ObservTime2Rad - InitTimerad))
+    LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - SidConst * (ObservTime2Rad - InitTimerad))
     LMN_Equ_2.z = Sin(DEC2Rad)
 
     Dim V1_cross_V2 As Vector
@@ -416,8 +416,8 @@ Public Sub CalibrateTelescope(InitTimerad As Double, RA1Rad As Double, DEC1Rad A
     Dim LMN_Equ_MatrixInvers(10, 10) As Double
     Dim lmn_Tel_Matrix(10, 10) As Double
 
-    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x: LMN_Equ_Matrix(0, 1) = LMN_Equ_2.x: LMN_Equ_Matrix(0, 2) = LMN_Equ_3.x
-    LMN_Equ_Matrix(1, 0) = LMN_Equ_1.y: LMN_Equ_Matrix(1, 1) = LMN_Equ_2.y: LMN_Equ_Matrix(1, 2) = LMN_Equ_3.y
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.X: LMN_Equ_Matrix(0, 1) = LMN_Equ_2.X: LMN_Equ_Matrix(0, 2) = LMN_Equ_3.X
+    LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y: LMN_Equ_Matrix(1, 1) = LMN_Equ_2.Y: LMN_Equ_Matrix(1, 2) = LMN_Equ_3.Y
     LMN_Equ_Matrix(2, 0) = LMN_Equ_1.z: LMN_Equ_Matrix(2, 1) = LMN_Equ_2.z: LMN_Equ_Matrix(2, 2) = LMN_Equ_3.z
 
     Calculate_Inverse 3, LMN_Equ_Matrix, LMN_Equ_MatrixInvers
@@ -426,8 +426,8 @@ Public Sub CalibrateTelescope(InitTimerad As Double, RA1Rad As Double, DEC1Rad A
                 dmy = LMN_Equ_MatrixInvers(1, 0): dmy = LMN_Equ_MatrixInvers(1, 1): dmy = LMN_Equ_MatrixInvers(1, 2)
                 dmy = LMN_Equ_MatrixInvers(2, 0): dmy = LMN_Equ_MatrixInvers(2, 1): dmy = LMN_Equ_MatrixInvers(2, 2)
 
-    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.x: lmn_Tel_Matrix(0, 1) = lmn_Tel_2.x: lmn_Tel_Matrix(0, 2) = lmn_Tel_3.x
-    lmn_Tel_Matrix(1, 0) = lmn_Tel_1.y: lmn_Tel_Matrix(1, 1) = lmn_Tel_2.y: lmn_Tel_Matrix(1, 2) = lmn_Tel_3.y
+    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.X: lmn_Tel_Matrix(0, 1) = lmn_Tel_2.X: lmn_Tel_Matrix(0, 2) = lmn_Tel_3.X
+    lmn_Tel_Matrix(1, 0) = lmn_Tel_1.Y: lmn_Tel_Matrix(1, 1) = lmn_Tel_2.Y: lmn_Tel_Matrix(1, 2) = lmn_Tel_3.Y
     lmn_Tel_Matrix(2, 0) = lmn_Tel_1.z: lmn_Tel_Matrix(2, 1) = lmn_Tel_2.z: lmn_Tel_Matrix(2, 2) = lmn_Tel_3.z
 
     '==================================================================================================
@@ -455,15 +455,15 @@ End Sub
 Public Sub CalculateTelescopeCoordinates(InitTimerad As Double, RA_CurrStarRad As Double, DEC_CurrStarRad As Double, AimTimeRad As Double, TransformationMatrix() As Double, AzAlt_CurrStar As AzAlt)
     'LMN_Equ_Result: Vector points to Deneb in equatorial coordinats
     Dim LMN_Equ_Result  As Vector
-    LMN_Equ_Result.x = Cos(DEC_CurrStarRad) * Cos(RA_CurrStarRad - SidConst * (AimTimeRad - InitTimerad))
-    LMN_Equ_Result.y = Cos(DEC_CurrStarRad) * Sin(RA_CurrStarRad - SidConst * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.X = Cos(DEC_CurrStarRad) * Cos(RA_CurrStarRad - SidConst * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.Y = Cos(DEC_CurrStarRad) * Sin(RA_CurrStarRad - SidConst * (AimTimeRad - InitTimerad))
     LMN_Equ_Result.z = Sin(DEC_CurrStarRad)
 
 
     Dim LMN_Equ_ResultMatrix(10, 10) As Double
     Dim lmn_Tel_ResultMatrix(10, 10) As Double
-    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.x
-    LMN_Equ_ResultMatrix(1, 0) = LMN_Equ_Result.y
+    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.X
+    LMN_Equ_ResultMatrix(1, 0) = LMN_Equ_Result.Y
     LMN_Equ_ResultMatrix(2, 0) = LMN_Equ_Result.z
 
     MatrixProduct TransformationMatrix, 3, 3, LMN_Equ_ResultMatrix, 3, 1, lmn_Tel_ResultMatrix
@@ -471,8 +471,8 @@ Public Sub CalculateTelescopeCoordinates(InitTimerad As Double, RA_CurrStarRad A
     'lmn_Tel__Matrix: Vector points to Beta Cet in equatorial coordinats
 
     Dim lmn_Tel_Result  As Vector
-    lmn_Tel_Result.x = lmn_Tel_ResultMatrix(0, 0)
-    lmn_Tel_Result.y = lmn_Tel_ResultMatrix(1, 0)
+    lmn_Tel_Result.X = lmn_Tel_ResultMatrix(0, 0)
+    lmn_Tel_Result.Y = lmn_Tel_ResultMatrix(1, 0)
     lmn_Tel_Result.z = lmn_Tel_ResultMatrix(2, 0)
 
 '    Dim AzAlt_CurrStar As AzAlt
@@ -485,7 +485,7 @@ Public Sub CalculateTelescopeCoordinates(InitTimerad As Double, RA_CurrStarRad A
 
     AzAlt_CurrStar = VectorToAzAlt(lmn_Tel_Result)
     
-    If lmn_Tel_Result.x < 0 Then
+    If lmn_Tel_Result.X < 0 Then
         Mainform.Label6 = "minus"
     Else
         Mainform.Label6 = "plus"
@@ -496,10 +496,10 @@ End Sub
 
 
 Public Function VectorToAzAlt(V As Vector) As AzAlt
-    VectorToAzAlt.Az = Atn(V.y / V.x)
+    VectorToAzAlt.Az = Atn(V.Y / V.X)
     '    When V.x >= 0, (-A) is in the 1st quadrant or the 4th quadrant.
     '    When V.x < 0, (-A) is in the 2nd quadrant or the 3rd quadrant.
-    If V.x < 0 Then
+    If V.X < 0 Then
         VectorToAzAlt.Az = VectorToAzAlt.Az + Pi
     End If
 

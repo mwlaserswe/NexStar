@@ -25,14 +25,14 @@ Public Type MyTime
     s As Double
 End Type
 
-Public Type GeoCoord
+Public Type GeoDegMinSec
     deg As Double
     Min As Double
     Sec As Double
     Sign As String
 End Type
 
-Public Type GeoPosition
+Public Type GeoCoordinates
     Latitude As Double
     Longitude As Double
 End Type
@@ -86,8 +86,8 @@ Public StatusMoving As Integer
 
 Public ObserverDateTimeUT As Date
 Public ObserverTimeUT As MyTime
-Public ObserverLatt As GeoCoord
-Public ObserverLong As GeoCoord
+Public ObserverLatt As GeoDegMinSec
+Public ObserverLong As GeoDegMinSec
 Public ObserverRA As Double
 Public ObserverDEC As Double
 Public ObserverAz As Double
@@ -95,7 +95,7 @@ Public ObserverAlt As Double
 Public GlobalOffset As AzAlt
 
 Public GlbSiderialTime As Double
-Public GlbOberverPos As GeoPosition
+Public GlbOberverPos As GeoCoordinates
 
 ' Main Horizontal System für die Matrixmetode in [radian]
 ' mathematischer Sinn gegen den Uhtzeigersinn (CCW)

@@ -48,3 +48,4 @@
 48	Fomalhaut	PsA	Alpha	24	22,96166667	-29,6222222	1.2
 49	Markab	Peg	Alpha	54	23,08000000	15,2052778	2.5
 50	zz_Demo_Saturn	zz	zz	0	10,9599114h	8,432806	99
+51	zz_Aldebaran	Tau	Alpha	87	4,616666	16,55	0.9

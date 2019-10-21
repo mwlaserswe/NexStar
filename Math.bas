@@ -244,38 +244,24 @@ Public Function arcsin(X As Double) As Double
 End Function
 
 
-Public Sub RA_DEC_to_AZ_ALT_radian(RA_Star_Rad As Double, DEC_Star_Rad As Double, Longitude As GeoDegMinSec, Latitude As GeoDegMinSec, LocalDateTime As Date, Az As Double, Alt As Double, LocalHourAngleRad As Double)
+
+
+Public Function RA_DEC_to_AZ_ALT_new(RaDec_Star As RaDec, GeoPos As GeoCoordinates, SiderialTime As Double) As AzAlt
+
     ' matrix_method_rev_d.pdf Seite 15
-    Dim SiderialTime As MyTime
-    Dim SiderialTimeRad As Double
-    Dim LongitudeDeg As Double
-    Dim LongitudeRad As Double
-    Dim LocalDate As MyDate
-    Dim LocalTimeUT As MyTime
-
-    LongitudeDeg = GeoToDez(Longitude)
-    LongitudeRad = DegToRad(LongitudeDeg)
-       
-    'Calculate siderial time at Greenwich
-    LocalDate.YY = Year(LocalDateTime)
-    LocalDate.MM = Month(LocalDateTime)
-    LocalDate.DD = Day(LocalDateTime)
-    LocalTimeUT.H = Hour(LocalDateTime)
-    LocalTimeUT.M = Minute(LocalDateTime)
-    LocalTimeUT.s = Second(LocalDateTime)
-
-    SiderialTime = GMST(LocalDate, LocalTimeUT)
-    SiderialTimeRad = TimeToRad(SiderialTime)
+    Dim Az As Double
+    Dim Alt As Double
+    Dim LocalHourAngleRad As Double
     
     ' Calculate local hour angle
-    LocalHourAngleRad = SiderialTimeRad - RA_Star_Rad
-    LocalHourAngleRad = LocalHourAngleRad - LongitudeRad
+    LocalHourAngleRad = SiderialTime - RaDec_Star.Ra
+    LocalHourAngleRad = LocalHourAngleRad - GeoPos.Longitude
     
     ' Calculate star position in rectangular equatorial coordinate system
     Dim LMN_Equatorial As Vector         ' Rectangular equatorial coordinate system
     Dim LMN_EquaMatrix(10, 10) As Double
 
-    LMN_Equatorial = PolarKarthesisch(LocalHourAngleRad, DEC_Star_Rad)
+    LMN_Equatorial = PolarKarthesisch(LocalHourAngleRad, RaDec_Star.Dec)
    
     LMN_EquaMatrix(0, 0) = LMN_Equatorial.X
     LMN_EquaMatrix(1, 0) = LMN_Equatorial.Y
@@ -285,15 +271,10 @@ Public Sub RA_DEC_to_AZ_ALT_radian(RA_Star_Rad As Double, DEC_Star_Rad As Double
     Dim LMN_Horizontal As Vector                ' Rectangular horizontal coordinate system
     Dim LMN_HorizMatrix(10, 10) As Double
     Dim TransformationMatrix(10, 10) As Double  ' Transformation-Matrix from equatorial Coordinates to horizontal Coordinates
-    Dim LatitudeDeg As Double                   ' Observer’s latitude
-    Dim LatitudeRad As Double
    
-    LatitudeDeg = GeoToDez(Latitude)
-    LatitudeRad = DegToRad(LatitudeDeg)
-   
-    TransformationMatrix(0, 0) = Cos(LatitudeRad - Pi / 2):   TransformationMatrix(0, 1) = 0:   TransformationMatrix(0, 2) = Sin(LatitudeRad - Pi / 2)
+    TransformationMatrix(0, 0) = Cos(GeoPos.Latitude - Pi / 2):   TransformationMatrix(0, 1) = 0:   TransformationMatrix(0, 2) = Sin(GeoPos.Latitude - Pi / 2)
     TransformationMatrix(1, 0) = 0:                           TransformationMatrix(1, 1) = 1:   TransformationMatrix(1, 2) = 0
-    TransformationMatrix(2, 0) = -Sin(LatitudeRad - Pi / 2):  TransformationMatrix(2, 1) = 0:   TransformationMatrix(2, 2) = Cos(LatitudeRad - Pi / 2)
+    TransformationMatrix(2, 0) = -Sin(GeoPos.Latitude - Pi / 2):  TransformationMatrix(2, 1) = 0:   TransformationMatrix(2, 2) = Cos(GeoPos.Latitude - Pi / 2)
 
     MatrixProduct TransformationMatrix, 3, 3, LMN_EquaMatrix, 3, 1, LMN_HorizMatrix
 
@@ -319,10 +300,14 @@ Public Sub RA_DEC_to_AZ_ALT_radian(RA_Star_Rad As Double, DEC_Star_Rad As Double
     
     
     'geht möglicherweise einfacher: sin(h) = Nh
-    sin_h = Cos(LatitudeRad) * Cos(LocalHourAngleRad) * Cos(DEC_Star_Rad) + Sin(LatitudeRad) * Sin(DEC_Star_Rad)
+    sin_h = Cos(GeoPos.Latitude) * Cos(LocalHourAngleRad) * Cos(RaDec_Star.Dec) + Sin(GeoPos.Latitude) * Sin(RaDec_Star.Dec)
     Alt = arcsin(sin_h)
 
-End Sub
+    RA_DEC_to_AZ_ALT_new.Az = Az
+    RA_DEC_to_AZ_ALT_new.Alt = Alt
+    
+End Function
+
 
 Public Function AZ_ALT_to_RA_DEC(StarAzAlt As AzAlt, GeoPos As GeoCoordinates, SiderialTime As Double) As RaDec
     ' matrix_method_rev_d.pdf  Seite 15,16

@@ -887,12 +887,26 @@ Private Sub Command4_Click()
     Dim Lont As MyTime
 
     ' Datensatz Saturn Demo aus dem Sript
-    Dim SaturnDateTime As Date
-    SaturnDateTime = "13.11.1978 4:34:0"
+    Dim SaturnDateTimeUT As Date
+    SaturnDateTimeUT = "13.11.1978 4:34:0"
+
+    Dim SaturnTimeUT As MyTime
+    Dim SaturnDate As MyDate
+    SaturnTimeUT.H = Hour(SaturnDateTimeUT)
+    SaturnTimeUT.M = Minute(SaturnDateTimeUT)
+    SaturnTimeUT.s = Second(SaturnDateTimeUT)
+    SaturnDate.YY = Year(SaturnDateTimeUT)
+    SaturnDate.MM = Month(SaturnDateTimeUT)
+    SaturnDate.DD = Day(SaturnDateTimeUT)
+        
+    'double check siderial time: https://tycho.usno.navy.mil/sidereal.html
+    Dim SaturnSiderialTime As Double
+    SaturnSiderialTime = TimeToRad(GMST(SaturnDate, SaturnTimeUT))
+
 
     Dim RA_Saturn As MyTime
     RA_Saturn.H = 10
-    RA_Saturn.M = 57              '57
+    RA_Saturn.M = 57
     RA_Saturn.s = 35.681
 
     Dim DEC_Saturn As GeoDegMinSec
@@ -901,6 +915,10 @@ Private Sub Command4_Click()
     DEC_Saturn.Sec = 58.1
     DEC_Saturn.Sign = "+"
 
+    Dim SaturnRaDec As RaDec
+    SaturnRaDec.Ra = TimeToRad(RA_Saturn)
+    SaturnRaDec.Dec = DegToRad(GeoToDez(DEC_Saturn))
+    
     Lont = TimeDezToHMS(4.35808335) '  -4.358°              ' Observer’s longitude
 
     Dim Longitude As GeoDegMinSec
@@ -915,6 +933,10 @@ Private Sub Command4_Click()
     Latitude.Sec = 55
     Latitude.Sign = "N"
 
+    Dim SaturnObsGeo As GeoCoordinates
+    SaturnObsGeo.Longitude = DegToRad(GeoToDez(Longitude))
+    SaturnObsGeo.Latitude = DegToRad(GeoToDez(Latitude))
+
     Dim Az As Double
     Dim Alt As Double
     Dim LocalHourAngleRad As Double
@@ -925,8 +947,12 @@ Private Sub Command4_Click()
     Dim DEC_Saturn_Rad As Double
     DEC_Saturn_Rad = DegToRad(GeoToDez(DEC_Saturn))
 
-    RA_DEC_to_AZ_ALT_radian RA_Saturn_Rad, DEC_Saturn_Rad, Longitude, Latitude, SaturnDateTime, Az, Alt, LocalHourAngleRad
-
+    'RA_DEC_to_AZ_ALT_radian RA_Saturn_Rad, DEC_Saturn_Rad, Longitude, Latitude, SaturnDateTimeUT, Az, Alt, LocalHourAngleRad
+    Dim StarPos As AzAlt
+    StarPos = RA_DEC_to_AZ_ALT_new(SaturnRaDec, SaturnObsGeo, SaturnSiderialTime)
+    Az = StarPos.Az
+    Alt = StarPos.Alt
+                
 '    If Mainform.O_OrientationNorth.Value Then Az = Az + Pi
     L_AzStar = CutAngle(RadToDeg(Az))
     L_AltStar = RadToDeg(Alt)

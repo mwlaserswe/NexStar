@@ -17,6 +17,7 @@ UserControl=zzSlider.ctl
 Form=Test2.frm
 Form=Vis.frm
 Module=Visualisieung; Visualisieung.bas
+Module=Math_old; Math_old.bas
 IconForm="Mainform"
 Startup="Mainform"
 ExeName32="NexStar.exe"

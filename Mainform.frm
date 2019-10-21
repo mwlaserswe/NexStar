@@ -1076,8 +1076,6 @@ End Enum
 
 Private Sub AlignmentStarList_Click()
     Dim idx As Long
-    Dim Az As Double
-    Dim Alt As Double
     Dim HourAngle As Double
     Dim HourAngleHMS As MyTime
     Dim SelectedStar As String
@@ -1089,16 +1087,15 @@ Private Sub AlignmentStarList_Click()
     Loop Until (AlignmentStarArray(idx).ProperName = AlignmentStarList.Text) Or (idx >= UBound(AlignmentStarArray))
     L_CurrentStar = AlignmentStarArray(idx).ProperName
     
-    ObserverRA = HourToRad(AlignmentStarArray(idx).Ra)
-    ObserverDEC = DegToRad(AlignmentStarArray(idx).Dec)
-      
-    RA_DEC_to_AZ_ALT_radian ObserverRA, ObserverDEC, ObserverLong, ObserverLatt, ObserverDateTimeUT, Az, Alt, HourAngle
-    
+    ObserverRaDec.Ra = HourToRad(AlignmentStarArray(idx).Ra)
+    ObserverRaDec.Dec = DegToRad(AlignmentStarArray(idx).Dec)
+         
+         
     Dim StarPos As AzAlt
-    StarPos.Az = Az
-    StarPos.Alt = Alt
+    StarPos = RA_DEC_to_AZ_ALT_new(ObserverRaDec, GlbOberverPos, GlbSiderialTime)
 '    StarPos = AzAlt_to_MatrixSystem(StarPos)
     DispAlignmentStar StarPos
+  
   
 End Sub
 
@@ -1158,8 +1155,8 @@ Private Sub C_GotoStar_Click()
 
 
     Dim tmp As AzAlt
-    tmp.Az = ObserverAz
-    tmp.Alt = ObserverAlt
+    tmp.Az = ObserverAzAlt.Az
+    tmp.Alt = ObserverAzAlt.Alt
     MatrixSystemSoll = AzAlt_to_MatrixSystem(tmp)
 
     Dim MotorIncr As AzAlt
@@ -1190,7 +1187,7 @@ Private Sub C_GotoStarCalibrated_Click()
     TrackingisON = False
 
     CalculateTelescopeCoordinates Cal_InitTime, _
-                                  ObserverRA, ObserverDEC, AimTimeRad, TransformationMatrix, _
+                                  ObserverRaDec.Ra, ObserverRaDec.Dec, AimTimeRad, TransformationMatrix, _
                                   AzAlt_BetaCet
 
  
@@ -1273,8 +1270,8 @@ End Sub
 
 Private Sub C_SetCalibrationStar_1_Click()
    
-    Cal_RaStar_1 = ObserverRA
-    Cal_DecStar_1 = ObserverDEC
+    Cal_RaStar_1 = ObserverRaDec.Ra
+    Cal_DecStar_1 = ObserverRaDec.Dec
     Cal_TelHorizAngle_1 = MatrixSystemIst.Az
     Cal_TelElevAngle_1 = MatrixSystemIst.Alt
 
@@ -1285,8 +1282,8 @@ Private Sub C_SetCalibrationStar_1_Click()
 End Sub
 
 Private Sub C_SetCalibrationStar_2_Click()
-    Cal_RaStar_2 = ObserverRA
-    Cal_DecStar_2 = ObserverDEC
+    Cal_RaStar_2 = ObserverRaDec.Ra
+    Cal_DecStar_2 = ObserverRaDec.Dec
     Cal_TelHorizAngle_2 = MatrixSystemIst.Az
     Cal_TelElevAngle_2 = MatrixSystemIst.Alt
 
@@ -2016,27 +2013,32 @@ Private Sub Tim_Tracking_Timer()
     L_CurrentStar = AlignmentStarArray(idx).ProperName
     F_StarInfo.Caption = AlignmentStarArray(idx).ProperName
     
-    ObserverRA = HourToRad(AlignmentStarArray(idx).Ra)
-    ObserverDEC = DegToRad(AlignmentStarArray(idx).Dec)
-    DisplayCoordinate L_I_RA, ObserverRA, HMS
-    DisplayCoordinate L_I_DEC, ObserverDEC, DegDec
+'    ObserverRA = HourToRad(AlignmentStarArray(idx).Ra)
+'    ObserverDEC = DegToRad(AlignmentStarArray(idx).Dec)
+    ObserverRaDec.Ra = HourToRad(AlignmentStarArray(idx).Ra)
+    ObserverRaDec.Dec = DegToRad(AlignmentStarArray(idx).Dec)
+    DisplayCoordinate L_I_RA, ObserverRaDec.Ra, HMS
+    DisplayCoordinate L_I_DEC, ObserverRaDec.Dec, DegDec
      
-    RA_DEC_to_AZ_ALT_radian ObserverRA, ObserverDEC, ObserverLong, ObserverLatt, ObserverDateTimeUT, ObserverAz, ObserverAlt, HourAngle
+'    RA_DEC_to_AZ_ALT_radian ObserverRA, ObserverDEC, ObserverLong, ObserverLatt, ObserverDateTimeUT, ObserverAzAlt.Az, ObserverAzAlt.Alt, HourAngle
+    ObserverAzAlt = RA_DEC_to_AZ_ALT_new(ObserverRaDec, GlbOberverPos, GlbSiderialTime)
+    ObserverAzAlt.Az = ObserverAzAlt.Az
+    ObserverAzAlt.Alt = ObserverAzAlt.Alt
 
     Dim DisplObserverAz As Double
     If Ch_South.Value = 1 Then
-        DisplObserverAz = CutRad(ObserverAz + Pi)
+        DisplObserverAz = CutRad(ObserverAzAlt.Az + Pi)
     Else
-        DisplObserverAz = CutRad(ObserverAz)
+        DisplObserverAz = CutRad(ObserverAzAlt.Az)
     End If
     
     DisplayCoordinate L_I_Az, DisplObserverAz, DegDec
     
     Dim tmp As AzAlt
-    tmp.Az = ObserverAz
-    tmp.Alt = ObserverAlt
+    tmp.Az = ObserverAzAlt.Az
+    tmp.Alt = ObserverAzAlt.Alt
     L_CardinalOrientation = GetCardinalDrection(AzAlt_to_MatrixSystem(tmp).Az)
-    DisplayCoordinate L_I_Alt, ObserverAlt, DegDec
+    DisplayCoordinate L_I_Alt, ObserverAzAlt.Alt, DegDec
     DisplayCoordinate L_I_HourAngle, HourAngle, HMS
 
             'Just for testing: get matrix vectors
@@ -2046,24 +2048,24 @@ Private Sub Tim_Tracking_Timer()
             Dim HorizAngle As Double
             Dim ElevAngle As Double
             
-            HorizAngle = ObserverRA
-            ElevAngle = ObserverDEC
+            HorizAngle = ObserverRaDec.Ra
+            ElevAngle = ObserverRaDec.Dec
             X = Cos(ElevAngle) * Cos(HorizAngle)
             Y = Cos(ElevAngle) * Sin(HorizAngle)
             z = Sin(ElevAngle)
             L_I_EquXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
         
-            HorizAngle = ObserverAz
-            ElevAngle = ObserverAlt
+            HorizAngle = ObserverAzAlt.Az
+            ElevAngle = ObserverAzAlt.Alt
             X = Cos(ElevAngle) * Cos(HorizAngle)
             Y = Cos(ElevAngle) * Sin(HorizAngle)
             z = Sin(ElevAngle)
             L_I_HorXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
 
 
-    If ObserverAlt < 0 Then
+    If ObserverAzAlt.Alt < 0 Then
         L_CurrentStar.BackColor = RGB(255, 0, 0)
-    ElseIf (ObserverAlt > 0) And (ObserverAlt < 0.3) Then
+    ElseIf (ObserverAzAlt.Alt > 0) And (ObserverAzAlt.Alt < 0.3) Then
         L_CurrentStar.BackColor = RGB(255, 255, 0)
     Else
         L_CurrentStar.BackColor = RGB(0, 255, 0)
@@ -2111,15 +2113,15 @@ Private Sub Tim_Tracking_Timer()
                 ElseIf GlbCalibStatus = 1 Then
                 
                                 
-                            Dim tmp1 As AzAlt
-                            tmp1.Az = CutRad(ObserverAz)
-                            tmp1.Alt = ObserverAlt
-                            MatrixSystemSoll = AzAlt_to_MatrixSystem(tmp1)
+                            Dim Tmp1 As AzAlt
+                            Tmp1.Az = CutRad(ObserverAzAlt.Az)
+                            Tmp1.Alt = ObserverAzAlt.Alt
+                            MatrixSystemSoll = AzAlt_to_MatrixSystem(Tmp1)
                             
 '                             'Set Az
-'                            MatrixSystemSoll.Az = CutRad(ObserverAz)
+'                            MatrixSystemSoll.Az = CutRad(ObserverAzAlt.Az)
 '                            'Set Alt
-'                            MatrixSystemSoll.Alt = ObserverAlt
+'                            MatrixSystemSoll.Alt = ObserverAzAlt.Alt
   
                 ElseIf GlbCalibStatus = 2 Then
                             Dim AimTimeRad As Double
@@ -2133,7 +2135,7 @@ Private Sub Tim_Tracking_Timer()
                             JetztTime = TimeToRad(ObserverTimeUT)
                         
                             CalculateTelescopeCoordinates Cal_InitTime, _
-                                                          ObserverRA, ObserverDEC, AimTimeRad, TransformationMatrix, _
+                                                          ObserverRaDec.Ra, ObserverRaDec.Dec, AimTimeRad, TransformationMatrix, _
                                                           AzAlt_BetaCet
                             'Set Az
                             MatrixSystemSoll.Az = CutRad(AzAlt_BetaCet.Az)

@@ -88,10 +88,8 @@ Public ObserverDateTimeUT As Date
 Public ObserverTimeUT As MyTime
 Public ObserverLatt As GeoDegMinSec
 Public ObserverLong As GeoDegMinSec
-Public ObserverRA As Double
-Public ObserverDEC As Double
-Public ObserverAz As Double
-Public ObserverAlt As Double
+Public ObserverRaDec As RaDec
+Public ObserverAzAlt As AzAlt
 Public GlobalOffset As AzAlt
 
 Public GlbSiderialTime As Double

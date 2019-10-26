@@ -6,24 +6,165 @@ Begin VB.Form Mainform
    ClientHeight    =   11235
    ClientLeft      =   225
    ClientTop       =   870
-   ClientWidth     =   14250
+   ClientWidth     =   16815
    LinkTopic       =   "Form1"
    ScaleHeight     =   11235
-   ScaleWidth      =   14250
+   ScaleWidth      =   16815
    StartUpPosition =   3  'Windows Default
+   Begin VB.Timer Tim_Preview 
+      Interval        =   500
+      Left            =   6600
+      Top             =   6600
+   End
+   Begin VB.Frame F_PreviewInfo 
+      Caption         =   "--"
+      Height          =   2415
+      Left            =   12840
+      TabIndex        =   113
+      Top             =   720
+      Width           =   3855
+      Begin VB.CheckBox Ch_South 
+         Caption         =   "South (VSky)"
+         Height          =   255
+         Left            =   2400
+         TabIndex        =   114
+         Top             =   360
+         Width           =   1335
+      End
+      Begin VB.Label Label49 
+         Caption         =   "RA:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   129
+         Top             =   240
+         Width           =   375
+      End
+      Begin VB.Label Label48 
+         Caption         =   "DEC:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   128
+         Top             =   480
+         Width           =   375
+      End
+      Begin VB.Label Label47 
+         Caption         =   "Az:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   127
+         Top             =   840
+         Width           =   375
+      End
+      Begin VB.Label Label45 
+         Caption         =   "Alt:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   126
+         Top             =   1080
+         Width           =   375
+      End
+      Begin VB.Label L_Preview_RA 
+         Caption         =   "RA:"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   125
+         Top             =   240
+         Width           =   1455
+      End
+      Begin VB.Label L_Preview_DEC 
+         Caption         =   "DEC:"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   124
+         Top             =   480
+         Width           =   1455
+      End
+      Begin VB.Label L_Preview_Az 
+         Caption         =   "--"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   123
+         Top             =   840
+         Width           =   735
+      End
+      Begin VB.Label L_Preview_Alt 
+         Caption         =   "--"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   122
+         Top             =   1080
+         Width           =   1455
+      End
+      Begin VB.Label L_Preview_HourAngle 
+         Caption         =   "--"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   121
+         Top             =   1440
+         Width           =   1455
+      End
+      Begin VB.Label Label35 
+         Caption         =   "Hour Angle:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   120
+         Top             =   1440
+         Width           =   855
+      End
+      Begin VB.Label Label34 
+         Caption         =   "Equ. xyz:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   119
+         Top             =   1800
+         Width           =   855
+      End
+      Begin VB.Label L_Preview_EquXYZ 
+         Caption         =   "--"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   118
+         Top             =   1800
+         Width           =   2415
+      End
+      Begin VB.Label L_Preview_HorXYZ 
+         Caption         =   "--"
+         Height          =   255
+         Left            =   1200
+         TabIndex        =   117
+         Top             =   2040
+         Width           =   2415
+      End
+      Begin VB.Label Label29 
+         Caption         =   "Horiz. xyz:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   116
+         Top             =   2040
+         Width           =   855
+      End
+      Begin VB.Label L_Preview_CardinalOrientation 
+         Caption         =   "--"
+         Height          =   255
+         Left            =   2160
+         TabIndex        =   115
+         Top             =   840
+         Width           =   495
+      End
+   End
    Begin VB.CommandButton C_Simulation 
       Caption         =   "Simulation"
       Height          =   495
       Left            =   4080
       Style           =   1  'Graphical
-      TabIndex        =   113
+      TabIndex        =   112
       Top             =   1200
       Width           =   1215
    End
    Begin Project1.zzSlider zzSlider1 
       Height          =   255
       Left            =   8040
-      TabIndex        =   112
+      TabIndex        =   111
       Top             =   9360
       Width           =   5055
       _ExtentX        =   8916
@@ -53,7 +194,7 @@ Begin VB.Form Mainform
       Caption         =   "Goto Noth"
       Height          =   495
       Left            =   4080
-      TabIndex        =   111
+      TabIndex        =   110
       Top             =   360
       Width           =   1335
    End
@@ -66,14 +207,14 @@ Begin VB.Form Mainform
       Caption         =   "Command1"
       Height          =   495
       Left            =   12360
-      TabIndex        =   109
+      TabIndex        =   108
       Top             =   7560
       Width           =   1215
    End
    Begin VB.ListBox List1 
       Height          =   5910
       Left            =   12240
-      TabIndex        =   108
+      TabIndex        =   107
       Top             =   240
       Width           =   1575
    End
@@ -82,14 +223,14 @@ Begin VB.Form Mainform
       Height          =   255
       Left            =   240
       Style           =   1  'Graphical
-      TabIndex        =   106
+      TabIndex        =   105
       Top             =   480
       Width           =   1215
    End
    Begin MSComctlLib.Slider Slider1 
       Height          =   315
       Left            =   7920
-      TabIndex        =   105
+      TabIndex        =   104
       Top             =   8880
       Width           =   5295
       _ExtentX        =   9340
@@ -104,7 +245,7 @@ Begin VB.Form Mainform
       Height          =   495
       Left            =   10560
       Style           =   1  'Graphical
-      TabIndex        =   95
+      TabIndex        =   94
       Top             =   6720
       Width           =   1215
    End
@@ -113,7 +254,7 @@ Begin VB.Form Mainform
       Height          =   495
       Left            =   3000
       Style           =   1  'Graphical
-      TabIndex        =   93
+      TabIndex        =   92
       Top             =   5760
       Width           =   2295
    End
@@ -179,7 +320,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   2520
-         TabIndex        =   103
+         TabIndex        =   102
          Top             =   1320
          Width           =   1095
       End
@@ -187,7 +328,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   2520
-         TabIndex        =   101
+         TabIndex        =   100
          Top             =   600
          Width           =   1095
       End
@@ -283,7 +424,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   2640
-         TabIndex        =   102
+         TabIndex        =   101
          Top             =   1320
          Width           =   1095
       End
@@ -291,7 +432,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   2520
-         TabIndex        =   100
+         TabIndex        =   99
          Top             =   600
          Width           =   1095
       End
@@ -383,19 +524,11 @@ Begin VB.Form Mainform
       TabIndex        =   49
       Top             =   360
       Width           =   3855
-      Begin VB.CheckBox Ch_South 
-         Caption         =   "South (VSky)"
-         Height          =   255
-         Left            =   2400
-         TabIndex        =   92
-         Top             =   360
-         Width           =   1335
-      End
       Begin VB.Label L_CardinalOrientation 
          Caption         =   "--"
          Height          =   255
          Left            =   2160
-         TabIndex        =   99
+         TabIndex        =   98
          Top             =   840
          Width           =   495
       End
@@ -811,7 +944,7 @@ Begin VB.Form Mainform
       Caption         =   "--"
       Height          =   375
       Left            =   9240
-      TabIndex        =   110
+      TabIndex        =   109
       Top             =   9840
       Width           =   2415
    End
@@ -820,7 +953,7 @@ Begin VB.Form Mainform
       Caption         =   "ErrorCount:"
       Height          =   255
       Left            =   12360
-      TabIndex        =   107
+      TabIndex        =   106
       Top             =   6840
       Width           =   1215
    End
@@ -835,7 +968,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8040
-      TabIndex        =   104
+      TabIndex        =   103
       Top             =   8280
       Width           =   2415
    End
@@ -844,7 +977,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8040
-      TabIndex        =   98
+      TabIndex        =   97
       Top             =   7920
       Width           =   2415
    End
@@ -853,7 +986,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8040
-      TabIndex        =   97
+      TabIndex        =   96
       Top             =   7560
       Width           =   2415
    End
@@ -862,7 +995,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8040
-      TabIndex        =   96
+      TabIndex        =   95
       Top             =   7080
       Width           =   2415
    End
@@ -871,7 +1004,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8040
-      TabIndex        =   94
+      TabIndex        =   93
       Top             =   6720
       Width           =   2415
    End
@@ -1076,26 +1209,21 @@ End Enum
 
 Private Sub AlignmentStarList_Click()
     Dim idx As Long
-    Dim HourAngle As Double
-    Dim HourAngleHMS As MyTime
-    Dim SelectedStar As String
 
     ' Search star name in list
     idx = -1
     Do
         idx = idx + 1
     Loop Until (AlignmentStarArray(idx).ProperName = AlignmentStarList.Text) Or (idx >= UBound(AlignmentStarArray))
-    L_CurrentStar = AlignmentStarArray(idx).ProperName
+'    L_CurrentStar = AlignmentStarArray(idx).ProperName
     
-    ObserverRaDec.Ra = HourToRad(AlignmentStarArray(idx).Ra)
-    ObserverRaDec.Dec = DegToRad(AlignmentStarArray(idx).Dec)
-         
-         
+    PreviewRaDec.Ra = HourToRad(AlignmentStarArray(idx).Ra)
+    PreviewRaDec.Dec = DegToRad(AlignmentStarArray(idx).Dec)
+    
     Dim StarPos As AzAlt
-    StarPos = RA_DEC_to_AZ_ALT_new(ObserverRaDec, GlbOberverPos, GlbSiderialTime)
+    StarPos = RA_DEC_to_AZ_ALT_new(PreviewRaDec, GlbOberverPos, GlbSiderialTime)
 '    StarPos = AzAlt_to_MatrixSystem(StarPos)
     DispAlignmentStar StarPos
-  
   
 End Sub
 
@@ -1152,7 +1280,11 @@ Private Sub C_GotoStar_Click()
 
     TestStatus = True
     StatusMoving = 0
-
+    
+    
+    '==== Telescope moves to this star ====
+    ObserverRaDec = PreviewRaDec
+    Tim_Tracking_Timer
 
     Dim tmp As AzAlt
     tmp.Az = ObserverAzAlt.Az
@@ -1800,6 +1932,136 @@ Private Sub Tim_DisplayUpdate_Timer()
     
 End Sub
 
+Private Sub Tim_Preview_Timer()
+'''    Dim tDate As MyDate
+'''    Dim tTs As MyTime
+'''    Dim tTsRad As Double
+'''    Dim LongitudeDeg As Double
+'''    Dim LongitudeRad As Double
+'''    Dim LatitudeDeg As Double
+'''    Dim LatitudeRad As Double
+'''
+'''
+'''
+'''    If O_TimeSelectLocal.Value = True Then
+'''        ObserverDateTimeUT = UtcTime(Now)              ' Get current Time UT
+'''        L_LocalTime = " Local time:   " & Now
+'''    Else
+'''        ' Take simulation time
+'''        ObserverDateTimeUT = StingsToDate(T_Tag, T_Monat, T_Jahr, T_Stunden, T_Minuten, T_Sekunden)
+'''        L_LocalTime = " Local time:   " & "--"
+'''    End If
+'''
+'''    L_UTime = " UT:              " & ObserverDateTimeUT
+'''    ObserverTimeUT.H = Hour(ObserverDateTimeUT)
+'''    ObserverTimeUT.M = Minute(ObserverDateTimeUT)
+'''    ObserverTimeUT.s = Second(ObserverDateTimeUT)
+'''    tDate.YY = Year(ObserverDateTimeUT)
+'''    tDate.MM = Month(ObserverDateTimeUT)
+'''    tDate.DD = Day(ObserverDateTimeUT)
+'''
+'''    LatitudeDeg = GeoToDez(ObserverLatt)
+'''    LatitudeRad = DegToRad(LatitudeDeg)
+'''    LongitudeDeg = GeoToDez(ObserverLong)
+'''    LongitudeRad = DegToRad(LongitudeDeg)
+'''
+'''    GlbOberverPos.Latitude = LatitudeRad
+'''    GlbOberverPos.Longitude = LongitudeRad
+'''
+'''    'double check siderial time: https://tycho.usno.navy.mil/sidereal.html
+'''    tTsRad = TimeToRad(GMST(tDate, ObserverTimeUT)) - LongitudeRad
+'''    GlbSiderialTime = TimeToRad(GMST(tDate, ObserverTimeUT))
+'''    tTs = RadToTime(tTsRad)
+'''    L_SiderialTime = "Siderial time: " & tTs.H & ":" & Format(tTs.M, "00") & ":" & Format(tTs.s, "00")
+'''
+
+
+
+    Dim idx As Long
+    Dim Az As Double
+    Dim HourAngle As Double
+    Dim HourAngleHMS As MyTime
+    
+    idx = AlignmentStarList.ListIndex
+    
+    ' no star selected yet
+    If idx < 0 Then
+        Exit Sub
+    End If
+    
+    ' Search star name in list
+    idx = -1
+    Do
+        idx = idx + 1
+    Loop Until (AlignmentStarArray(idx).ProperName = AlignmentStarList.Text) Or (idx >= UBound(AlignmentStarArray))
+    L_CurrentStar = AlignmentStarArray(idx).ProperName
+    F_PreviewInfo.Caption = AlignmentStarArray(idx).ProperName
+    
+    PreviewRaDec.Ra = HourToRad(AlignmentStarArray(idx).Ra)
+    PreviewRaDec.Dec = DegToRad(AlignmentStarArray(idx).Dec)
+    DisplayCoordinate L_Preview_RA, PreviewRaDec.Ra, HMS
+    DisplayCoordinate L_Preview_DEC, PreviewRaDec.Dec, DegDec
+     
+    PreviewAzAlt = RA_DEC_to_AZ_ALT_new(PreviewRaDec, GlbOberverPos, GlbSiderialTime)
+
+   
+    
+    Dim DisplPreviewAz As Double
+    If Ch_South.Value = 1 Then
+        DisplPreviewAz = CutRad(PreviewAzAlt.Az + Pi)
+    Else
+        DisplPreviewAz = CutRad(PreviewAzAlt.Az)
+    End If
+    
+    DisplayCoordinate L_Preview_Az, DisplPreviewAz, DegDec
+    
+    
+    
+    
+    
+    
+    
+    Dim tmp As AzAlt
+    tmp.Az = PreviewAzAlt.Az
+    tmp.Alt = PreviewAzAlt.Alt
+    L_Preview_CardinalOrientation = GetCardinalDrection(AzAlt_to_MatrixSystem(tmp).Az)
+    DisplayCoordinate L_Preview_Alt, PreviewAzAlt.Alt, DegDec
+    DisplayCoordinate L_Preview_HourAngle, HourAngle, HMS
+
+            'Just for testing: get matrix vectors
+            Dim X As Double
+            Dim Y As Double
+            Dim z As Double
+            Dim HorizAngle As Double
+            Dim ElevAngle As Double
+            
+            HorizAngle = PreviewRaDec.Ra
+            ElevAngle = PreviewRaDec.Dec
+            X = Cos(ElevAngle) * Cos(HorizAngle)
+            Y = Cos(ElevAngle) * Sin(HorizAngle)
+            z = Sin(ElevAngle)
+            L_Preview_EquXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
+        
+            HorizAngle = PreviewAzAlt.Az
+            ElevAngle = PreviewAzAlt.Alt
+            X = Cos(ElevAngle) * Cos(HorizAngle)
+            Y = Cos(ElevAngle) * Sin(HorizAngle)
+            z = Sin(ElevAngle)
+            L_Preview_HorXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
+
+
+    If PreviewAzAlt.Alt < 0 Then
+        L_CurrentStar.BackColor = RGB(255, 0, 0)
+    ElseIf (PreviewAzAlt.Alt > 0) And (PreviewAzAlt.Alt < 0.3) Then
+        L_CurrentStar.BackColor = RGB(255, 255, 0)
+    Else
+        L_CurrentStar.BackColor = RGB(0, 255, 0)
+    End If
+    
+    
+  
+End Sub
+
 Private Sub Tim_Simulation_Timer()
     Dim SimScaling As Double
     Dim SimGotoStep As Double
@@ -1975,7 +2237,7 @@ Private Sub Tim_Tracking_Timer()
     tDate.YY = Year(ObserverDateTimeUT)
     tDate.MM = Month(ObserverDateTimeUT)
     tDate.DD = Day(ObserverDateTimeUT)
-    
+
     LatitudeDeg = GeoToDez(ObserverLatt)
     LatitudeRad = DegToRad(LatitudeDeg)
     LongitudeDeg = GeoToDez(ObserverLong)
@@ -1983,7 +2245,7 @@ Private Sub Tim_Tracking_Timer()
 
     GlbOberverPos.Latitude = LatitudeRad
     GlbOberverPos.Longitude = LongitudeRad
-    
+
     'double check siderial time: https://tycho.usno.navy.mil/sidereal.html
     tTsRad = TimeToRad(GMST(tDate, ObserverTimeUT)) - LongitudeRad
     GlbSiderialTime = TimeToRad(GMST(tDate, ObserverTimeUT))
@@ -1997,26 +2259,31 @@ Private Sub Tim_Tracking_Timer()
     Dim Az As Double
     Dim HourAngle As Double
     Dim HourAngleHMS As MyTime
-    
+
     idx = AlignmentStarList.ListIndex
-    
+
     ' no star selected yet
     If idx < 0 Then
         Exit Sub
     End If
-    
+
     ' Search star name in list
     idx = -1
     Do
         idx = idx + 1
     Loop Until (AlignmentStarArray(idx).ProperName = AlignmentStarList.Text) Or (idx >= UBound(AlignmentStarArray))
-    L_CurrentStar = AlignmentStarArray(idx).ProperName
+'    L_CurrentStar = AlignmentStarArray(idx).ProperName
     F_StarInfo.Caption = AlignmentStarArray(idx).ProperName
-    
+
 '    ObserverRA = HourToRad(AlignmentStarArray(idx).Ra)
 '    ObserverDEC = DegToRad(AlignmentStarArray(idx).Dec)
-    ObserverRaDec.Ra = HourToRad(AlignmentStarArray(idx).Ra)
-    ObserverRaDec.Dec = DegToRad(AlignmentStarArray(idx).Dec)
+
+
+'''    ObserverRaDec.Ra = HourToRad(AlignmentStarArray(idx).Ra)
+'''    ObserverRaDec.Dec = DegToRad(AlignmentStarArray(idx).Dec)
+
+
+    
     DisplayCoordinate L_I_RA, ObserverRaDec.Ra, HMS
     DisplayCoordinate L_I_DEC, ObserverRaDec.Dec, DegDec
      
@@ -2063,13 +2330,13 @@ Private Sub Tim_Tracking_Timer()
             L_I_HorXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
 
 
-    If ObserverAzAlt.Alt < 0 Then
-        L_CurrentStar.BackColor = RGB(255, 0, 0)
-    ElseIf (ObserverAzAlt.Alt > 0) And (ObserverAzAlt.Alt < 0.3) Then
-        L_CurrentStar.BackColor = RGB(255, 255, 0)
-    Else
-        L_CurrentStar.BackColor = RGB(0, 255, 0)
-    End If
+'''    If ObserverAzAlt.Alt < 0 Then
+'''        L_CurrentStar.BackColor = RGB(255, 0, 0)
+'''    ElseIf (ObserverAzAlt.Alt > 0) And (ObserverAzAlt.Alt < 0.3) Then
+'''        L_CurrentStar.BackColor = RGB(255, 255, 0)
+'''    Else
+'''        L_CurrentStar.BackColor = RGB(0, 255, 0)
+'''    End If
     
     
     

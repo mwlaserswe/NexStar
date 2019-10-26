@@ -92,6 +92,11 @@ Public ObserverRaDec As RaDec
 Public ObserverAzAlt As AzAlt
 Public GlobalOffset As AzAlt
 
+
+' Preview
+Public PreviewRaDec As RaDec
+Public PreviewAzAlt As AzAlt
+
 Public GlbSiderialTime As Double
 Public GlbOberverPos As GeoCoordinates
 

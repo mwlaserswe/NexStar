@@ -686,7 +686,7 @@ Begin VB.Form Mainform
       LargeChange     =   10
       Left            =   4560
       Max             =   0
-      Min             =   100
+      Min             =   1300
       TabIndex        =   8
       Top             =   3240
       Value           =   100
@@ -1452,7 +1452,7 @@ Private Sub Form_Load()
     
     Command = 0
     
-    VS_ManualSlewingSpeed.Value = 10
+    VS_ManualSlewingSpeed.Value = 1300
 
 
     LoadAlignmetStarFile
@@ -2113,10 +2113,10 @@ Private Sub Tim_Tracking_Timer()
                 ElseIf GlbCalibStatus = 1 Then
                 
                                 
-                            Dim Tmp1 As AzAlt
-                            Tmp1.Az = CutRad(ObserverAzAlt.Az)
-                            Tmp1.Alt = ObserverAzAlt.Alt
-                            MatrixSystemSoll = AzAlt_to_MatrixSystem(Tmp1)
+                            Dim tmp1 As AzAlt
+                            tmp1.Az = CutRad(ObserverAzAlt.Az)
+                            tmp1.Alt = ObserverAzAlt.Alt
+                            MatrixSystemSoll = AzAlt_to_MatrixSystem(tmp1)
                             
 '                             'Set Az
 '                            MatrixSystemSoll.Az = CutRad(ObserverAzAlt.Az)

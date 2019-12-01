@@ -19,9 +19,9 @@ Begin VB.Form Mainform
    Begin VB.Frame F_PreviewInfo 
       Caption         =   "--"
       Height          =   2415
-      Left            =   12840
+      Left            =   12600
       TabIndex        =   113
-      Top             =   720
+      Top             =   360
       Width           =   3855
       Begin VB.CheckBox Ch_South 
          Caption         =   "South (VSky)"
@@ -1290,10 +1290,9 @@ Private Sub C_GotoStar_Click()
     tmp.Az = ObserverAzAlt.Az
     tmp.Alt = ObserverAzAlt.Alt
     MatrixSystemSoll = AzAlt_to_MatrixSystem(tmp)
+    F_StarInfo.Caption = F_PreviewInfo.Caption
 
     Dim MotorIncr As AzAlt
-    
-
     MotorIncr = Matrix_To_MotorIncrSystem(MatrixSystemSoll)
     
     If SimOffline Then
@@ -2273,7 +2272,7 @@ Private Sub Tim_Tracking_Timer()
         idx = idx + 1
     Loop Until (AlignmentStarArray(idx).ProperName = AlignmentStarList.Text) Or (idx >= UBound(AlignmentStarArray))
 '    L_CurrentStar = AlignmentStarArray(idx).ProperName
-    F_StarInfo.Caption = AlignmentStarArray(idx).ProperName
+'''''    F_StarInfo.Caption = AlignmentStarArray(idx).ProperName
 
 '    ObserverRA = HourToRad(AlignmentStarArray(idx).Ra)
 '    ObserverDEC = DegToRad(AlignmentStarArray(idx).Dec)
@@ -2549,7 +2548,7 @@ Private Sub LoadAlignmetStarFile()
     
     AlignmetStarFile = FreeFile
     On Error GoTo openErr:
-    AlignmetStarFileName = App.Path & "\Alignment Stars.txt"
+    AlignmetStarFileName = App.Path & "\Alignment Stars extended.txt"
     Open AlignmetStarFileName For Input As AlignmetStarFile
     While Not EOF(AlignmetStarFile)
         Line Input #AlignmetStarFile, Zeile

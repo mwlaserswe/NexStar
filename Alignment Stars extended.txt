@@ -1,0 +1,215 @@
+1	Acamar	Eridanus	Theta	-1	2,971111	-40,30472000	2,90				
+2	Achernar	Eridanus	Alpha	-1	1,628611	-57,23666000	0,44				
+3	Achird	Cassiopeia	Eta	-1	0,818333	57,81527000	3,44				
+4	Acrux	Crux	Alpha	-1	12,44888	-63,09916000	0,77				
+5	Adhafera	Leo	Zeta	-1	10,27805	23,41722000	3,33				
+6	Adhara	Canis Major	Epsilon	-1	6,977222	-28,97194000	1,50				
+7	Ain	Taurus	Epsilon	-1	4,476944	19,18055000	3,53				
+8	Alaraph	Virgo	Beta	-1	11,845	1,76472200	3,60				
+9	Albali	Aquarius	Epsilon	-1	20,79472	-9,49583300	3,77				
+10	Albireo	Cygnus	Beta	-1	19,51194	27,95972000	3,18				
+11	Alchibah	Corvus	Alpha	-1	12,14027	-24,72888000	4,00				
+12	Alcor	Ursa Major	80	-1	13,42055	54,98805000	3,99				
+13	Alcyone	Taurus	Eta	-1	3,791388	24,10500000	2,87				
+14	Aldebaran	Taurus	Alpha	-1	4,598611	16,50916000	~0.85				
+15	Alderamin	Cephus	Alpha	-1	21,30972	62,58555000	2,51				
+16	Aldhanab	Grus	Gamma	-1	21,89888	-37,36472000	3,00				
+17	Alfirk	Cephus	Beta	-1	21,47777	70,56083000	3,14				
+18	Algenib	Pegasus	Gamma	-1	0,220555	15,18361000	2,84				
+19	Algieba	Leo	Gamma	-1	10,33277	19,84138000	1,98				
+20	Algol	Perseus	Beta	-1	3,136111	40,95555000	2,12				
+21	Algorab	Corvus	Delta	-1	12,49777	-16,51555000	2,96				
+22	Alhaud	Ursa Major	Theta	-1	9,5475	51,67722000	3,17				
+23	Alhena	Gemini	Gamma	-1	6,628611	16,39916000	1,92				
+24	Alioth	Ursa Major	Epsilon	-1	12,90055	55,95972000	1,77				
+25	Alkaid	Ursa Major	Eta	-1	13,79222	49,31333000	1,84				
+26	Almach	Andromeda	Gamma	-1	2,065	42,32972000	2,26				
+27	Alnair	Grus	Alpha	-1	22,13722	46,96111000	1,74				
+28	Alnilam	Orion	Epsilon	-1	5,603611	-1,20194400	1,70				
+29	Alnitak	Orion	Zeta	-1	5,679444	-1,94277700	2,00				
+30	Alniyat	Scorpius	Sigma	-1	16,35305	-25,59277000	2,88				
+31	Alpha Cen	Centaurus	-	-1	14,66	-60,83388000	-0.01				
+32	Alphard	Hydra	Alpha	-1	9,459722	-8,65861100	2,00				
+33	Alphecca	Corona Borealis	Alpha	-1	15,57805	26,71472000	2,21				
+34	Alpheratz	Andromeda	Alpha	-1	0,139722	29,09055000	2,22				
+35	Alrai	Cephus	Gamma	-1	23,65583	77,63222000	3,22				
+36	Alshain	Aquila	Beta	-1	19,92194	6,40666600	3,71				
+37	Altair	Aquila	Alpha	-1	19,84638	8,86833300	0,77				
+38	Altais	Draco	Delta	-1	19,20916	67,66166000	3,07				
+39	Aludra	Canis Major	Eta	-1	7,401666	-29,30305000	2,45				
+40	Alula Australis 	Ursa Major	Xi	-1	11,30305	31,52916000	3,79				
+41	Alula Borealis	Ursa Major	Nu	-1	11,30805	33,09444000	3,49				
+42	Alwaid	Draco	Beta	-1	17,50722	52,30138000	2,79				
+43	Angetenar	Eridanus	Tau	-1	2,850555	-21,00416000	4,75				
+44	Ankaa	Phoenix	Alpha	-1	0,438055	-42,30611000	2,38				
+45	Antares	Scorpius	Alpha	-1	16,49	-26,43194000	0,96				
+46	Arcturus	Bootes	Alpha	-1	14,26111	19,18222000	-0.04				
+47	Arkab	Sagittarius	Beta	-1	19,37722	-44,45888000	3,96				
+48	Arneb	Lepus	Alpha	-1	5,545555	-17,82222000	2,59				
+49	Ascella	Sagittarius	Zeta	-1	19,04361	-29,88000000	2,59				
+50	Asellus Australis	Cancer	Delta	-1	8,744722	18,15416000	3,94				
+51	Asmidiske	Puppis	Xi	-1	7,821666	-24,85972000	3,35				
+52	Atik	Perseus	Omicron	-1	3,738611	32,28833000	3,83				
+53	Atria	Triangulum Australe	Alpha	-1	16,81111	-69,02777000	1,91				
+54	Auva	Virgo	Delta	-1	12,92666	3,39750000	3,40				
+55	Avior	Carina	Epsilon	-1	8,375277	-59,50944000	1,86				
+56	Azha	Eridanus	Eta	-1	2,940555	-8,89805500	4,10				
+57	Baham	Pegasus	Theta	-1	22,17	6,19777700	3,53				
+58	Baten Kaitos	Cetus	Zeta	-1	1,857777	-10,33500000	3,90				
+59	Beid	Eridanus	Omicron	-1	4,197777	-6,83722200	4,04				
+60	Bellatrix	Orion	Gamma	-1	5,418888	6,34972200	1,64				
+61	Betelgeuse	Orion	Alpha	-1	5,919444	7,40694400	0,42				
+62	Canopus	Carina	Alpha	-1	6,399166	52,69555000	-0.72				
+63	Capella	Auriga	Alpha	-1	5,278055	45,99805000	0,91				
+64	Caph	Cassiopeia	Beta	-1	0,153055	59,14972000	2,28				
+65	Castor	Gemini	Alpha	-1	7,576666	31,88833000	1,93				
+66	Celbalrai	Ophiuchus	Beta	-1	17,72444	4,56722200	2,75				
+67	Chort	Leo	Theta	-1	11,23722	15,42916000	3,32				
+68	Cor Caroli	Canes Venatici	Alpha	-1	12,93388	38,31833000	2,84				
+69	Cursa	Eridanus	Beta	-1	5,130833	-5,08638800	2,80				
+70	Dabih	Capricornus	Beta	-1	20,35027	-14,78138000	3,05				
+71	Deneb	Cygnus	Alpha	-1	20,69055	45,28027000	1,25				
+72	Deneb Algiedi	Capricornus	Delta	-1	21,78388	-16,12722000	2,81				
+73	Denebola	Leo	Beta	-1	11,81777	14,57194000	2,11				
+74	Diphda	Cetus	Beta	-1	0,726388	-17,98666000	2,02				
+75	Dnoces	Ursa Major	Iota	-1	8,986666	48,04194000	3,14				
+76	Dschubba	Scorpius	Delta	-1	16,00555	-22,62166000	2,31				
+77	Dubhe	Ursa Major	Alpha	-1	11,06222	61,75111000	1,79				
+78	Edasich	Draco	Iota	-1	15,41555	58,96611000	3,29				
+79	El Nath	Taurus	Beta	-1	5,438333	28,60750000	1,68				
+80	Eltanin	Draco	Gamma	-1	17,94333	51,48888000	2,36				
+81	Enif	Pegasus	Epsilon	-1	21,73638	9,87500000	2,40				
+82	Fomalhaut	Piscis Austrinus	Alpha	-1	22,96083	-29,62222000	1,16				
+83	Fornacis	Fornax	Alpha	-1	3,201388	-28,98750000	3,85				
+84	Furud	Canis Major	Zeta	-1	6,338611	-30,06333000	3,02				
+85	Gacrux	Crux	Gamma	-1	12,51944	-57,11333000	1,63				
+86	Giauzar	Draco	Lambda	-1	11,475	69,60833000	4,10				
+87	Giedi	Capricornus	Alpha	-1	20,29416	-12,50833000	4,30				
+88	Gienah	Cygnus	Epsilon	-1	20,77027	33,97027000	2,48				
+89	Gienah	Corvus	Gamma	-1	12,26333	-17,54194000	2,58				
+90	Gomeisa	Canis Major	Beta	-1	7,4525	8,28944400	2,89				
+91	Graffias	Scorpius	Beta	-1	16,09055	-19,80527000	2,63				
+92	Grumium	Draco	Xi	-1	17,89222	56,87277000	3,75				
+93	Hadar	Centaurus	Beta	-1	14,06361	-60,37305000	0,60				
+94	Hamal	Aries	Alpha	-1	2,119444	23,46250000	2,00				
+95	Heze	Virgo	Zeta	-1	13,57833	-0,59583300	3,38				
+96	Homam	Pegasus	Zeta	-1	22,69111	10,83138000	3,40				
+97	Izar	Bootes	Epsilon	-1	14,74972	27,07416000	2,37				
+98	Jabbah	Scorpius	Nu	-1	16,2	-19,46083000	4,00				
+99	Kaffaljidhm	Cetus	Gamma	-1	2,721666	3,23583300	3,47				
+100	Kaus Australis	Sagittarius	Epsilon	-1	18,40277	-34,38472000	1,85				
+101	Kaus Borealis	Sagittarius	Lambda	-1	18,46611	-25,42166000	2,82				
+102	Kaus Media	Sagittarius	Delta	-1	18,35	-29,82805000	2,70				
+103	Kekwan	Centaurus	Kappa	-1	14,98611	-42,10416000	3,14				
+104	Kitalpha	Equuleus	Alpha	-1	21,26361	5,24805500	3,92				
+105	Kochab	Ursa Minor	Beta	-1	14,845	74,15555000	2,08				
+106	Kornephoros	Hercules	Beta	-1	16,50361	21,48972000	2,81				
+107	Kraz	Corvus	Beta	-1	12,57305	-23,39666000	2,65				
+108	Lesuth	Scorpius	Upsilon	-1	17,51277	-37,29583000	2,70				
+109	Maaz	Auriga	Epsilon	-1	5,032777	43,82333000	3,04				
+110	Marfik	Ophiuchus	Lambda	-1	16,51527	1,98388800	3,90				
+111	Markab	Pegasus	Alpha	-1	23,07944	15,20527000	2,48				
+112	Matar	Pegasus	Eta	-1	22,71666	30,22111000	2,95				
+113	Mebsuta	Gemini	Epsilon	-1	6,732222	25,13111000	3,06				
+114	Megrez	Ursa Major	Delta	-1	12,25722	57,03250000	3,31				
+115	Meissa	Orion	Lambda	-1	5,585555	9,93416600	3,54				
+116	Mekbuda	Gemini	Zeta	-1	7,068611	20,57027000	3,93				
+117	Menkalinan	Auriga	Beta	-1	5,992222	44,94750000	1,90				
+118	Menkar	Cetus	Alpha	-1	3,038055	4,08972200	2,53				
+119	Menkent	Centaurus	Theta	-1	14,11138	-36,37000000	2,06				
+120	Menkib	Perseus	Xi	-1	3,982777	35,79111000	4,04				
+121	Merak	Ursa Major	Beta	-1	11,03055	56,38250000	2,37				
+122	Miaplacidus	Carina	Beta	-1	9,220277	-69,71722000	1,68				
+123	Mimosa	Crux	Beta	-1	12,79527	-59,68888000	1,25				
+124	Minkar	Corvus	Epsilon	-1	12,16861	-22,61972000	3,02				
+125	Mintaka	Orion	Delta	-1	5,533333	-0,29916600	2,23				
+126	Mira	Cetus	Omicron	-1	2,3225	-2,97750000	3,04				
+127	Mirach	Andromeda	Beta	-1	1,162222	35,62055000	2,05				
+128	Mirfak	Perseus	Alpha	-1	3,405277	49,86111000	1,81				
+129	Mirzam	Canis Major	Beta	-1	6,378333	-17,95583000	1,98				
+130	Mizar	Ursa Major	Zeta	-1	13,39888	54,92527000	2,23				
+131	Mothallah	Triangulum  	Alpha	-1	1,884722	29,57888000	3,42				
+132	Muhlifain	Centaurus	Gamma	-1	12,69194	-48,96000000	2,17				
+133	Muphrid	Bootes	Eta	-1	13,91138	18,39777000	2,68				
+134	Muscida	Ursa Major	Omicron	-1	8,504444	60,71805000	3,35				
+135	Nair Saif	Orion	Iota	-1	5,590555	-5,91000000	2,77				
+136	Naos	Puppis	Zeta	-1	8,059722	-40,00333000	2,21				
+137	Nashira	Capricornus	Gamma	-1	21,66805	-16,66222000	3,69				
+138	Nasl	Sagittarius	Gamma	-1	18,09666	-30,42416000	2,98				
+139	Navi	Cassiopeia	Gamma	-1	0,945277	60,71666000	2,47				
+140	Nekkar	Bootes	Beta	-1	15,0325	40,39055000	3,49				
+141	Nihal	Lepus	Beta	-1	5,470833	-20,75944000	2,84				
+142	Nunki	Sagittarius	Sigma	-1	18,92111	-26,29666000	2,05				
+143	Nusakan	Corona Borealis	Beta	-1	15,46388	29,10583000	3,65				
+144	Peacock	Pavo	Alpha	-1	20,4275	-56,73500000	1,94				
+145	Phact	Columba	Alpha	-1	5,660833	-34,07416000	2,64				
+146	Phad	Ursa Major	Gamma	-1	11,89722	53,69472000	2,44				
+147	Pherkad	Ursa Minor	Gamma	-1	15,34555	71,83388000	3,05				
+148	Polaris	Ursa Major	Alpha	-1	2,530277	89,26416000	1,98				
+149	Pollux	Gemini	Beta	-1	7,755277	28,02611000	1,14				
+150	Porrima	Virgo	Gamma	-1	12,69444	-1,44944400	2,74				
+151	Praecipua	Leo Minor	46	-1	10,88861	34,21388000	3,75				
+152	Prijipati	Auriga	Delta	-1	5,992222	54,28472000	3,74				
+153	Procyon	Canis Minor	Alpha	-1	7,655	5,22500000	0,34				
+154	Propus	Gemini	Eta	-1	6,248055	22,50694000	3,15				
+155	Rana	Eridanus	Delta	-1	3,720833	-9,76333300	3,54				
+156	Rasalas	Leo	Mu	-1	9,879166	26,00638000	4,10				
+157	Rasalgethi	Hercules	Alpha	-1	17,24416	14,39027000	2,91				
+158	Rasalhague	Ophiuchus	Alpha	-1	17,58222	12,56000000	2,07				
+159	Rastaban	Draco	Beta	-1	17,50722	52,30138000	2,79				
+160	Regor	Vela	Gamma	-1	8,158888	-47,33666000	1,78				
+161	Regulus	Leo	Alpha	-1	10,13944	11,96722000	1,35				
+162	Rigel	Orion	Beta	-1	5,242222	-8,20166600	0,12				
+163	Rotanev	Delphinus	Beta	-1	20,62583	14,59500000	3,62				
+164	Rukbah	Cassiopeia	Delta	-1	1,430277	60,23527000	2,68				
+165	Rukbat	Sagittarius	Alpha	-1	19,39805	-40,61583000	3,97				
+166	Sabik	Ophiuchus	Eta	-1	17,17305	-15,72500000	2,43				
+167	Sadachbia	Aquarius	Gamma	-1	22,36083	-1,38722200	3,85				
+168	Sadalbari	Pegasus	Mu	-1	22,83333	24,60166000	3,51				
+169	Sadalmelik	Aquarius	Alpha	-1	22,09638	-0,31972200	2,94				
+170	Sadalsuud	Aquarius	Beta	-1	21,52611	-5,57111100	2,87				
+171	Sadr	Cygnus	Gamma	-1	20,37055	40,25666000	2,23				
+172	Saiph	Orion	Kappa	-1	5,795833	-9,66972200	2,09				
+173	Sargas	Scorpius	Theta	-1	17,62194	-42,99777000	1,87				
+174	Sarin	Hercules	Delta	-1	17,25055	24,83916000	3,13				
+175	Scheat	Pegasus	Beta	-1	23,06305	28,08277000	2,42				
+176	Schedar	Cassiopeia	Alpha	-1	0,675	56,53722000	2,24				
+177	Schemali	Cetus	Iota	-1	0,323888	-8,82388800	3,56				
+178	Scutulum	Carina	Iota	-1	9,284722	-59,27527000	2,21				
+179	Seginus	Bootes	Gamma	-1	14,53472	38,30833000	3,00				
+180	Shaula	Scorpius	Lambda	-1	17,56	-37,10388000	1,62				
+181	Shelyak	Lyra	Beta	-1	18,83472	33,36277000	3,52				
+182	Sheratan	Aries	Beta	-1	1,910555	20,80805000	2,66				
+183	Sirius	Canis Major	Alpha	-1	6,7525	-16,71611000	-1,47				
+184	Skat	Aquarius	Delta	-1	22,91083	-15,82083000	3,25				
+185	Spica	Virgo	Alpha	-1	13,42	-11,16138000	1,04				
+186	Sualocin	Delphinus	Alpha	-1	20,66055	15,91194000	3,77				
+187	Suhail	Vela	Gamma	-1	9,133333	-43,43250000	2,21				
+188	Sulaphat	Lyra	Gamma	-1	18,98222	32,68944000	3,26				
+189	Talitha Australis	Ursa Major	Kappa	-1	9,060555	47,15638000	3,60				
+190	Tania Australis 	Ursa Major	Mu	-1	10,37194	41,49972000	3,20				
+191	Tania Borealis	Ursa Major	Lambda	-1	10,285	42,91444000	3,45				
+192	Tarazed	Aquila	Gamma	-1	19,77111	10,61333000	2,71				
+193	Tarf	Cancer	Beta	-1	8,275277	9,18555500	3,54				
+194	Tchou	Ara	Alpha	-1	17,53055	-49,87611000	2,93				
+195	Tejat	Gemini	Mu	-1	6,382777	22,51361000	2,86				
+196	Thuban	Draco	Alpha	-1	14,07305	64,37583000	3,65				
+197	Tsih	Cassiopeia	Gamma	-1	0,945277	60,71666000	2,47				
+198	Tyl	Draco	Epsilon	-1	19,80277	70,26805000	4,00				
+199	Unukalhai	Serpens Caput	Alpha	-1	15,73777	6,42555500	2,62				
+200	Vega	Lyra	Alpha	-1	18,61555	38,78361000	0,03				
+201	Vindemiatrix	Virgo	Epsilon	-1	13,03638	10,95916000	2,83				
+202	Wasat	Gemini	Delta	-1	7,335277	21,98222000	3,53				
+203	Wazn	Columba	Beta	-1	5,849444	-35,76833000	3,10				
+204	Wezen	Canis Major	Delta	-1	7,139722	-26,39333000	1,83				
+205	Yed Posterior	Ophiuchus	Epsilon	-1	16,30527	-4,69250000	3,22				
+206	Yed Prior	Ophiuchus	Delta	-1	16,23916	-3,69444400	2,75				
+207	Zaniah	Virgo	Eta	-1	12,33166	-0,66694400	3,89				
+208	Zaurac	Eridanus	Gamma	-1	3,967222	-13,50861000	2,95				
+209	Zosma	Leo	Delta	-1	11,23527	20,52361000	2,56				
+210	Zubenelgenubi	Libra	Alpha	-1	14,84472	-15,99722000	2,74				
+211	Zubenelhakrabi	Libra	Gamma	-1	15,59222	-14,45611000	3,91				
+212	Zubeneshamali	Libra	Beta	-1	15,28333	-9,38277700	2,61				
+213	Zuben Elschamali	Libra	Beta	-1	15,28333	-9,38277700	2,61				
+214	zz_Demo_Saturn	zz	zz	0	10,9599114h	8,432806	99
+215	zz_Aldebaran	Tau	Alpha	87	4,616666	16,55	0.9

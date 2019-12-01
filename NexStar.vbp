@@ -18,6 +18,7 @@ Form=Test2.frm
 Form=Vis.frm
 Module=Visualisieung; Visualisieung.bas
 Module=Math_old; Math_old.bas
+Module=History; History.bas
 IconForm="Mainform"
 Startup="Mainform"
 ExeName32="NexStar.exe"

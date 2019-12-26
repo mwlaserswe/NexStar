@@ -76,6 +76,8 @@ End Type
 Public SimOffline As Boolean
 Public ErrorCount As Long
 Public CommTest As Boolean
+Public DefaultPath As String
+Public DefaultStarKatalog As String
 Public IniFileName As String
 Public CommFileName As String
 Public AlignmentStarArray() As StarDescription

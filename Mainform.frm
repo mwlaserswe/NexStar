@@ -1,6 +1,7 @@
 VERSION 5.00
 Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form Mainform 
    Caption         =   "Form1"
    ClientHeight    =   11235
@@ -11,6 +12,13 @@ Begin VB.Form Mainform
    ScaleHeight     =   11235
    ScaleWidth      =   16815
    StartUpPosition =   3  'Windows Default
+   Begin MSComDlg.CommonDialog LoadStarKatalogDialog 
+      Left            =   6840
+      Top             =   4680
+      _ExtentX        =   847
+      _ExtentY        =   847
+      _Version        =   393216
+   End
    Begin VB.Timer Tim_Preview 
       Interval        =   500
       Left            =   6600
@@ -1150,6 +1158,9 @@ Begin VB.Form Mainform
    End
    Begin VB.Menu M_Setup 
       Caption         =   "Setup"
+      Begin VB.Menu M_LoadStarkatalog 
+         Caption         =   "Load Star Katalog"
+      End
    End
    Begin VB.Menu M_Test 
       Caption         =   "Test"
@@ -1585,6 +1596,8 @@ Private Sub Form_Load()
     
     VS_ManualSlewingSpeed.Value = 1300
 
+    DefaultPath = INIGetValue(IniFileName, "Diretories", "DefaultPath")
+    DefaultStarKatalog = INIGetValue(IniFileName, "Diretories", "DefaultStarKatalog")
 
     LoadAlignmetStarFile
 
@@ -1689,6 +1702,39 @@ Private Sub M_Communication_Click()
 End Sub
 
 
+
+
+
+Private Sub M_LoadStarkatalog_Click()
+'    Dim Befehlszeile As String
+'    Dim EditFileName As String
+    
+    ' CancelError ist auf True gesetzt.
+    On Error GoTo ErrHandler
+    
+    
+    LoadStarKatalogDialog.CancelError = True
+    LoadStarKatalogDialog.InitDir = DefaultPath
+    LoadStarKatalogDialog.Filter = "TXT-Datei (*.txt)|*.txt"
+    LoadStarKatalogDialog.Filename = ""
+    LoadStarKatalogDialog.ShowOpen
+    DefaultStarKatalog = LoadStarKatalogDialog.Filename
+    DefaultPath = Pfad$(DefaultStarKatalog)
+'    DefaultStarKatalog = EditFileName
+    '  LastEditFileName = EditFileName
+    
+    INISetValue IniFileName, "Diretories", "DefaultPath", DefaultPath
+    INISetValue IniFileName, "Diretories", "DefaultStarKatalog", DefaultStarKatalog
+    LoadAlignmetStarFile
+    
+
+    Exit Sub
+  
+ErrHandler:
+' Benutzer hat auf Abbrechen-Schaltfläche geklickt.
+  Exit Sub
+
+End Sub
 
 Private Sub M_Test1_Click()
     Test.Show
@@ -2545,10 +2591,12 @@ Private Sub LoadAlignmetStarFile()
     Dim idx As Long
 
     ReDim AlignmentStarArray(0 To 0)
+    AlignmentStarList.Clear
     
     AlignmetStarFile = FreeFile
     On Error GoTo openErr:
-    AlignmetStarFileName = App.Path & "\Alignment Stars extended.txt"
+    'AlignmetStarFileName = App.Path & "\Alignment Stars extended.txt"
+    AlignmetStarFileName = DefaultStarKatalog
     Open AlignmetStarFileName For Input As AlignmetStarFile
     While Not EOF(AlignmetStarFile)
         Line Input #AlignmetStarFile, Zeile

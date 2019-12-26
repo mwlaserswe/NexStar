@@ -1,0 +1,111 @@
+Lfd. Nr	Name	Sternbild (lat.)	Sternbild (de)	--	RA	DEC	Entfernung in Lichtjahren	Art des Objekts	Messier-Nr.	NGC-Nr.	RA(orig)	Dec(orig.)	Epoch (M)
+1	M1 Krebs-Nebel	Taurus	Stier	-1	05,575000	22,016667	3400	Supernova-Überrest	1	1952	05:20:02	+21:45:17	Sep-12-1758
+2	M2 	Aquarius	Wassermann	-1	21,558333	-00,816667	52000	Kugelsternhaufen	2	7089	21:21:08	-01:47:00	Sep-11-1760
+3	M3 	Canum Venaticorum	Jagdhunde	-1	13,703333	28,383333	46000	Kugelsternhaufen	3	5272	13:31:25	+29:32:57	May-03-1764
+4	M4 	Scorpio	Skorpion	-1	16,393333	-26,533333	7500	Kugelsternhaufen	4	6121	16:09:08	-25:55:40	May-08-1764
+5	M5 	Serpens	Schlange	-1	15,310000	02,083333	27000	Kugelsternhaufen	5	5904	15:06:36	+02:57:16	May-23-1764
+6	M6 	Scorpio	Skorpion	-1	17,668333	-32,216667	2100	offener Sternhaufen	6	6405	17:24:42	-32:10:34	May-23-1764
+7	M7 	Scorpio	Skorpion	-1	17,898333	-34,816667	800	offener Sternhaufen	7	6475	17:38:02	-34:40:34	May-23-1764
+8	M8 Lagunen-Nebel	Sagittarius	Schütze	-1	18,063333	-24,383333	4900	Emissionsnebel	8	6523	17:49:58	-24:21:10	May-23-1764
+9	M9 	Ophiuchus	Schlangenträger	-1	17,320000	-18,516667	26000	Kugelsternhaufen	9	6333	17:05:22	-18:13:26	May-28-1764
+10	M10 	Ophiuchus	Schlangenträger	-1	16,951667	-04,100000	16000	Kugelsternhaufen	10	6254	16:44:48	-03:42:18	May-29-1764
+11	M11 Wildenten-Nebel	Scutum	Schild	-1	18,851667	-06,266667	5500	offener Sternhaufen	11	6705	18:30:23	-06:31:01	May-30-1764
+12	M12 	Ophiuchus	Schlangenträger	-1	16,786667	-01,950000	19000	Kugelsternhaufen	12	6218	16:34:53	-02:30:28	May-30-1764
+13	M13 	Hercules	Herkules	-1	16,695000	36,466667	22000	Kugelsternhaufen	13	6205	16:33:15	+36:54:44	Jun-01-1764
+14	M14 	Ophiuchus	Schlangenträger	-1	17,626667	-03,250000	23000	Kugelsternhaufen	14	6402	17:25:14	-03:05:45	Jun-01-1764
+15	M15 	Ophiuchus	Pegasus	-1	21,500000	12,166667	49000	Kugelsternhaufen	15	7078	21:18:41	+10:40:03	Jun-03-1764
+16	M16 Adler-Nebel	Serpens	Schlange	-1	18,313333	-13,783333	5900	o. Sternh. + Emissionsn.	16	6611	18:05:00	-13:51:44	Jun-03-1764
+17	M17 Omega-Nebel	Sagittarius	Schütze	-1	18,346667	-16,183333	5900	Emissionsnebel	17	6618	18:07:03	-16:14:44	Jun-03-1764
+18	M18 	Sagittarius	Schütze	-1	18,331667	-17,133333	4900	offener Sternhaufen	18	6613	18:06:16	-17:13:14	Jun-03-1764
+19	M19 	Ophiuchus	Schlangenträger	-1	17,043333	-26,266667	22000	Kugelsternhaufen	19	6273	16:48:07	-25:54:46	Jun-05-1764
+20	M20 Trifid-Nebel 	Sagittarius	Schütze	-1	18,043333	-23,033333	5200	Emissions- u. Reflexionsnebel	20	6514	17:48:16	-22:59:10	Jun-05-1764
+21	M21 	Sagittarius	Schütze	-1	18,076667	-22,500000	4200	offener Sternhaufen	21	6531	17:50:07	-22:31:25	Jun-05-1764
+22	M22 	Sagittarius	Schütze	-1	18,606667	-23,900000	9800	Kugelsternhaufen	22	6656	18:21:55	-24:06:11	Jun-05-1764
+23	M23 	Sagittarius	Schütze	-1	17,946667	-19,016667	2200	offener Sternhaufen	23	6494	17:42:51	-18:45:55	Jun-20-1764
+24	M24 	Sagittarius	Schütze	-1	18,281667	-18,483333	16000	Sternwolke	24	6603	18:01:44	-18:26:00	Jun-20-1764
+25	M25 	Sagittarius	Schütze	-1	18,526667	-19,250000	2000	offener Sternhaufen	25	4725 IC	18:17:40	-19:05:00	Jun-20-1764
+26	M26 	Scutum	Schild	-1	18,753333	-09,400000	4900	offener Sternhaufen	26	6694	18:32:22	-09:38:14	Jun-20-1764
+27	M27 Hantel-Nebel	Vulpecula	Füchschen	-1	19,993333	22,716667	650	Planetarischer Nebel	27	6853	19:49:27	+22:04:00	Jul-12-1764
+28	M28 	Sagittarius	Schütze	-1	18,408333	-24,866667	15000	Kugelsternhaufen	28	6626	18:09:58	-24:57:11	Jul-27-1764
+29	M29 	Cygnus	Schwan	-1	20,398333	38,533333	3900	offener Sternhaufen	29	6913	20:15:38	+37:11:57	Jul-29-1764
+30	M30 	Capricornus	Steinbock	-1	21,673333	-23,183333	42000	Kugelsternhaufen	30	7099	21:27:05	-24:19:04	Aug-03-1764
+31	M31 Andromeda-Galaxie	Andromeda	Andromeda	-1	00,711667	41,266667	2300000	Spiralgalaxie	31	224	00:29:46	+39:09:32	Aug-03-1764
+32	M32 (Begleiter von M31)	Andromeda	Andromeda	-1	00,711667	40,866667	2300000	elliptische Galaxie	32	221	00:29:50	+38:45:34	Aug-03-1764
+33	M33 Triangulum-Galaxie	Triangulum	Dreieck	-1	01,565000	30,650000	2300000	Spiralgalaxie	33	598	01:40:37	+29:32:25	Aug-25-1764
+34	M34 	Perseus	Perseus	-1	02,700000	42,783333	1400	offener Sternhaufen	34	1039	02:27:27	+41:39:32	Aug-25-1764
+35	M35 	Gemini	Zwillinge	-1	06,148333	24,333333	2800	offener Sternhaufen	35	2168	05:54:41	+24:33:30	Aug-30-1764
+36	M36 	Auriga	Fuhrmann	-1	05,601667	34,133333	4200	offener Sternhaufen	36	1960	05:20:47	+34:08:06	Sep-02-1764
+37	M37 	Auriga	Fuhrmann	-1	05,873333	32,550000	4200	offener Sternhaufen	37	2099	05:37:01	+32:11:51	Sep-02-1764
+38	M38 	Auriga	Fuhrmann	-1	05,473333	35,833333	4200	offener Sternhaufen	38	1912	05:12:41	+36:11:51	Sep-25-1764
+39	M39 	Cygnus	Schwan	-1	21,536667	48,433333	800	offener Sternhaufen	39	7092	21:23:49	+47:25:00	Oct-24-1764
+40	M40 Winnecke 4	Ursa Maior	Großer Bär	-1	12,373333	58,083333		Doppelstern	40		12:11:02	+59:23:50	Oct-24-1764
+41	M41 	Canis Maior	Großer Hund	-1	06,766667	-20,733333	2200	offener Sternhaufen	41	2287	06:35:53	-20:33:00	Jan-16-1765
+42	M42 Orion-Nebel	Orion	Orion	-1	05,590000	-05,450000	1500	Emissionsnebel	42	1976	05:23:59	-05:34:06	Mar-04-1769
+43	M43 Orion-Nebel	Orion	Orion	-1	05,593333	-05,266667	1500	Emissionsnebel	43	1982	05:24:12	-05:26:37	Mar-04-1769
+44	M44 Praesepe	Cancer	Krebs	-1	08,668333	19,983333	520	offener Sternhaufen	44	2632	08:07:22	+20:31:38	Mar-04-1769
+45	M45 Plejaden	Taurus	Stier	-1	03,783333	24,116667	410	offener Sternhaufen	45		03:33:48	+23:22:41	Mar-04-1769
+46	M46 	Argo Navis		-1	07,696667	-14,816667	5900	offener Sternhaufen	46	2437	07:31:11	-14:19:07	Feb-19-1771
+47	M47 	Argo Navis		-1	07,610000	-14,500000	1800	offener Sternhaufen	47	2422	07:44:16	-14:50:08	Feb-19-1771
+48	M48 	Hydra	Wasserschlange	-1	08,230000	-05,800000	1600	offener Sternhaufen	48	2548	08:02:24	-01:16:42	Feb-19-1771
+49	M49 	Virgo	Jungfrau	-1	12,496667	08,000000	36000000	elliptische Galaxie	49	4472	12:17:48	+09:16:09	Feb-19-1771
+50	M50 	Monoceros	Einhorn	-1	07,053333	-08,333333	3000	offener Sternhaufen	50	2323	06:51:50	-07:57:42	Apr-05-1772
+51	M51 Whirlpool-Galaxie	Canes Venatici	Jagdhunde	-1	13,498333	47,200000	13000000	Spiralgalaxie	51	5194	13:20:23	+48:24:24	Jan-11-1774
+52	M52 	Cassiopeia	Cassiopeia	-1	23,403333	61,583333	6900	offener Sternhaufen	52	7654	23:14:38	+60:22:12	Sep-07-1774
+53	M53 	Coma Berenices	Haar der Bereinke	-1	13,215000	18,166667	65000	Kugelsternhaufen	53	5024	13:02:02	+19:22:44	Feb-26-1777
+54	M54 	Sagiitarius	Schütze	-1	18,918333	-30,483333	49000	Kugelsternhaufen	54	6715	18:40:52	-30:44:01	Jul-24-1778
+55	M55 	Sagiitarius	Schütze	-1	19,666667	-30,966667	19000	Kugelsternhaufen	55	6809	19:26:02	-31:26:27	Jul-24-1778
+56	M56 	Lyra	Leier	-1	19,276667	30,183333	46000	Kugelsternhaufen	56	6779	19:08:00	+29:48:14	Jan-23-1779
+57	M57 Ring-Nebel	Lyra	Leier	-1	18,893333	33,033333	2300	Planetarischer Nebel	57	6720	18:45:21	+32:46:03	Jan-31-1779
+58	M58 	Virgo	Jungfrau	-1	12,628333	11,816667	36000000	Spiralgalaxie	58	4579	12:26:30	+13:02:42	Apr-15-1779
+59	M59 	Virgo	Jungfrau	-1	12,700000	11,650000	36000000	elliptische Galaxie	59	4621	12:30:47	+12:52:36	Apr-15-1779
+60	M60 	Virgo	Jungfrau	-1	12,728333	11,550000	36000000	elliptische Galaxie	60	4649	12:32:28	+12:46:02	Apr-15-1779
+61	M61 	Virgo	Jungfrau	-1	12,365000	04,466667	36000000	Spiralgalaxie	61	4303	12:10:44	+05:42:05	May-11-1779
+62	M62 	Ophiuchus	Schlangenträger	-1	17,020000	-30,116667	22000	Kugelsternhaufen	62	6266	16:47:14	-29:45:30	Jun-04-1779
+63	M63 	Canes Venatici	Jagdhunde	-1	13,263333	42,033333	13000000	Spiralgalaxie	63	5055	13:04:22	+43:12:37	Jun-14-1779
+64	M64 	Coma Berenices	Haar der Berenike	-1	12,945000	21,683333	20000000	Spiralgalaxie	64	4826	12:45:51	+22:52:31	Mar-01-1780
+65	M65 	Leo	Löwe	-1	11,315000	13,083333		Spiralgalaxie	65	3623	11:07:24	+14:16:08	Mar-01-1780
+66	M66 	Leo	Löwe	-1	11,336667	12,983333		Spiralgalaxie	66	3627	11:08:47	+14:12:21	Mar-01-1780
+67	M67 	Cancer	Krebs	-1	08,840000	11,816667	2700	offener Sternhaufen	67	2682	08:36:28	+12:36:38	Apr-06-1780
+68	M68 	Hydra	Wasserschlange	-1	12,658333	-26,750000	40000	Kugelsternhaufen	68	4590	12:27:38	-25:30:20	Apr-09-1780
+69	M69 	Sagittarius	Schütze	-1	18,523333	-32,350000	23000	Kugelsternhaufen	69	6637	18:16:47	-32:31:45	Aug-31-1780
+70	M70 	Sagittarius	Schütze	-1	18,720000	-32,300000	65000	Kugelsternhaufen	70	6681	18:28:53	-32:31:07	Aug-31-1780
+71	M71 	Sagitta	Pfeil	-1	19,896667	18,783333	18000	Kugelsternhaufen	71	6838	19:43:57	+18:13:00	Oct-04-1780
+72	M72 	Aquarius	Wassermann	-1	20,891667	-12,533333	59000	Kugelsternhaufen	72	6981	20:41:23	-13:20:51	Oct-04-1780
+73	M73 	Aquarius	Wassermann	-1	20,981667	-12,633333		Sterngruppe	73	6994	20:46:52	-13:28:40	Oct-04-1780
+74	M74 	Pisces	Fische	-1	01,611667	15,783333	26000000	Spiralgalaxie	74	628	01:24:57	+14:39:35	Oct-18-1780
+75	M75 	Sagittarius	Schütze	-1	20,101667	-21,916667	78000	Kugelsternhaufen	75	6864	19:53:10	-22:32:23	Oct-18-1780
+76	M76 Kleiner Hantel-Nebel	Perseus	Perseus	-1	01,706667	51,566667	8200	Planetarischer Nebel	76	650	01:28:43	+50:28:48	Oct-21-1780
+77	M77 	Cetus	Walfisch	-1	02,711667	-00,016667	52000000	Spiralgalaxie	77	1068	02:31:30	-00:57:43	Dec-17-1780
+78	M78 	Orion	Orion	-1	05,778333	00,050000	1600	Reflexionsnebel	78	2068	05:35:34	-00:01:23	Dec-17-1780
+79	M79 	Lepus	Hase	-1	05,408333	-24,550000	42000	Kugelsternhaufen	79	1904	05:15:16	-24:42:57	Dec-17-1780
+80	M80 	Scorpio	Skorpion	-1	16,283333	-22,983333	36000	Kugelsternhaufen	80	6093	16:04:00	-22:25:13	Jan-04-1781
+81	M81 	Ursa Maior	Große Bär	-1	09,926667	69,066667	9800000	Spiralgalaxie	81	3031	09:37:51	+70:07:24	Feb-09-1781
+82	M82 	Ursa Maior	Große Bär	-1	09,930000	69,683333	9800000	aktive Galaxie	82	3034	09:37:57	+70:44:27	Feb-09-1781
+83	M83 	Hydra	Wasserschlange	-1	13,616667	-29,866667	13000000	Spiralgalaxie	83	5236	13:24:33	-28:42:27	Feb-17-1781
+84	M84 	Virgo	Jungfrau	-1	12,418333	12,883333	36000000	elliptische Galaxie	84	4374	12:14:01	+14:07:01	Mar-18-1781
+85	M85 	Coma Berenices	Haar der Berenike	-1	12,423333	18,183333	36000000	elliptische Galaxie	85	4382	12:14:21	+19:24:26	Mar-18-1781
+86	M86 	Virgo	Jungfrau	-1	12,436667	12,950000	36000000	elliptische Galaxie	86	4406	12:15:05	+14:09:52	Mar-18-1781
+87	M87 	Virgo	Jungfrau	-1	12,513333	12,400000	36000000	elliptische Galaxie	87	4486	12:19:48	+13:38:01	Mar-18-1781
+88	M88 	Coma Berenices	Haar der Berenike	-1	12,533333	14,416667	36000000	Spiralgalaxie	88	4501	12:21:03	+15:37:51	Mar-18-1781
+89	M89 	Virgo	Jungfrau	-1	12,595000	12,550000	36000000	elliptische Galaxie	89	4552	12:24:38	+13:46:49	Mar-18-1781
+90	M90 	Virgo	Jungfrau	-1	12,613333	13,166667	36000000	Spiralgalaxie	90	4569	12:25:48	+14:22:50	Mar-18-1781
+91	M91 		 	-1	12,590000	14,500000		Spiralgalaxie	91	4548	12:26:28	+14:57:06	Mar-18-1781
+92	M92 	Hercules	Herkules	-1	17,285000	43,133333	36000	Kugelsternhaufen	92	6341	17:10:32	+43:21:59	Mar-18-1781
+93	M93 	Argo Navis		-1	07,743333	-23,866667	3600	offener Sternhaufen	93	2447	07:35:14	-23:19:45	Mar-20-1781
+94	M94 	Canes Venatici	Jagdhunde	-1	12,848333	41,116667	20000000	Spiralgalaxie	94	4736	12:40:43	+42:18:43	Mar-24-1781
+95	M95 	Leo	Löwe	-1	10,733333	11,700000	29000000	Spiralgalaxie	95	3351	10:32:12	+12:50:21	Mar-24-1781
+96	M96 	Leo	Löwe	-1	10,780000	11,816667	29000000	Spiralgalaxie	96	3368	10:35:05	+12:58:09	Mar-24-1781
+97	M97 Eulen-Nebel	Ursa Maior	Großer Bär	-1	11,246667	55,016667	2600	Planetarischer Nebel	97	358	11:01:15	+56:13:30	Mar-24-1781
+98	M98 	Coma Berenices	Haar der Berenike	-1	12,230000	14,900000	36000000	Spiralgalaxie	98	4192	12:03:23	+16:08:15	Apr-13-1781
+99	M99 	Coma Berenices	Haar der Berenike	-1	12,313333	14,416667	36000000	Spiralgalaxie	99	4254	12:07:41	+15:37:12	Apr-13-1781
+100	M100 	Coma Berenices	Haar der Berenike	-1	12,381667	15,816667	36000000	Spiralgalaxie	100	4321	12:11:57	+16:59:21	Apr-13-1781
+101	M101 Wagenrad-Galaxie	Ursa Maior	Großer Bär	-1	14,053333	54,350000	9800000	Spiralgalaxie	101	5457	13:43:28	+55:24:25	Mar-27-1781
+102	M102 	-	-	-1	15,108333	55,766667	-	-	102	-	14:40	+56:     	prob. 1781)
+103	M103 	Cassiopeia	Cassiopeia	-1	01,553333	60,700000	8500	offener Sternhaufen	103	581	01:20	+61:     	prob. 1781)
+104	M104 Sombrero-Galaxie	Virgo	Jungfrau	-1	12,666667	-11,616667	14000000	Spiralgalaxie	104	4594	12:28:39	-10:24:49	May-11-1781
+105	M105 	Leo	Löwe	-1	10,796667	12,583333		elliptische Galaxie	105	3379		         	Mar-24-1781
+106	M106 	Canes Venatici	Jagdhunde	-1	12,316667	47,300000		Spiralgalaxie	106	4258		         	Jul-1781)  
+107	M107 	Ophiuchus	Schlangenträger	-1	16,541667	-13,050000		Kugelsternhaufen	107	6171		         	Apr-1782)  
+108	M108 	Ursa Maior	Großer Bär	-1	11,191667	55,666667		Spiralgalaxie	108	3556		         	Mar-24-1781
+109	M109 	Ursa Maior	Großer Bär	-1	11,960000	53,383333		Spiralgalaxie	109	3992		         	Mar-24-1781
+110	M110 (Begleiter von M31)	Andromeda	Andromeda	-1	00,673333	41,683333	2300000	elliptische Galaxie	110	205		         	1773)      

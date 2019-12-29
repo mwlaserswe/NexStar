@@ -4,17 +4,25 @@ Begin VB.Form Communication
    ClientHeight    =   6045
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   9780
+   ClientWidth     =   7065
    LinkTopic       =   "Form1"
    ScaleHeight     =   6045
-   ScaleWidth      =   9780
+   ScaleWidth      =   7065
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton C_Stop 
+      Caption         =   "Stop"
+      Height          =   495
+      Left            =   600
+      TabIndex        =   3
+      Top             =   3480
+      Width           =   1215
+   End
    Begin VB.ListBox List_log 
-      Height          =   5130
+      Height          =   5325
       Left            =   2400
       TabIndex        =   2
       Top             =   240
-      Width           =   7095
+      Width           =   4215
    End
    Begin VB.Timer DisplayUpdateTimer 
       Interval        =   100
@@ -45,11 +53,20 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
+
 Dim LineString As String
 Dim iAzLastValue As Long
 Dim iAltLastValue As Long
+Public StopFlag As Boolean
 
 
+
+
+Private Sub C_Stop_Click()
+    StopFlag = Not StopFlag
+End Sub
 
 Private Sub C_TestCommHandheldToMotor_Click()
     If TestCommHandheldToMotor Then
@@ -67,6 +84,10 @@ Private Sub C_TestCommMotorToHandheld_Click()
         TestCommMotorToHandheld = True
         TestCommHandheldToMotor = False
     End If
+End Sub
+
+Private Sub Command1_Click()
+
 End Sub
 
 Private Sub DisplayUpdateTimer_Timer()
@@ -88,6 +109,7 @@ Public Sub DisplayAzAltTracking(s As String)
     Dim i As Long
     Dim sLine As String
     Dim s1 As String
+    Dim s2 As String
     Dim sAz As String
     Dim sAlt As String
     Dim iAz As Long
@@ -112,8 +134,8 @@ Public Sub DisplayAzAltTracking(s As String)
            
         Next i
         
-        iAz = GetNexStarPosition(Mid(LineString, 1, 3))
-        iAlt = GetNexStarPosition(Mid(LineString, 4, 3))
+'''        iAz = GetNexStarPosition(Mid(LineString, 1, 3))
+'''        iAlt = GetNexStarPosition(Mid(LineString, 4, 3))
         
         iAzDiff = iAz - iAzLastValue
         iAltDiff = iAlt - iAltLastValue

@@ -4,7 +4,7 @@ Option Explicit
   Private Declare Function FindFirstFile Lib "Kernel32" Alias "FindFirstFileA" (ByVal lpFileName As String, lpFindFileData As WIN32_FIND_DATA) As Long
   Private Declare Function FindNextFile Lib "Kernel32" Alias "FindNextFileA" (ByVal hFindFile As Long, lpFindFileData As WIN32_FIND_DATA) As Long
   Private Declare Function FindClose Lib "Kernel32" (ByVal hFindFile As Long) As Long
-  Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+  Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
   
 
     
@@ -633,7 +633,7 @@ End Sub
 
 Public Sub Add_List(CurrentForm As Form, Listbox As Control, Text As String)
 
-    Dim x&, Max&, Akt&, result&, cForm As Form
+    Dim X&, Max&, Akt&, result&, cForm As Form
 
     Text = Text & "   "
 
@@ -645,13 +645,13 @@ Public Sub Add_List(CurrentForm As Form, Listbox As Control, Text As String)
     Set cForm = CurrentForm
     Set cForm.Font = Listbox.Font
     
-    For x = 0 To Listbox.ListCount - 1
-      Akt = cForm.TextWidth(Listbox.List(x))
+    For X = 0 To Listbox.ListCount - 1
+      Akt = cForm.TextWidth(Listbox.List(X))
       If Akt > Max Then Max = Akt
     Next
     
     Max = Max \ Screen.TwipsPerPixelX
-    result = SendMessage(Listbox.hwnd, LB_SETHORIZONTAL, _
+    result = SendMessage(Listbox.hWnd, LB_SETHORIZONTAL, _
                          Max, ByVal 0)
     
     Set cForm = Nothing
@@ -991,10 +991,12 @@ Dim ByteLocal(3) As Byte
 End Function
 
 
-Public Sub WriteComm(Txt As String, Mode As ProtokollMode)
+Public Sub NexStarCommunication(CommString As String, Comment As String, Mode As ProtokollMode)
     Dim CommFile As Integer
     Dim i As Integer
-    Dim Prexit As String
+'    Dim Prexit As String
+    
+    
     
     CommFile = FreeFile                'Nächste freie DateiNr.
     On Error GoTo OpenError
@@ -1002,10 +1004,19 @@ Public Sub WriteComm(Txt As String, Mode As ProtokollMode)
     
     Select Case Mode
       Case Send
-        Print #CommFile, "--> Send:   " & Txt
-       
+        Mainform.NexStarComm.Output = CommString
+        
+        Print #CommFile, "--> Send:   " & Comment
+        If Not Communication.StopFlag Then
+            Communication.List_log.AddItem "--> Send:   " & Comment
+            Communication.List_log.ListIndex = Communication.List_log.ListCount - 1 'Letzten Eintrag hinterlegen
+        End If
       Case Receive
-        Print #CommFile, "--> Recive:   " & Txt
+        Print #CommFile, "--> Recive:   " & Comment
+        If Not Communication.StopFlag Then
+            Communication.List_log.AddItem "--> Recive:   " & Comment
+            Communication.List_log.ListIndex = Communication.List_log.ListCount - 1 'Letzten Eintrag hinterlegen
+        End If
     
     End Select
     

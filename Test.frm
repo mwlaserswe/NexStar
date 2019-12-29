@@ -877,7 +877,7 @@ Private Sub Command3_Click()
     B = Chr$(&H0) & Chr$(&H0) & Chr$(&H0) & Chr$(&H11) & Chr$(&H24) & Chr$(&H80)
 '    b = Chr$(&H0) & Chr$(&H3) & Chr$(&HE8)
 
-    erg = GetNexStarPosition(a)
+'''    erg = GetNexStarPosition(a)
 
 End Sub
 
@@ -1064,6 +1064,12 @@ Private Sub Command5_Click()
     Dim t2 As Double
     Dim s1 As String
     Dim s2 As String
+    Dim buf As Byte
+    
+    
+    
+    buf = 192
+    s2 = Hex$(buf)
     
     s1 = "A"
     

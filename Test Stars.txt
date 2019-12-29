@@ -1,0 +1,4 @@
+1	Capella_(Handy)	Aur	Alpha	13	5,301667	46,016667	0.1
+2	zz_Demo_Saturn	zz	zz	0	10,9599114h	8,432806	99
+3	zz_Aldebaran	Tau	Alpha	87	4,616666	16,55	0.9
+4	Sonne	---	---	13	18,550000	-23,216667	-26.8

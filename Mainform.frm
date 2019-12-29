@@ -1,17 +1,24 @@
 VERSION 5.00
 Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form Mainform 
    Caption         =   "Form1"
    ClientHeight    =   11235
    ClientLeft      =   225
    ClientTop       =   870
-   ClientWidth     =   16815
+   ClientWidth     =   15960
    LinkTopic       =   "Form1"
    ScaleHeight     =   11235
-   ScaleWidth      =   16815
+   ScaleWidth      =   15960
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton C_MoveTelescope 
+      Caption         =   "Move Telescope"
+      Height          =   495
+      Left            =   1080
+      TabIndex        =   127
+      Top             =   4320
+      Width           =   1215
+   End
    Begin MSComDlg.CommonDialog LoadStarKatalogDialog 
       Left            =   6840
       Top             =   4680
@@ -28,14 +35,14 @@ Begin VB.Form Mainform
       Caption         =   "--"
       Height          =   2415
       Left            =   12600
-      TabIndex        =   113
+      TabIndex        =   110
       Top             =   360
       Width           =   3855
       Begin VB.CheckBox Ch_South 
          Caption         =   "South (VSky)"
          Height          =   255
          Left            =   2400
-         TabIndex        =   114
+         TabIndex        =   111
          Top             =   360
          Width           =   1335
       End
@@ -43,7 +50,7 @@ Begin VB.Form Mainform
          Caption         =   "RA:"
          Height          =   255
          Left            =   240
-         TabIndex        =   129
+         TabIndex        =   126
          Top             =   240
          Width           =   375
       End
@@ -51,7 +58,7 @@ Begin VB.Form Mainform
          Caption         =   "DEC:"
          Height          =   255
          Left            =   240
-         TabIndex        =   128
+         TabIndex        =   125
          Top             =   480
          Width           =   375
       End
@@ -59,7 +66,7 @@ Begin VB.Form Mainform
          Caption         =   "Az:"
          Height          =   255
          Left            =   240
-         TabIndex        =   127
+         TabIndex        =   124
          Top             =   840
          Width           =   375
       End
@@ -67,7 +74,7 @@ Begin VB.Form Mainform
          Caption         =   "Alt:"
          Height          =   255
          Left            =   240
-         TabIndex        =   126
+         TabIndex        =   123
          Top             =   1080
          Width           =   375
       End
@@ -75,7 +82,7 @@ Begin VB.Form Mainform
          Caption         =   "RA:"
          Height          =   255
          Left            =   1200
-         TabIndex        =   125
+         TabIndex        =   122
          Top             =   240
          Width           =   1455
       End
@@ -83,7 +90,7 @@ Begin VB.Form Mainform
          Caption         =   "DEC:"
          Height          =   255
          Left            =   1200
-         TabIndex        =   124
+         TabIndex        =   121
          Top             =   480
          Width           =   1455
       End
@@ -91,7 +98,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   123
+         TabIndex        =   120
          Top             =   840
          Width           =   735
       End
@@ -99,7 +106,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   122
+         TabIndex        =   119
          Top             =   1080
          Width           =   1455
       End
@@ -107,7 +114,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   121
+         TabIndex        =   118
          Top             =   1440
          Width           =   1455
       End
@@ -115,7 +122,7 @@ Begin VB.Form Mainform
          Caption         =   "Hour Angle:"
          Height          =   255
          Left            =   240
-         TabIndex        =   120
+         TabIndex        =   117
          Top             =   1440
          Width           =   855
       End
@@ -123,7 +130,7 @@ Begin VB.Form Mainform
          Caption         =   "Equ. xyz:"
          Height          =   255
          Left            =   240
-         TabIndex        =   119
+         TabIndex        =   116
          Top             =   1800
          Width           =   855
       End
@@ -131,7 +138,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   118
+         TabIndex        =   115
          Top             =   1800
          Width           =   2415
       End
@@ -139,7 +146,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   1200
-         TabIndex        =   117
+         TabIndex        =   114
          Top             =   2040
          Width           =   2415
       End
@@ -147,7 +154,7 @@ Begin VB.Form Mainform
          Caption         =   "Horiz. xyz:"
          Height          =   255
          Left            =   240
-         TabIndex        =   116
+         TabIndex        =   113
          Top             =   2040
          Width           =   855
       End
@@ -155,7 +162,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   2160
-         TabIndex        =   115
+         TabIndex        =   112
          Top             =   840
          Width           =   495
       End
@@ -165,15 +172,15 @@ Begin VB.Form Mainform
       Height          =   495
       Left            =   4080
       Style           =   1  'Graphical
-      TabIndex        =   112
+      TabIndex        =   109
       Top             =   1200
       Width           =   1215
    End
    Begin Project1.zzSlider zzSlider1 
       Height          =   255
       Left            =   8040
-      TabIndex        =   111
-      Top             =   9360
+      TabIndex        =   108
+      Top             =   8880
       Width           =   5055
       _ExtentX        =   8916
       _ExtentY        =   450
@@ -202,7 +209,7 @@ Begin VB.Form Mainform
       Caption         =   "Goto Noth"
       Height          =   495
       Left            =   4080
-      TabIndex        =   110
+      TabIndex        =   107
       Top             =   360
       Width           =   1335
    End
@@ -211,49 +218,28 @@ Begin VB.Form Mainform
       Left            =   6240
       Top             =   4440
    End
-   Begin VB.CommandButton Command1 
-      Caption         =   "Command1"
-      Height          =   495
-      Left            =   12360
-      TabIndex        =   108
-      Top             =   7560
-      Width           =   1215
-   End
    Begin VB.ListBox List1 
       Height          =   5910
       Left            =   12240
-      TabIndex        =   107
+      TabIndex        =   105
       Top             =   240
-      Width           =   1575
+      Width           =   855
    End
    Begin VB.CommandButton C_SetEncoder_Alt 
       Caption         =   "Set Enc. Alt"
       Height          =   255
       Left            =   240
       Style           =   1  'Graphical
-      TabIndex        =   105
+      TabIndex        =   103
       Top             =   480
       Width           =   1215
-   End
-   Begin MSComctlLib.Slider Slider1 
-      Height          =   315
-      Left            =   7920
-      TabIndex        =   104
-      Top             =   8880
-      Width           =   5295
-      _ExtentX        =   9340
-      _ExtentY        =   556
-      _Version        =   393216
-      Min             =   -1000
-      Max             =   1000
-      SelectRange     =   -1  'True
    End
    Begin VB.CommandButton C_Tracking 
       Caption         =   "Tracking"
       Height          =   495
       Left            =   10560
       Style           =   1  'Graphical
-      TabIndex        =   94
+      TabIndex        =   93
       Top             =   6720
       Width           =   1215
    End
@@ -262,7 +248,7 @@ Begin VB.Form Mainform
       Height          =   495
       Left            =   3000
       Style           =   1  'Graphical
-      TabIndex        =   92
+      TabIndex        =   91
       Top             =   5760
       Width           =   2295
    End
@@ -270,7 +256,7 @@ Begin VB.Form Mainform
       Caption         =   "GotoStar calibrated"
       Height          =   255
       Left            =   8640
-      TabIndex        =   91
+      TabIndex        =   90
       Top             =   10800
       Width           =   2175
    End
@@ -279,7 +265,7 @@ Begin VB.Form Mainform
       Height          =   495
       Left            =   3000
       Style           =   1  'Graphical
-      TabIndex        =   90
+      TabIndex        =   89
       Top             =   7560
       Width           =   2295
    End
@@ -288,7 +274,7 @@ Begin VB.Form Mainform
       Height          =   495
       Left            =   3000
       Style           =   1  'Graphical
-      TabIndex        =   89
+      TabIndex        =   88
       Top             =   6960
       Width           =   2295
    End
@@ -297,7 +283,7 @@ Begin VB.Form Mainform
       Height          =   495
       Left            =   3000
       Style           =   1  'Graphical
-      TabIndex        =   88
+      TabIndex        =   87
       Top             =   6360
       Width           =   2295
    End
@@ -305,17 +291,9 @@ Begin VB.Form Mainform
       Caption         =   "GotoStar w/o calibration"
       Height          =   255
       Left            =   5880
-      TabIndex        =   87
+      TabIndex        =   86
       Top             =   10800
       Width           =   2175
-   End
-   Begin VB.CommandButton C_SetNorth 
-      Caption         =   "Set North"
-      Height          =   495
-      Left            =   120
-      TabIndex        =   86
-      Top             =   5760
-      Width           =   2295
    End
    Begin VB.Frame Frame4 
       Caption         =   "Altitude"
@@ -328,7 +306,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   2520
-         TabIndex        =   102
+         TabIndex        =   101
          Top             =   1320
          Width           =   1095
       End
@@ -336,7 +314,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   2520
-         TabIndex        =   100
+         TabIndex        =   99
          Top             =   600
          Width           =   1095
       End
@@ -432,7 +410,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   2640
-         TabIndex        =   101
+         TabIndex        =   100
          Top             =   1320
          Width           =   1095
       End
@@ -440,7 +418,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   2520
-         TabIndex        =   99
+         TabIndex        =   98
          Top             =   600
          Width           =   1095
       End
@@ -536,7 +514,7 @@ Begin VB.Form Mainform
          Caption         =   "--"
          Height          =   255
          Left            =   2160
-         TabIndex        =   98
+         TabIndex        =   97
          Top             =   840
          Width           =   495
       End
@@ -946,14 +924,104 @@ Begin VB.Form Mainform
          Width           =   2895
       End
    End
+   Begin Project1.zzSlider zzSlider2 
+      Height          =   255
+      Left            =   8040
+      TabIndex        =   130
+      Top             =   9840
+      Width           =   5055
+      _ExtentX        =   8916
+      _ExtentY        =   450
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      SliderColor     =   12632319
+      MaxValue        =   1000
+      MinValue        =   -1000
+      Value           =   300
+      SmallChange     =   0
+      LargeChange     =   0
+   End
+   Begin VB.Label Label30 
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "Label30"
+      Height          =   255
+      Index           =   0
+      Left            =   13440
+      TabIndex        =   131
+      Top             =   4320
+      Width           =   495
+   End
+   Begin VB.Label Label30 
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "Label30"
+      Height          =   255
+      Index           =   3
+      Left            =   15240
+      TabIndex        =   134
+      Top             =   4320
+      Width           =   495
+   End
+   Begin VB.Label Label30 
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "Label30"
+      Height          =   255
+      Index           =   2
+      Left            =   14640
+      TabIndex        =   133
+      Top             =   4320
+      Width           =   495
+   End
+   Begin VB.Label Label30 
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "Label30"
+      Height          =   255
+      Index           =   1
+      Left            =   14040
+      TabIndex        =   132
+      Top             =   4320
+      Width           =   495
+   End
+   Begin VB.Line Line2 
+      X1              =   10560
+      X2              =   10560
+      Y1              =   9600
+      Y2              =   10320
+   End
+   Begin VB.Label Label28 
+      Alignment       =   1  'Right Justify
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   255
+      Left            =   840
+      TabIndex        =   129
+      Top             =   5160
+      Width           =   1215
+   End
+   Begin VB.Label L_SlewingSpeedY 
+      Alignment       =   1  'Right Justify
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   255
+      Left            =   2880
+      TabIndex        =   128
+      Top             =   5280
+      Width           =   1215
+   End
    Begin VB.Label L_StatusMoving 
       Alignment       =   2  'Center
       BorderStyle     =   1  'Fixed Single
       Caption         =   "--"
       Height          =   375
-      Left            =   9240
-      TabIndex        =   109
-      Top             =   9840
+      Left            =   11040
+      TabIndex        =   106
+      Top             =   7440
       Width           =   2415
    End
    Begin VB.Label L_ErrorCount 
@@ -961,7 +1029,7 @@ Begin VB.Form Mainform
       Caption         =   "ErrorCount:"
       Height          =   255
       Left            =   12360
-      TabIndex        =   106
+      TabIndex        =   104
       Top             =   6840
       Width           =   1215
    End
@@ -976,7 +1044,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8040
-      TabIndex        =   103
+      TabIndex        =   102
       Top             =   8280
       Width           =   2415
    End
@@ -985,7 +1053,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8040
-      TabIndex        =   97
+      TabIndex        =   96
       Top             =   7920
       Width           =   2415
    End
@@ -994,7 +1062,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8040
-      TabIndex        =   96
+      TabIndex        =   95
       Top             =   7560
       Width           =   2415
    End
@@ -1003,7 +1071,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8040
-      TabIndex        =   95
+      TabIndex        =   94
       Top             =   7080
       Width           =   2415
    End
@@ -1012,7 +1080,7 @@ Begin VB.Form Mainform
       Caption         =   "Label6"
       Height          =   255
       Left            =   8040
-      TabIndex        =   93
+      TabIndex        =   92
       Top             =   6720
       Width           =   2415
    End
@@ -1021,17 +1089,17 @@ Begin VB.Form Mainform
       Height          =   255
       Left            =   2880
       TabIndex        =   39
-      Top             =   4920
+      Top             =   4800
       Width           =   1335
    End
-   Begin VB.Label L_SlewingSpeed 
+   Begin VB.Label L_SlewingSpeedX 
       Alignment       =   1  'Right Justify
       BorderStyle     =   1  'Fixed Single
       Caption         =   "--"
       Height          =   255
       Left            =   2880
       TabIndex        =   38
-      Top             =   5280
+      Top             =   5040
       Width           =   1215
    End
    Begin VB.Label Label16 
@@ -1151,7 +1219,7 @@ Begin VB.Form Mainform
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   5880
+      Left            =   4560
       TabIndex        =   9
       Top             =   10200
       Width           =   2775
@@ -1191,11 +1259,12 @@ Dim Command As Long
 Dim CommandCnt As Long
 Dim InputBufferAz As String
 Dim InputbufferAlt As String
-Dim NexStarAz As String
-Dim NexStarAlt As String
+'Dim NexStarAz As String
+'Dim NexStarAlt As String
 Dim TelIncr As AzAlt
 
-Dim ManualSlewingSpeed As Double
+Dim ManualSlewingSpeedX As Double
+Dim ManualSlewingSpeedY As Double
 
 'Simulation
 Dim SimIncr As AzAlt
@@ -1246,9 +1315,19 @@ Private Sub C_GetAz_Click()
     If SimOffline Then
         TelIncr = SimIncr
     Else
-        NexStarComm.Output = Chr$(&H1)
-        NexStarAz = ""
-        Command = 1
+        If StatusMoving = 2 Then
+'''            NexStarComm.Output = Chr$(&H1)
+'''            Communication.List_log.AddItem "0x15 Az?"
+'''            Communication.List_log.ListIndex = Communication.List_log.ListCount - 1 'Letzten Eintrag hinterlegen
+            
+            
+            Command = 1
+            
+            Dim CommString As String
+            CommString = Chr$(&H1)
+            NexStarCommunication CommString, " Read Az (0x01)", Send
+
+        End If
     End If
     
 End Sub
@@ -1260,9 +1339,17 @@ Private Sub C_GetAlt_Click()
     If SimOffline Then
         TelIncr = SimIncr
     Else
-        NexStarComm.Output = Chr$(&H15)
-        NexStarAlt = ""
-        Command = 21
+        If StatusMoving = 2 Then
+'''            NexStarComm.Output = Chr$(&H15)
+'''            Communication.List_log.AddItem "0x15 Alt?"
+'''            Communication.List_log.ListIndex = Communication.List_log.ListCount - 1 'Letzten Eintrag hinterlegen
+            
+            Command = 21
+            
+            Dim CommString As String
+            CommString = Chr$(&H15)
+            NexStarCommunication CommString, " Read Alt (0x15)", Send
+        End If
     End If
     
 End Sub
@@ -1281,8 +1368,12 @@ Private Sub C_GotoNorth_Click()
         SimGotoAzAltActive = True
         SimGoto = MotorIncr
     Else
-        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
-    End If
+'''        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
+        
+        Dim CommString As String
+        CommString = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
+        NexStarCommunication CommString, " Goto AzAlt (0x02): " & CLng(MotorIncr.Az) & " " & CLng(MotorIncr.Alt), Send
+   End If
 
 End Sub
 
@@ -1310,7 +1401,11 @@ Private Sub C_GotoStar_Click()
         SimGotoAzAltActive = True
         SimGoto = MotorIncr
     Else
-        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
+'''        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
+        Dim CommString As String
+        CommString = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
+        NexStarCommunication CommString, " Goto AzAlt (0x02): " & CLng(MotorIncr.Az) & " " & CLng(MotorIncr.Alt), Send
+
     End If
 
 
@@ -1352,10 +1447,18 @@ Private Sub C_GotoStarCalibrated_Click()
         SimGotoAzAltActive = True
         SimGoto = MotorIncr
     Else
-        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
+'''        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
+'''        NexStarComm.Output = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
+        Dim CommString As String
+        CommString = Chr$(&O2) & SetNexStarPosition(CLng(MotorIncr.Az)) & Chr$(&H16) & SetNexStarPosition(CLng(MotorIncr.Alt))
+        NexStarCommunication CommString, " Goto AzAlt (0x02): " & CLng(MotorIncr.Az) & " " & CLng(MotorIncr.Alt), Send
     End If
 
 
+End Sub
+
+Private Sub C_MoveTelescope_Click()
+    MoveTelescope.Show
 End Sub
 
 Private Sub C_Set_ObserverLocation_Click()
@@ -1395,7 +1498,10 @@ Private Sub C_SetBacklAlt_Click()
     
     If SimOffline Then
     Else
-        NexStarComm.Output = Chr$(&H1E) & SetNexStarPosition(BacklashAlt)
+'''        NexStarComm.Output = Chr$(&H1E) & SetNexStarPosition(BacklashAlt)
+        Dim CommString As String
+        CommString = Chr$(&H1E) & SetNexStarPosition(BacklashAlt)
+        NexStarCommunication CommString, " Backlash Alt (0x1E): " & BacklashAlt, Send
     End If
 End Sub
 
@@ -1406,7 +1512,10 @@ Private Sub C_SetBacklAz_Click()
     
     If SimOffline Then
     Else
-        NexStarComm.Output = Chr$(&HA) & SetNexStarPosition(BacklashAz)
+'''        NexStarComm.Output = Chr$(&HA) & SetNexStarPosition(BacklashAz)
+        Dim CommString As String
+        CommString = Chr$(&HA) & SetNexStarPosition(BacklashAz)
+        NexStarCommunication CommString, " Backlash Az (0x0A): " & BacklashAz, Send
     End If
 End Sub
 
@@ -1448,21 +1557,33 @@ End Sub
 Private Sub C_SetEncoder_Alt_Click()
     If SimOffline Then
     Else
-        NexStarComm.Output = Chr$(&H1F) & SetNexStarPosition(EncoderResolution)
+        Dim CommString As String
+        CommString = Chr$(&H1F) & SetNexStarPosition(EncoderResolution)
+        NexStarCommunication CommString, " Encoder Rsolution Alt:   0x1F " & EncoderResolution, Send
     End If
 End Sub
 
 Private Sub C_SetEncoder_Az_Click()
     If SimOffline Then
     Else
-    
-        WriteComm " Encoder Rsolution Az:   0x0C " & EncoderResolution, Send
-        NexStarComm.Output = Chr$(&HC) & SetNexStarPosition(EncoderResolution)
+        Dim CommString As String
+        CommString = Chr$(&HC) & SetNexStarPosition(EncoderResolution)
+        NexStarCommunication CommString, " Encoder Rsolution Az:   0x0C " & EncoderResolution, Send
     End If
 End Sub
 
+
+
 Private Sub C_Simulation_Click()
-    SimOffline = Not SimOffline
+    If SimOffline Then
+        SimOffline = False
+
+        InitNexStarComm
+    Else
+        SimOffline = True
+    End If
+    
+    INISetValue IniFileName, "Basics", "SimOffline", SimOffline
 End Sub
 
 Private Sub C_SingleStarAlignment_Click()
@@ -1505,7 +1626,11 @@ Private Sub C_Tracking_Click()
         
         If SimOffline Then
         Else
-            NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+'''            NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        Dim CommString As String
+        CommString = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarCommunication CommString, " Stop Tracking", Send
+
         End If
     Else
         TrackingisON = True
@@ -1517,7 +1642,10 @@ Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
     If SimOffline Then
         SimBntUp = True
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(CDbl(ManualSlewingSpeed))
+'''        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(CDbl(ManualSlewingSpeedY))
+        Dim CommString As String
+        CommString = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(CDbl(ManualSlewingSpeedY))
+        NexStarCommunication CommString, " Move up: (0x06) " & 0 & ", (0x1A) " & CDbl(ManualSlewingSpeedY), Send
     End If
 End Sub
 
@@ -1525,7 +1653,10 @@ Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As 
     If SimOffline Then
         SimBntUp = False
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+'''        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        Dim CommString As String
+        CommString = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarCommunication CommString, " Stop", Send
     End If
 End Sub
 
@@ -1533,7 +1664,10 @@ Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
     If SimOffline Then
         SimBntDn = True
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1B) & SetNexStarPosition(CDbl(ManualSlewingSpeed))
+''        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1B) & SetNexStarPosition(CDbl(ManualSlewingSpeedY))
+        Dim CommString As String
+        CommString = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1B) & SetNexStarPosition(CDbl(ManualSlewingSpeedY))
+        NexStarCommunication CommString, " Move down: (0x06) " & 0 & ", (0x1B) " & CDbl(ManualSlewingSpeedY), Send
     End If
 End Sub
 
@@ -1541,7 +1675,10 @@ Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As 
     If SimOffline Then
         SimBntDn = False
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+'''        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        Dim CommString As String
+        CommString = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarCommunication CommString, " Stop", Send
     End If
 End Sub
 
@@ -1549,7 +1686,10 @@ Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
     If SimOffline Then
         SimBntLe = True
     Else
-        NexStarComm.Output = Chr$(&H7) & SetNexStarPosition(CDbl(ManualSlewingSpeed)) & Chr$(&H1A) & SetNexStarPosition(0)
+'''        NexStarComm.Output = Chr$(&H7) & SetNexStarPosition(CDbl(ManualSlewingSpeedX)) & Chr$(&H1A) & SetNexStarPosition(0)
+        Dim CommString As String
+        CommString = Chr$(&H7) & SetNexStarPosition(CDbl(ManualSlewingSpeedX)) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarCommunication CommString, " Move left: (0x07) " & CDbl(ManualSlewingSpeedX) & ", (0x1A) " & 0, Send
     End If
 End Sub
 
@@ -1557,7 +1697,10 @@ Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As 
     If SimOffline Then
         SimBntLe = False
     Else
-      NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+'''        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        Dim CommString As String
+        CommString = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarCommunication CommString, " Stop", Send
     End If
 End Sub
 
@@ -1565,7 +1708,10 @@ Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
     If SimOffline Then
         SimBntRi = True
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(CDbl(ManualSlewingSpeed)) & Chr$(&H1A) & SetNexStarPosition(0)
+'''        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(CDbl(ManualSlewingSpeedX)) & Chr$(&H1A) & SetNexStarPosition(0)
+        Dim CommString As String
+        CommString = Chr$(&H6) & SetNexStarPosition(CDbl(ManualSlewingSpeedX)) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarCommunication CommString, " Move right: (0x06) " & CDbl(ManualSlewingSpeedX) & ", (0x1A) " & 0, Send
     End If
 End Sub
 
@@ -1573,32 +1719,39 @@ Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As 
     If SimOffline Then
         SimBntRi = False
     Else
-        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+'''        NexStarComm.Output = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        Dim CommString As String
+        CommString = Chr$(&H6) & SetNexStarPosition(0) & Chr$(&H1A) & SetNexStarPosition(0)
+        NexStarCommunication CommString, " Stop", Send
     End If
 End Sub
 
 
-Private Sub Command1_Click()
-    Command = 13
-    NexStarComm.Output = Chr$(&HD)
-End Sub
 
 
 Private Sub Form_Load()
-    SimOffline = True
+
     CommTest = False
     
     O_TimeSelectLocal.Value = 1
     IniFileName = App.Path & "\NexStar.ini"
-    InitNexStarComm
     
     Command = 0
     
     VS_ManualSlewingSpeed.Value = 1300
 
-    DefaultPath = INIGetValue(IniFileName, "Diretories", "DefaultPath")
-    DefaultStarKatalog = INIGetValue(IniFileName, "Diretories", "DefaultStarKatalog")
+    DefaultPath = INIGetValue(IniFileName, "Basics", "DefaultPath")
+    DefaultStarKatalog = INIGetValue(IniFileName, "Basics", "DefaultStarKatalog")
 
+    Dim SimString As String
+    SimString = INIGetValue(IniFileName, "Basics", "SimOffline")
+    If INIGetValue(IniFileName, "Basics", "SimOffline") = "False" Then
+        SimOffline = False
+    Else
+        SimOffline = True
+    End If
+    InitNexStarComm
+    
     LoadAlignmetStarFile
 
     T_Latt_Grad = INIGetValue(IniFileName, "Ort", "LattGrad")
@@ -1710,7 +1863,7 @@ Private Sub M_LoadStarkatalog_Click()
 '    Dim EditFileName As String
     
     ' CancelError ist auf True gesetzt.
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
     
     
     LoadStarKatalogDialog.CancelError = True
@@ -1723,14 +1876,14 @@ Private Sub M_LoadStarkatalog_Click()
 '    DefaultStarKatalog = EditFileName
     '  LastEditFileName = EditFileName
     
-    INISetValue IniFileName, "Diretories", "DefaultPath", DefaultPath
-    INISetValue IniFileName, "Diretories", "DefaultStarKatalog", DefaultStarKatalog
+    INISetValue IniFileName, "Basics", "DefaultPath", DefaultPath
+    INISetValue IniFileName, "Basics", "DefaultStarKatalog", DefaultStarKatalog
     LoadAlignmetStarFile
     
 
     Exit Sub
   
-ErrHandler:
+errhandler:
 ' Benutzer hat auf Abbrechen-Schaltfläche geklickt.
   Exit Sub
 
@@ -1784,12 +1937,15 @@ End Sub
 
 
 Private Sub NexStarComm_OnComm()
-  Dim pos As Long
-  Dim vbuf As Variant
-  Dim bbuf() As Byte
-  Dim key As Integer
-  Dim l As Long
-  
+    Dim pos As Long
+    Dim vbuf As Variant
+    Dim buf As Byte
+    Dim key As Integer
+    Dim l As Long
+    Dim i As Integer
+    Dim NexStarAz As Long
+    Dim NexStarAlt As Long
+ 
   
   On Error GoTo msgError
  
@@ -1816,66 +1972,103 @@ Private Sub NexStarComm_OnComm()
     Case comEvRing  ' Pegeländerung auf RI(Ring Indicator)
     Case comEvReceive ' Anzahl empfangener Zeichen gleich RThreshold
     
+   
             If Command = 1 Then
-                Do
-                    vbuf = NexStarComm.Input
-                    bbuf = vbuf
-                    NexStarAz = NexStarAz & Chr$(bbuf(0))
-                     key = (bbuf(0))
-                Loop While NexStarComm.InBufferCount > 0
-                l = Len(NexStarAz)
-                
-                If l = 3 Then
-                    TelIncr.Az = GetNexStarPosition(NexStarAz)
-                    WriteComm "Az: " & TelIncr.Az, Receive
-                Else
-                    ErrorCount = ErrorCount + 1
+
+                NexStarAz = 0
+                If NexStarComm.InBufferCount = 3 Then
+                    For i = 1 To 3
+                        vbuf = NexStarComm.Input
+                        buf = Asc(vbuf)
+                        NexStarAz = NexStarAz + buf * 256 ^ (3 - i)
+                        Label30(i) = Hex$(buf)
+                    Next i
+   
+                    TelIncr.Az = NexStarAz
+                    NexStarCommunication "", "Az: " & TelIncr.Az, Receive
+                    Command = 0
+
                 End If
 
+
             ElseIf Command = 21 Then
-                Do
-                    vbuf = NexStarComm.Input
-                    bbuf = vbuf
-                    NexStarAlt = NexStarAlt & Chr$(bbuf(0))
-                     key = (bbuf(0))
-                Loop While NexStarComm.InBufferCount > 0
-                l = Len(NexStarAlt)
-                
-                If l = 3 Then
-                    TelIncr.Alt = GetNexStarPosition(NexStarAlt)
-                    WriteComm "Alt: " & TelIncr.Alt, Receive
-                Else
-                    ErrorCount = ErrorCount + 1
+               
+                NexStarAlt = 0
+                If NexStarComm.InBufferCount = 3 Then
+                    For i = 1 To 3
+                        vbuf = NexStarComm.Input
+                        buf = Asc(vbuf)
+                        NexStarAlt = NexStarAlt + buf * 256 ^ (3 - i)
+                        Label30(i) = Hex$(buf)
+                    Next i
+   
+                    TelIncr.Alt = NexStarAlt
+                    NexStarCommunication "", "Alt: " & TelIncr.Alt, Receive
+                    Command = 0
+
                 End If
+                
             ElseIf Command = 13 Then
-                 NexStarChar1 = ""
-                Do
+
+                NexStarChar1 = ""
+                
+                If NexStarComm.InBufferCount = 1 Then
                     vbuf = NexStarComm.Input
-                    bbuf = vbuf
-                    NexStarChar1 = NexStarChar1 & Chr$(bbuf(0))
-                     key = (bbuf(0))
-                    List1.AddItem key
-                    
+                    buf = Asc(vbuf)
+                    NexStarChar1 = NexStarChar1 & Chr$(buf)
+                    key = buf
+                    NexStarCommunication "", "Status " & key, Receive
+
                     If key = 0 Then
                         StatusMoving = 1      'Busy
                     ElseIf key = 255 Then
                         StatusMoving = 2      'Idle
                     End If
                     
-                Loop While NexStarComm.InBufferCount > 0
-                l = Len(NexStarChar1)
+                    
+                    l = Len(NexStarChar1)
+
+                    If l <> 1 Then
+                        ErrorCount = ErrorCount + 1
+                    End If
+
+
+                    Command = 0
+
+                End If
+
             ElseIf TestCommMotorToHandheld Then
                 NexStarChar1 = ""
                 Do
                     vbuf = NexStarComm.Input
-                    bbuf = vbuf
-                    NexStarChar1 = NexStarChar1 & Chr$(bbuf(0))
-                     key = (bbuf(0))
+                    buf = Asc(vbuf)
+                    NexStarChar1 = NexStarChar1 & Chr$(buf)
+                     key = buf
+                
                 Loop While NexStarComm.InBufferCount > 0
                 l = Len(NexStarChar1)
                 Communication.DisplayAzAltTracking NexStarChar1
+            Else
+                Command = 0
            
             End If
+            
+        
+        
+    ' Communication error: clear buffer
+    Dim DummyBuffer As String
+    If NexStarComm.InBufferCount > 3 Then
+        Do
+            vbuf = NexStarComm.Input
+            buf = Asc(vbuf)
+            DummyBuffer = DummyBuffer & Chr$(buf)
+            key = buf
+        Loop While NexStarComm.InBufferCount > 0
+                
+        Command = 0
+    End If
+         
+            
         
     Case comEvSend  ' Im Sendepuffer befinden sich SThreshold Zeichen
     Case comEvEOF ' Im Eingabestrom wurde ein EOF-Zeichen gefunden
@@ -1950,11 +2143,17 @@ Private Sub Tim_DisplayUpdate_Timer()
     L_MotorSystemAzDiffSim = "Real (Simulation): " & Format(SimTrackingStep.Az, "0.000") & " Incr/s"
    
     If SimOffline Then
-        Slider1.Value = SimIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
+'''        Slider1.Value = SimIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
         zzSlider1.Value = SimIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
+        
+'''        Slider2.Value = SimIncr.Alt - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Alt
+        zzSlider2.Value = SimIncr.Alt - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Alt
     Else
-        Slider1.Value = TelIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
+'''        Slider1.Value = TelIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
         zzSlider1.Value = TelIncr.Az - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Az
+        
+'''        Slider2.Value = TelIncr.Alt - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Alt
+        zzSlider2.Value = TelIncr.Alt - Matrix_To_MotorIncrSystem(MatrixSystemSoll).Alt
     End If
     
     L_ErrorCount = "Error cout: " & ErrorCount
@@ -2115,19 +2314,19 @@ Private Sub Tim_Simulation_Timer()
     SimGotoStep = 10000
 
     If SimBntUp Then
-        SimIncr.Alt = SimIncr.Alt + (ManualSlewingSpeed / SimScaling)
+        SimIncr.Alt = SimIncr.Alt + (ManualSlewingSpeedY / SimScaling)
     End If
         
     If SimBntDn Then
-        SimIncr.Alt = SimIncr.Alt - (ManualSlewingSpeed / SimScaling)
+        SimIncr.Alt = SimIncr.Alt - (ManualSlewingSpeedY / SimScaling)
     End If
     
     If SimBntLe Then
-        SimIncr.Az = SimIncr.Az - (ManualSlewingSpeed / SimScaling)
+        SimIncr.Az = SimIncr.Az - (ManualSlewingSpeedX / SimScaling)
     End If
         
     If SimBntRi Then
-        SimIncr.Az = SimIncr.Az + (ManualSlewingSpeed / SimScaling)
+        SimIncr.Az = SimIncr.Az + (ManualSlewingSpeedX / SimScaling)
     End If
     
     
@@ -2187,7 +2386,13 @@ Private Sub Tim_Startup_Timer()
             StartupStep = 10
         Else
             Command = 13
-            NexStarComm.Output = Chr$(&HD)
+'''            NexStarComm.Output = Chr$(&HD)
+            
+            Dim CommString As String
+            CommString = Chr$(&HD)
+            NexStarCommunication CommString, " Request Status (0x0D)", Send
+            
+            
             StatusMoving = 0
             StartupStep = 10
         End If
@@ -2241,7 +2446,10 @@ Private Sub Tim_TestStatus_Timer()
         Command = 13
         If SimOffline Then
         Else
-            NexStarComm.Output = Chr$(&HD)
+'''            NexStarComm.Output = Chr$(&HD)
+            Dim CommString As String
+            CommString = Chr$(&HD)
+            NexStarCommunication CommString, " Request Status (0x0D)", Send
         End If
     End If
     
@@ -2347,8 +2555,9 @@ Private Sub Tim_Tracking_Timer()
     DisplayCoordinate L_I_Az, DisplObserverAz, DegDec
     
     Dim tmp As AzAlt
-    tmp.Az = ObserverAzAlt.Az
-    tmp.Alt = ObserverAzAlt.Alt
+''    tmp.Az = ObserverAzAlt.Az
+''    tmp.Alt = ObserverAzAlt.Alt
+    tmp = ObserverAzAlt
     L_CardinalOrientation = GetCardinalDrection(AzAlt_to_MatrixSystem(tmp).Az)
     DisplayCoordinate L_I_Alt, ObserverAzAlt.Alt, DegDec
     DisplayCoordinate L_I_HourAngle, HourAngle, HMS
@@ -2402,7 +2611,8 @@ Private Sub Tim_Tracking_Timer()
             TrackCount = TrackCount + 1
             
             ' this code only every "TrackInterval" sec
-            If TrackCount >= N Then
+            ' do write if another command is beeing executed
+            If TrackCount >= N And Command = 0 Then
                         '==== Life counter ====
                         Static LifeCounter As Long
                         Dim i As Long
@@ -2421,19 +2631,12 @@ Private Sub Tim_Tracking_Timer()
                 
                 C_Tracking.BackColor = RGB(0, 255, 0)
             
-                If GlbCalibStatus = 0 Then
-                ElseIf GlbCalibStatus = 1 Then
-                
-                                
+                If GlbCalibStatus = 0 Or GlbCalibStatus = 1 Then
                             Dim tmp1 As AzAlt
-                            tmp1.Az = CutRad(ObserverAzAlt.Az)
-                            tmp1.Alt = ObserverAzAlt.Alt
+'                            tmp1.Az = CutRad(ObserverAzAlt.Az)
+'                            tmp1.Alt = ObserverAzAlt.Alt
+                            tmp1 = ObserverAzAlt
                             MatrixSystemSoll = AzAlt_to_MatrixSystem(tmp1)
-                            
-'                             'Set Az
-'                            MatrixSystemSoll.Az = CutRad(ObserverAzAlt.Az)
-'                            'Set Alt
-'                            MatrixSystemSoll.Alt = ObserverAzAlt.Alt
   
                 ElseIf GlbCalibStatus = 2 Then
                             Dim AimTimeRad As Double
@@ -2529,8 +2732,13 @@ Private Sub Tim_Tracking_Timer()
                     
                 If Not SimOffline Then
                     LogString = "Tracking: " & TrackingSpeed.Az & " " & TrackingSpeed.Alt
-                    WriteComm LogString, Send
-                    NexStarComm.Output = AzString & AltString
+'''                    NexStarCommunication LogString, Send
+'''                    NexStarComm.Output = AzString & AltString
+                    
+                    Dim CommString As String
+                    CommString = AzString & AltString
+                    NexStarCommunication CommString, LogString, Send
+                    
                     
                 End If
             End If
@@ -2559,8 +2767,10 @@ Private Sub VS_ManualSlewingSpeed_Change()
     Dim tmp As Double
     
     tmp = VS_ManualSlewingSpeed.Value
-    ManualSlewingSpeed = 1000 * tmp
-    L_SlewingSpeed = ManualSlewingSpeed
+    ManualSlewingSpeedX = 1000 * tmp
+    ManualSlewingSpeedY = 1000 * tmp
+    L_SlewingSpeedX = ManualSlewingSpeedX
+    L_SlewingSpeedY = ManualSlewingSpeedY
     
     'TrackingSpeed[Incr/sec] = ManualSlewingSpeed[Incr/sec] * 0,1 [Incr/sec]
 

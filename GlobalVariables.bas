@@ -38,7 +38,7 @@ Public Type GeoCoordinates
 End Type
 
 Public Type Vector
-  X As Double
+  x As Double
   Y As Double
   z As Double
 End Type
@@ -104,7 +104,7 @@ Public GlbOberverPos As GeoCoordinates
 
 ' Main Horizontal System für die Matrixmetode in [radian]
 ' mathematischer Sinn gegen den Uhtzeigersinn (CCW)
-Public MatrixSystemSoll As AzAlt
+Public MatrixSystemSoll As AzAlt        ' is calculated: RaDec ->AzAlt -> plus GlobalOffset ->MatrixSystemSoll
 Public MatrixSystemIst As AzAlt
 
 Public MotorIncrSystem As Double       ' Horizontalsystem in [Increments] 0..726559 [CW]
@@ -119,19 +119,25 @@ Public GlbCalibStatus As Integer        ' 0: not calibrated
 '==== Init Time ====
 Public Cal_InitTime As Double
 Public TransformationMatrix(10, 10) As Double
+Public TransformationMatrix__OLD(10, 10) As Double
 
 '==== Reference Star 1 ====
-Public Cal_RaStar_1 As Double
-Public Cal_DecStar_1 As Double
-Public Cal_TelHorizAngle_1 As Double
-Public Cal_TelElevAngle_1 As Double
+    Public Cal_RaStar_1 As Double
+    Public Cal_DecStar_1 As Double
+Public Cal_Star_1_RaDec As RaDec
+
+    Public Cal_TelHorizAngle_1 As Double
+    Public Cal_TelElevAngle_1 As Double
+Public Cal_Tel_1_AzAlt As AzAlt
 Public Cal_Time_1 As Double
 
 '==== Reference Star 2 ====
-Public Cal_RaStar_2 As Double
-Public Cal_DecStar_2 As Double
-Public Cal_TelHorizAngle_2 As Double
-Public Cal_TelElevAngle_2 As Double
+    Public Cal_RaStar_2 As Double
+    Public Cal_DecStar_2 As Double
+Public Cal_Star_2_RaDec As RaDec
+    Public Cal_TelHorizAngle_2 As Double
+    Public Cal_TelElevAngle_2 As Double
+Public Cal_Tel_2_AzAlt As AzAlt
 Public Cal_Time_2 As Double
 
 Public TrackingisON As Boolean

@@ -10,6 +10,15 @@ Begin VB.Form Test
    ScaleHeight     =   7320
    ScaleWidth      =   8655
    StartUpPosition =   3  'Windows Default
+   Begin VB.TextBox Text2 
+      Alignment       =   1  'Right Justify
+      Height          =   285
+      Left            =   1800
+      TabIndex        =   31
+      Text            =   "0"
+      Top             =   5160
+      Width           =   1215
+   End
    Begin VB.TextBox T_G 
       Height          =   285
       Left            =   6840
@@ -168,6 +177,16 @@ Begin VB.Form Test
       TabIndex        =   0
       Top             =   240
       Width           =   1215
+   End
+   Begin VB.Label Label7 
+      Alignment       =   1  'Right Justify
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   255
+      Left            =   1800
+      TabIndex        =   32
+      Top             =   4800
+      Width           =   1575
    End
    Begin VB.Label Label2 
       Alignment       =   1  'Right Justify
@@ -343,22 +362,22 @@ Private Sub C_TestKalibrierung_1_Click()
     k = 1.00273790935
 
     'Equation (5.4-5)
-    lmn_Tel_1.X = Cos(TelElevAngle1) * Cos(TelHorizAngle1)
+    lmn_Tel_1.x = Cos(TelElevAngle1) * Cos(TelHorizAngle1)
     lmn_Tel_1.Y = Cos(TelElevAngle1) * Sin(TelHorizAngle1)
     lmn_Tel_1.z = Sin(TelElevAngle1)
 
     'Equation (5.4-6)
-    LMN_Equ_1.X = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))
+    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))
     LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - k * (ObservTime1Rad - InitTimerad))
     LMN_Equ_1.z = Sin(DEC1Rad)
 
     'Equation (5.4-7)
-    lmn_Tel_2.X = Cos(TelElevAngle2) * Cos(TelHorizAngle2)
+    lmn_Tel_2.x = Cos(TelElevAngle2) * Cos(TelHorizAngle2)
     lmn_Tel_2.Y = Cos(TelElevAngle2) * Sin(TelHorizAngle2)
     lmn_Tel_2.z = Sin(TelElevAngle2)
 
     'Equation (5.4-8)
-    LMN_Equ_2.X = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))
+    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))
     LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - k * (ObservTime2Rad - InitTimerad))
     LMN_Equ_2.z = Sin(DEC2Rad)
 
@@ -382,7 +401,7 @@ Private Sub C_TestKalibrierung_1_Click()
     Dim lmn_Tel_Matrix(10, 10) As Double
     Dim TransformationMatrix(10, 10) As Double
 
-    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.X: LMN_Equ_Matrix(0, 1) = LMN_Equ_2.X: LMN_Equ_Matrix(0, 2) = LMN_Equ_3.X
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x: LMN_Equ_Matrix(0, 1) = LMN_Equ_2.x: LMN_Equ_Matrix(0, 2) = LMN_Equ_3.x
     LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y: LMN_Equ_Matrix(1, 1) = LMN_Equ_2.Y: LMN_Equ_Matrix(1, 2) = LMN_Equ_3.Y
     LMN_Equ_Matrix(2, 0) = LMN_Equ_1.z: LMN_Equ_Matrix(2, 1) = LMN_Equ_2.z: LMN_Equ_Matrix(2, 2) = LMN_Equ_3.z
 
@@ -392,7 +411,7 @@ Private Sub C_TestKalibrierung_1_Click()
                 dmy = LMN_Equ_MatrixInvers(1, 0): dmy = LMN_Equ_MatrixInvers(1, 1): dmy = LMN_Equ_MatrixInvers(1, 2)
                 dmy = LMN_Equ_MatrixInvers(2, 0): dmy = LMN_Equ_MatrixInvers(2, 1): dmy = LMN_Equ_MatrixInvers(2, 2)
 
-    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.X: lmn_Tel_Matrix(0, 1) = lmn_Tel_2.X: lmn_Tel_Matrix(0, 2) = lmn_Tel_3.X
+    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.x: lmn_Tel_Matrix(0, 1) = lmn_Tel_2.x: lmn_Tel_Matrix(0, 2) = lmn_Tel_3.x
     lmn_Tel_Matrix(1, 0) = lmn_Tel_1.Y: lmn_Tel_Matrix(1, 1) = lmn_Tel_2.Y: lmn_Tel_Matrix(1, 2) = lmn_Tel_3.Y
     lmn_Tel_Matrix(2, 0) = lmn_Tel_1.z: lmn_Tel_Matrix(2, 1) = lmn_Tel_2.z: lmn_Tel_Matrix(2, 2) = lmn_Tel_3.z
 
@@ -437,14 +456,14 @@ Private Sub C_TestKalibrierung_1_Click()
  
     'LMN_Equ_Result: Vector points to Deneb in equatorial coordinats
     Dim LMN_Equ_Result  As Vector
-    LMN_Equ_Result.X = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.x = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_Result.Y = Cos(DEC_BetaCetRad) * Sin(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_Result.z = Sin(DEC_BetaCetRad)
 
 
     Dim LMN_Equ_ResultMatrix(10, 10) As Double
     Dim lmn_Tel_ResultMatrix(10, 10) As Double
-    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.X
+    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.x
     LMN_Equ_ResultMatrix(1, 0) = LMN_Equ_Result.Y
     LMN_Equ_ResultMatrix(2, 0) = LMN_Equ_Result.z
 
@@ -453,7 +472,7 @@ Private Sub C_TestKalibrierung_1_Click()
     'lmn_Tel__Matrix: Vector points to Beta Cet in equatorial coordinats
 
     Dim lmn_Tel_Result  As Vector
-    lmn_Tel_Result.X = lmn_Tel_ResultMatrix(0, 0)
+    lmn_Tel_Result.x = lmn_Tel_ResultMatrix(0, 0)
     lmn_Tel_Result.Y = lmn_Tel_ResultMatrix(1, 0)
     lmn_Tel_Result.z = lmn_Tel_ResultMatrix(2, 0)
 
@@ -554,26 +573,26 @@ Private Sub C_TestKalibrierung_2_Click()
 
     'Equation (5.4-5)
     'Telescope coordinates star 1
-    lmn_Tel_1.X = Cos(TelElevAngle1) * Cos(TelHorizAngle1)  '0.099
+    lmn_Tel_1.x = Cos(TelElevAngle1) * Cos(TelHorizAngle1)  '0.099
     lmn_Tel_1.Y = Cos(TelElevAngle1) * Sin(TelHorizAngle1)  '0.8207
     lmn_Tel_1.z = Sin(TelElevAngle1)                        '0.5628
 
 
     'Equation (5.4-6)
     'RA DEC star 1
-    LMN_Equ_1.X = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))   '0.8738
+    LMN_Equ_1.x = Cos(DEC1Rad) * Cos(RA1Rad - k * (ObservTime1Rad - InitTimerad))   '0.8738
     LMN_Equ_1.Y = Cos(DEC1Rad) * Sin(RA1Rad - k * (ObservTime1Rad - InitTimerad))   '0.0301
     LMN_Equ_1.z = Sin(DEC1Rad)                                                      '0.4854
 
     'Equation (5.4-7)
     'Telescope coordinates star 2
-    lmn_Tel_2.X = Cos(TelElevAngle2) * Cos(TelHorizAngle2)  '0.6699
+    lmn_Tel_2.x = Cos(TelElevAngle2) * Cos(TelHorizAngle2)  '0.6699
     lmn_Tel_2.Y = Cos(TelElevAngle2) * Sin(TelHorizAngle2)  '0.0124
     lmn_Tel_2.z = Sin(TelElevAngle2)                        '0.7423
 
     'Equation (5.4-8)
     'RA DEC star 2
-    LMN_Equ_2.X = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))   '0.0111
+    LMN_Equ_2.x = Cos(DEC2Rad) * Cos(RA2Rad - k * (ObservTime2Rad - InitTimerad))   '0.0111
     LMN_Equ_2.Y = Cos(DEC2Rad) * Sin(RA2Rad - k * (ObservTime2Rad - InitTimerad))   '0.0079
     LMN_Equ_2.z = Sin(DEC2Rad)                                                      '0.9999
 
@@ -597,9 +616,9 @@ Private Sub C_TestKalibrierung_2_Click()
     Dim lmn_Tel_Matrix(10, 10) As Double
     Dim TransformationMatrix(10, 10) As Double
 
-    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.X
-    LMN_Equ_Matrix(0, 1) = LMN_Equ_2.X
-    LMN_Equ_Matrix(0, 2) = LMN_Equ_3.X
+    LMN_Equ_Matrix(0, 0) = LMN_Equ_1.x
+    LMN_Equ_Matrix(0, 1) = LMN_Equ_2.x
+    LMN_Equ_Matrix(0, 2) = LMN_Equ_3.x
     LMN_Equ_Matrix(1, 0) = LMN_Equ_1.Y
     LMN_Equ_Matrix(1, 1) = LMN_Equ_2.Y
     LMN_Equ_Matrix(1, 2) = LMN_Equ_3.Y
@@ -609,9 +628,9 @@ Private Sub C_TestKalibrierung_2_Click()
 
     Calculate_Inverse 3, LMN_Equ_Matrix, LMN_Equ_MatrixInvers
 
-    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.X
-    lmn_Tel_Matrix(0, 1) = lmn_Tel_2.X
-    lmn_Tel_Matrix(0, 2) = lmn_Tel_3.X
+    lmn_Tel_Matrix(0, 0) = lmn_Tel_1.x
+    lmn_Tel_Matrix(0, 1) = lmn_Tel_2.x
+    lmn_Tel_Matrix(0, 2) = lmn_Tel_3.x
     lmn_Tel_Matrix(1, 0) = lmn_Tel_1.Y
     lmn_Tel_Matrix(1, 1) = lmn_Tel_2.Y
     lmn_Tel_Matrix(1, 2) = lmn_Tel_3.Y
@@ -650,14 +669,14 @@ Private Sub C_TestKalibrierung_2_Click()
 
     'LMN_Equ_Result: Vector points to Deneb in equatorial coordinats
     Dim LMN_Equ_Result  As Vector
-    LMN_Equ_Result.X = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
+    LMN_Equ_Result.x = Cos(DEC_BetaCetRad) * Cos(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_Result.Y = Cos(DEC_BetaCetRad) * Sin(RA_BetaCetRad - k * (AimTimeRad - InitTimerad))
     LMN_Equ_Result.z = Sin(DEC_BetaCetRad)
 
 
     Dim LMN_Equ_ResultMatrix(10, 10) As Double
     Dim lmn_Tel_ResultMatrix(10, 10) As Double
-    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.X
+    LMN_Equ_ResultMatrix(0, 0) = LMN_Equ_Result.x
     LMN_Equ_ResultMatrix(1, 0) = LMN_Equ_Result.Y
     LMN_Equ_ResultMatrix(2, 0) = LMN_Equ_Result.z
 
@@ -669,7 +688,7 @@ Private Sub C_TestKalibrierung_2_Click()
     'lmn_Tel__Matrix: Vector points to Beta Cet in equatorial coordinats
 
     Dim lmn_Tel_Result  As Vector
-    lmn_Tel_Result.X = lmn_Tel_ResultMatrix(0, 0)
+    lmn_Tel_Result.x = lmn_Tel_ResultMatrix(0, 0)
     lmn_Tel_Result.Y = lmn_Tel_ResultMatrix(1, 0)
     lmn_Tel_Result.z = lmn_Tel_ResultMatrix(2, 0)
 
@@ -713,6 +732,11 @@ Private Sub C_TestKalibrierung_3_Click()
     Dim TelElevAngle1 As Double
     Dim TelElevAngle2 As Double
 
+    Dim Star1 As RaDec
+    Dim Star2 As RaDec
+    Dim Tel1 As AzAlt
+    Dim Tel2 As AzAlt
+
 
     'Observation date/time: unknown
     'Observation location: unknown
@@ -732,7 +756,7 @@ Private Sub C_TestKalibrierung_3_Click()
     DEC1Rad = DegToRad(29.038)
     TelHorizAngle1 = DegToRad(99.25)      'Danger! Telescope angle is CCW
     TelElevAngle1 = DegToRad(83.87)
-
+    
     'time pointing to 2. reference star
     tst.H = 21: tst.M = 37: tst.s = 2
     ObservTime2Rad = TimeToRad(tst)
@@ -744,10 +768,26 @@ Private Sub C_TestKalibrierung_3_Click()
     DEC2Rad = DegToRad(89.222)
     TelHorizAngle2 = DegToRad(310.98)      'Danger! Telescope angle is CCW
     TelElevAngle2 = DegToRad(35.04)
+    
+    'Prepare parameters for CalibrateTelescope_NEW
+    Star1.Ra = RA1Rad
+    Star1.Dec = DEC1Rad
+    Star2.Ra = RA2Rad
+    Star2.Dec = DEC2Rad
+    Tel1.Az = TelHorizAngle1
+    Tel1.Alt = TelElevAngle1
+    Tel2.Az = TelHorizAngle2
+    Tel2.Alt = TelElevAngle2
 
-    CalibrateTelescope InitTimerad, _
+
+    CalibrateTelescope__OLD InitTimerad, _
                        RA1Rad, DEC1Rad, TelHorizAngle1, TelElevAngle1, ObservTime1Rad, _
                        RA2Rad, DEC2Rad, TelHorizAngle2, TelElevAngle2, ObservTime2Rad, _
+                       TransformationMatrix__OLD
+
+    CalibrateTelescope InitTimerad, _
+                       Star1, Tel1, ObservTime1Rad, _
+                       Star2, Tel2, ObservTime2Rad, _
                        TransformationMatrix
 
 
@@ -757,15 +797,14 @@ Private Sub C_TestKalibrierung_3_Click()
     Dim RA_BetaCet As MyTime
     Dim DEC_BetaCet As Double
     Dim AimTime As MyTime
-    Dim RA_BetaCetRad As Double
-    Dim DEC_BetaCetRad As Double
+    Dim BetaCetRad As RaDec
     Dim AimTimeRad As Double
     Dim AzAlt_BetaCet As AzAlt
     
     ' if you want to aim the telescope at Beta Cet (RA = 0h43m07s, DEC = -18.038°) at 21h52m12s
     RA_BetaCet.H = 0: RA_BetaCet.M = 43: RA_BetaCet.s = 7
-    RA_BetaCetRad = TimeToRad(RA_BetaCet)
-    DEC_BetaCetRad = DegToRad(-18.038)
+    BetaCetRad.Ra = TimeToRad(RA_BetaCet)
+    BetaCetRad.Dec = DegToRad(-18.038)
     AimTime.H = 21: AimTime.M = 52: AimTime.s = 12
     AimTimeRad = TimeToRad(AimTime)
 
@@ -777,7 +816,7 @@ Private Sub C_TestKalibrierung_3_Click()
 '    AimTimeRad = TimeToRad(AimTime)
 
     CalculateTelescopeCoordinates InitTimerad, _
-                                  RA_BetaCetRad, DEC_BetaCetRad, AimTimeRad, TransformationMatrix, _
+                                  BetaCetRad, AimTimeRad, TransformationMatrix, _
                                   AzAlt_BetaCet
 
  
@@ -1085,6 +1124,26 @@ Private Sub Command6_Click()
 End Sub
 
 
+
+Private Sub Command8_Click()
+    Dim v1 As Vector
+    Dim v2 As Vector
+    Dim winkel As Double
+    
+    v1.x = 1
+    v1.Y = 1
+    v1.z = 0
+
+    v2.x = 0
+    v2.Y = 1
+    v2.z = 0
+
+    winkel = RadToDeg(AngleBetweenVectors(v1, v2))
+    Label1 = winkel
+    
+    
+    
+End Sub
 
 Private Sub Command9_Click()
 

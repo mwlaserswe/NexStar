@@ -39,7 +39,7 @@ Public Function PolarKarthesisch(HourAngle As Double, Declination As Double) As 
   'https://de.wikipedia.org/wiki/Kugelkoordinaten
   '   Absatz "Andere Konventionen"
 
-  PolarKarthesisch.X = Cos(-HourAngle) * Cos(Declination)
+  PolarKarthesisch.x = Cos(-HourAngle) * Cos(Declination)
   PolarKarthesisch.Y = Sin(-HourAngle) * Cos(Declination)
   PolarKarthesisch.z = Sin(Declination)
 End Function
@@ -48,21 +48,45 @@ End Function
 Public Function CrossProduct(v1 As Vector, v2 As Vector) As Vector
   'http://james-ramsden.com/calculate-the-cross-product-c-code/
   
-  CrossProduct.X = v1.Y * v2.z - v2.Y * v1.z
-  CrossProduct.Y = (v1.X * v2.z - v2.X * v1.z) * -1
-  CrossProduct.z = v1.X * v2.Y - v2.X * v1.Y
+  CrossProduct.x = v1.Y * v2.z - v2.Y * v1.z
+  CrossProduct.Y = (v1.x * v2.z - v2.x * v1.z) * -1
+  CrossProduct.z = v1.x * v2.Y - v2.x * v1.Y
 End Function
 
 
-Public Function ScalarProduct(Scalar As Double, V As Vector) As Vector
-    ScalarProduct.X = Scalar * V.X
-    ScalarProduct.Y = Scalar * V.Y
-    ScalarProduct.z = Scalar * V.z
+Public Function ScalarProduct(scalar As Double, V As Vector) As Vector
+    ScalarProduct.x = scalar * V.x
+    ScalarProduct.Y = scalar * V.Y
+    ScalarProduct.z = scalar * V.z
 End Function
 
 
 Public Function LenghtVector(V As Vector) As Double
-    LenghtVector = Sqr(V.X * V.X + V.Y * V.Y + V.z * V.z)
+    LenghtVector = Sqr(V.x * V.x + V.Y * V.Y + V.z * V.z)
+End Function
+
+
+Public Function AngleBetweenVectors(v1 As Vector, v2 As Vector) As Double
+    ' per cross product:  http://ne.lo-net2.de/selbstlernmaterial/m/ag/skp/skp_ww_gw.pdf
+    Dim len1 As Double
+    Dim len2 As Double
+    Dim len3 As Double
+    len1 = LenghtVector(CrossProduct(v1, v2))
+    len2 = LenghtVector(v1)
+    len3 = LenghtVector(v2)
+
+    AngleBetweenVectors = arcsin(len1 / (len2 * len3))
+
+    ' per scalar product:  https://matheguru.com/lineare-algebra/winkel-zwischen-zwei-vektoren.html
+    ' Dim len1 As Double
+    ' Dim len2 As Double
+    ' len1 = LenghtVector(v1)
+    ' len2 = LenghtVector(v2)
+    ' Dim scalar As Double
+    ' scalar = v1.x * v2.x + v1.Y * v2.Y + v1.z * v2.z
+    '
+    ' AngleBetweenVectors = (Pi / 2) - arcsin(scalar / (len1 * len2))
+    
 End Function
 
 

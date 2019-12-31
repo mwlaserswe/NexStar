@@ -266,7 +266,7 @@ Begin VB.Form Mainform
       Left            =   3000
       Style           =   1  'Graphical
       TabIndex        =   89
-      Top             =   7560
+      Top             =   7920
       Width           =   2295
    End
    Begin VB.CommandButton C_SetCalibrationStar_2 
@@ -802,10 +802,10 @@ Begin VB.Form Mainform
    End
    Begin VB.VScrollBar VS_ManualSlewingSpeed 
       Height          =   2295
-      LargeChange     =   10
+      LargeChange     =   100
       Left            =   4560
       Max             =   0
-      Min             =   1300
+      Min             =   1000
       TabIndex        =   8
       Top             =   3240
       Value           =   100
@@ -947,6 +947,24 @@ Begin VB.Form Mainform
       Value           =   300
       SmallChange     =   0
       LargeChange     =   0
+   End
+   Begin VB.Label Label37 
+      Caption         =   "Angle"
+      Height          =   255
+      Left            =   3000
+      TabIndex        =   136
+      Top             =   7560
+      Width           =   495
+   End
+   Begin VB.Label L_Angle 
+      Alignment       =   2  'Center
+      BorderStyle     =   1  'Fixed Single
+      Caption         =   "--"
+      Height          =   255
+      Left            =   3720
+      TabIndex        =   135
+      Top             =   7560
+      Width           =   1575
    End
    Begin VB.Label Label30 
       BorderStyle     =   1  'Fixed Single
@@ -1424,7 +1442,7 @@ Private Sub C_GotoStarCalibrated_Click()
     TrackingisON = False
 
     CalculateTelescopeCoordinates Cal_InitTime, _
-                                  ObserverRaDec.Ra, ObserverRaDec.Dec, AimTimeRad, TransformationMatrix, _
+                                  ObserverRaDec, AimTimeRad, TransformationMatrix, _
                                   AzAlt_BetaCet
 
  
@@ -1526,6 +1544,10 @@ Private Sub C_SetCalibrationStar_1_Click()
     Cal_TelHorizAngle_1 = MatrixSystemIst.Az
     Cal_TelElevAngle_1 = MatrixSystemIst.Alt
 
+Cal_Star_1_RaDec = ObserverRaDec
+Cal_Tel_1_AzAlt = MatrixSystemIst
+
+
     'Set time reference star 1 for calibration
     Cal_Time_1 = TimeToRad(ObserverTimeUT)
 
@@ -1533,25 +1555,46 @@ Private Sub C_SetCalibrationStar_1_Click()
 End Sub
 
 Private Sub C_SetCalibrationStar_2_Click()
+
+Dim Angle As Double
+
     Cal_RaStar_2 = ObserverRaDec.Ra
     Cal_DecStar_2 = ObserverRaDec.Dec
     Cal_TelHorizAngle_2 = MatrixSystemIst.Az
     Cal_TelElevAngle_2 = MatrixSystemIst.Alt
 
+Cal_Star_2_RaDec = ObserverRaDec
+Cal_Tel_2_AzAlt = MatrixSystemIst
+
+
     'Set time reference star 2 for calibration
     Cal_Time_2 = TimeToRad(ObserverTimeUT)
 
     C_SetCalibrationStar_2.BackColor = vbGreen
+    
+    
+    Angle = AngleBetweenTelescopePositions(Cal_Tel_1_AzAlt, Cal_Tel_2_AzAlt)
+    L_Angle = Format(RadToDeg(Angle), "0.0000") & "°"
+    
 End Sub
 
 Private Sub C_CalibrateNow_Click()
 Label6 = "--"
-    CalibrateTelescope Cal_InitTime, _
+    CalibrateTelescope__OLD Cal_InitTime, _
                        Cal_RaStar_1, Cal_DecStar_1, Cal_TelHorizAngle_1, Cal_TelElevAngle_1, Cal_Time_1, _
                        Cal_RaStar_2, Cal_DecStar_2, Cal_TelHorizAngle_2, Cal_TelElevAngle_2, Cal_Time_2, _
+                       TransformationMatrix__OLD
+                       
+    CalibrateTelescope Cal_InitTime, _
+                       Cal_Star_1_RaDec, Cal_Tel_1_AzAlt, Cal_Time_1, _
+                       Cal_Star_2_RaDec, Cal_Tel_2_AzAlt, Cal_Time_2, _
                        TransformationMatrix
 
     C_CalibrateNow.BackColor = vbGreen
+    
+    ' Set status 2 point calibration done
+    GlbCalibStatus = 2
+
 End Sub
 
 Private Sub C_SetEncoder_Alt_Click()
@@ -1587,24 +1630,33 @@ Private Sub C_Simulation_Click()
 End Sub
 
 Private Sub C_SingleStarAlignment_Click()
-''''    Dim MatrixSystem As AzAlt
-''''    Dim tmp As Double
-''''    Dim d1 As Double
-''''    Dim d2 As Double
-''''
-''''    MatrixSystem = MotorIncr_To_MatrixSystem(TelIncr)
-''''    GlobalOffset.Az = CutRad(MatrixSystem.Az)
-''''    GlobalOffset.Alt = CutRad(MatrixSystem.Alt)
+
+    Dim tmp2 As Double
+    Dim tmp3 As Double
+    Dim tmp4 As Double
+    Dim tmp5 As Double
+    Dim tmp6 As Double
+
     
-    
+    tmp2 = GlobalOffset.Az
+    tmp2 = MatrixSystemIst.Az
+    tmp3 = MatrixSystemSoll.Az
     
 '    GlobalOffset.Az = GlobalOffset.Az + (MatrixSystemIst.Az - MatrixSystemSoll.Az)
 '    GlobalOffset.Alt = GlobalOffset.Alt + (MatrixSystemIst.Alt - MatrixSystemSoll.Alt)
 
     GlobalOffset = AddAzAlt(GlobalOffset, SubAzAlt(MatrixSystemIst, MatrixSystemSoll))
+'    GlobalOffset = SubAzAlt(MatrixSystemIst, MatrixSystemSoll)
 
     ' Set status 1 point calibration done
     GlbCalibStatus = 1
+    
+                            Dim tmp1 As AzAlt
+'                            tmp1.Az = CutRad(ObserverAzAlt.Az)
+'                            tmp1.Alt = ObserverAzAlt.Alt
+                            tmp1 = ObserverAzAlt
+                            MatrixSystemSoll = AzAlt_to_MatrixSystem(tmp1)
+
   
     'Set Initial for calibration
     Cal_InitTime = TimeToRad(ObserverTimeUT)
@@ -1638,7 +1690,7 @@ Private Sub C_Tracking_Click()
 End Sub
 
 
-Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntUp = True
     Else
@@ -1649,7 +1701,7 @@ Private Sub C_Up_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
     End If
 End Sub
 
-Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntUp = False
     Else
@@ -1660,7 +1712,7 @@ Private Sub C_Up_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntDn = True
     Else
@@ -1671,7 +1723,7 @@ Private Sub C_Dn_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
     End If
 End Sub
 
-Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntDn = False
     Else
@@ -1682,7 +1734,7 @@ Private Sub C_Dn_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntLe = True
     Else
@@ -1693,7 +1745,7 @@ Private Sub C_Le_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
     End If
 End Sub
 
-Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntLe = False
     Else
@@ -1704,7 +1756,7 @@ Private Sub C_Le_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As 
     End If
 End Sub
 
-Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntRi = True
     Else
@@ -1715,7 +1767,7 @@ Private Sub C_Ri_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
     End If
 End Sub
 
-Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub C_Ri_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If SimOffline Then
         SimBntRi = False
     Else
@@ -1738,7 +1790,7 @@ Private Sub Form_Load()
     
     Command = 0
     
-    VS_ManualSlewingSpeed.Value = 1300
+    VS_ManualSlewingSpeed.Value = 1000
 
     DefaultPath = INIGetValue(IniFileName, "Basics", "DefaultPath")
     DefaultStarKatalog = INIGetValue(IniFileName, "Basics", "DefaultStarKatalog")
@@ -2273,7 +2325,7 @@ Private Sub Tim_Preview_Timer()
     DisplayCoordinate L_Preview_HourAngle, HourAngle, HMS
 
             'Just for testing: get matrix vectors
-            Dim X As Double
+            Dim x As Double
             Dim Y As Double
             Dim z As Double
             Dim HorizAngle As Double
@@ -2281,17 +2333,17 @@ Private Sub Tim_Preview_Timer()
             
             HorizAngle = PreviewRaDec.Ra
             ElevAngle = PreviewRaDec.Dec
-            X = Cos(ElevAngle) * Cos(HorizAngle)
+            x = Cos(ElevAngle) * Cos(HorizAngle)
             Y = Cos(ElevAngle) * Sin(HorizAngle)
             z = Sin(ElevAngle)
-            L_Preview_EquXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
+            L_Preview_EquXYZ = Format(x, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
         
             HorizAngle = PreviewAzAlt.Az
             ElevAngle = PreviewAzAlt.Alt
-            X = Cos(ElevAngle) * Cos(HorizAngle)
+            x = Cos(ElevAngle) * Cos(HorizAngle)
             Y = Cos(ElevAngle) * Sin(HorizAngle)
             z = Sin(ElevAngle)
-            L_Preview_HorXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
+            L_Preview_HorXYZ = Format(x, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
 
 
     If PreviewAzAlt.Alt < 0 Then
@@ -2563,7 +2615,7 @@ Private Sub Tim_Tracking_Timer()
     DisplayCoordinate L_I_HourAngle, HourAngle, HMS
 
             'Just for testing: get matrix vectors
-            Dim X As Double
+            Dim x As Double
             Dim Y As Double
             Dim z As Double
             Dim HorizAngle As Double
@@ -2571,17 +2623,17 @@ Private Sub Tim_Tracking_Timer()
             
             HorizAngle = ObserverRaDec.Ra
             ElevAngle = ObserverRaDec.Dec
-            X = Cos(ElevAngle) * Cos(HorizAngle)
+            x = Cos(ElevAngle) * Cos(HorizAngle)
             Y = Cos(ElevAngle) * Sin(HorizAngle)
             z = Sin(ElevAngle)
-            L_I_EquXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
+            L_I_EquXYZ = Format(x, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
         
             HorizAngle = ObserverAzAlt.Az
             ElevAngle = ObserverAzAlt.Alt
-            X = Cos(ElevAngle) * Cos(HorizAngle)
+            x = Cos(ElevAngle) * Cos(HorizAngle)
             Y = Cos(ElevAngle) * Sin(HorizAngle)
             z = Sin(ElevAngle)
-            L_I_HorXYZ = Format(X, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
+            L_I_HorXYZ = Format(x, "0.0000") & " " & Format(Y, "0.0000") & " " & Format(z, "0.0000")
 
 
 '''    If ObserverAzAlt.Alt < 0 Then
@@ -2640,7 +2692,7 @@ Private Sub Tim_Tracking_Timer()
   
                 ElseIf GlbCalibStatus = 2 Then
                             Dim AimTimeRad As Double
-                            Dim AzAlt_BetaCet As AzAlt
+                            Dim CalculatedObserverAzAlt As AzAlt
                             Dim TimeDiff As MyTime
                             
                             
@@ -2650,12 +2702,12 @@ Private Sub Tim_Tracking_Timer()
                             JetztTime = TimeToRad(ObserverTimeUT)
                         
                             CalculateTelescopeCoordinates Cal_InitTime, _
-                                                          ObserverRaDec.Ra, ObserverRaDec.Dec, AimTimeRad, TransformationMatrix, _
-                                                          AzAlt_BetaCet
+                                                          ObserverRaDec, AimTimeRad, TransformationMatrix, _
+                                                          CalculatedObserverAzAlt
                             'Set Az
-                            MatrixSystemSoll.Az = CutRad(AzAlt_BetaCet.Az)
+                            MatrixSystemSoll.Az = CutRad(CalculatedObserverAzAlt.Az)
                             'Set Alt
-                            MatrixSystemSoll.Alt = AzAlt_BetaCet.Alt
+                            MatrixSystemSoll.Alt = CalculatedObserverAzAlt.Alt
                 End If
     
             
@@ -2767,8 +2819,8 @@ Private Sub VS_ManualSlewingSpeed_Change()
     Dim tmp As Double
     
     tmp = VS_ManualSlewingSpeed.Value
-    ManualSlewingSpeedX = 1000 * tmp
-    ManualSlewingSpeedY = 1000 * tmp
+    ManualSlewingSpeedX = 100 * tmp
+    ManualSlewingSpeedY = 100 * tmp
     L_SlewingSpeedX = ManualSlewingSpeedX
     L_SlewingSpeedY = ManualSlewingSpeedY
     
